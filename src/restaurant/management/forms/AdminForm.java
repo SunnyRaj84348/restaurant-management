@@ -1,8 +1,13 @@
 package restaurant.management.forms;
 
+import com.formdev.flatlaf.FlatDarkLaf;
+
 public class AdminForm extends javax.swing.JFrame {
 
     public AdminForm() {
+        // Set FlatLaf Dark theme
+        FlatDarkLaf.setup();
+
         initComponents();
     }
 
