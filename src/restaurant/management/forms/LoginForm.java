@@ -1,6 +1,7 @@
 package restaurant.management.forms;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import javax.swing.JOptionPane;
 
 public class LoginForm extends javax.swing.JFrame {
 
@@ -43,6 +44,11 @@ public class LoginForm extends javax.swing.JFrame {
         );
 
         loginButton.setText("Login");
+        loginButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginButtonActionPerformed(evt);
+            }
+        });
 
         userLabel.setText("Username");
 
@@ -86,6 +92,24 @@ public class LoginForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private boolean validateData() {
+        // Check if fields consist of only whitespaces
+        if (userField.getText().trim().length() == 0
+                || String.valueOf(passwordField.getPassword()).length() == 0) {
+
+            return false;
+        }
+
+        return true;
+    }
+
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
+        if (!validateData()) {
+            JOptionPane.showMessageDialog(this, "One or more field is empty");
+            return;
+        }
+    }//GEN-LAST:event_loginButtonActionPerformed
 
     public static void main(String args[]) {
         // Set FlatLaf Dark theme
