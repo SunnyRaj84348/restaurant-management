@@ -1,6 +1,8 @@
 package restaurant.management.forms;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import java.sql.SQLException;
+import restaurant.management.models.Database;
 
 public class EmployeeForm extends javax.swing.JFrame {
 
@@ -9,6 +11,23 @@ public class EmployeeForm extends javax.swing.JFrame {
         FlatDarkLaf.setup();
 
         initComponents();
+        addRoles();
+    }
+
+    private void addRoles() {
+        try {
+            var db = new Database();
+            var empRoleList = db.getEmployeeRoles();
+
+            roleCBox.removeAllItems();
+
+            empRoleList.forEach(role -> {
+                roleCBox.addItem(role.roleName);
+            });
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @SuppressWarnings("unchecked")

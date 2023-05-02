@@ -3,6 +3,7 @@ package restaurant.management.models;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Database {
 
@@ -45,5 +46,20 @@ public class Database {
 
         var employeeRole = new EmployeeRoleModel(rs.getInt(1), rs.getString(2));
         return employeeRole;
+    }
+
+    public ArrayList<EmployeeRoleModel> getEmployeeRoles() throws SQLException {
+        var stmt = con.prepareStatement(
+                "SELECT * FROM employee_role"
+        );
+
+        var rs = stmt.executeQuery();
+        var EmpRoleList = new ArrayList<EmployeeRoleModel>();
+
+        while (rs.next()) {
+            EmpRoleList.add(new EmployeeRoleModel(rs.getInt(1), rs.getString(2)));
+        }
+
+        return EmpRoleList;
     }
 }
