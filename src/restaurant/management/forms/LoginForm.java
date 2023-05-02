@@ -1,7 +1,9 @@
 package restaurant.management.forms;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import restaurant.management.models.Database;
 
 public class LoginForm extends javax.swing.JFrame {
 
@@ -94,7 +96,7 @@ public class LoginForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private boolean validateData() {
-        // Check if fields consist of only whitespaces
+        // Check if fields are empty or consists of only whitespaces
         if (userField.getText().trim().length() == 0
                 || String.valueOf(passwordField.getPassword()).length() == 0) {
 
@@ -108,6 +110,30 @@ public class LoginForm extends javax.swing.JFrame {
         if (!validateData()) {
             JOptionPane.showMessageDialog(this, "One or more field is empty");
             return;
+        }
+
+        try {
+            var db = new Database();
+            var creds = db.getCredentials(userField.getText());
+
+            // Check if user or password not matched
+            if (creds == null || !String.valueOf(passwordField.getPassword()).equals(creds.password)) {
+                JOptionPane.showMessageDialog(this, "Incorrect username or password");
+                return;
+            }
+
+            var employeeRole = db.getEmployeeRole(creds.employeeID);
+
+            // Check role of employee
+            if (employeeRole.roleName.equals("Admin")) {
+                this.dispose();
+
+                var adminForm = new AdminForm();
+                adminForm.setVisible(true);
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }//GEN-LAST:event_loginButtonActionPerformed
 
