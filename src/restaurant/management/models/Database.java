@@ -84,6 +84,20 @@ public class Database {
         return empDetails;
     }
 
+    public int getMaxEmployeeID() throws SQLException {
+        var stmt = con.prepareStatement(
+                "SELECT emp_id FROM employee ORDER BY emp_id DESC LIMIT 1"
+        );
+
+        var rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            return rs.getInt(1);
+        }
+
+        return -1;
+    }
+
     public void setRole(String roleName) throws SQLException {
         var stmt = con.prepareStatement(
                 "INSERT INTO employee_role VALUES(DEFAULT, ?)"
