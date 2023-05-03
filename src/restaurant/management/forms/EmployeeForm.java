@@ -7,33 +7,33 @@ import javax.swing.table.DefaultTableModel;
 import restaurant.management.models.Database;
 
 public class EmployeeForm extends javax.swing.JFrame {
-
+    
     static String roleName;
-
+    
     public EmployeeForm() {
         // Set FlatLaf Dark theme
         FlatDarkLaf.setup();
-
+        
         initComponents();
         addRoles();
     }
-
+    
     private void addRoles() {
         try {
             var db = new Database();
             var empRoleList = db.getEmployeeRoles();
-
+            
             roleCBox.removeAllItems();
-
+            
             empRoleList.forEach(role -> {
                 roleCBox.addItem(role.roleName);
             });
-
+            
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
-
+    
     @SuppressWarnings("unchecked")
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -246,7 +246,7 @@ public class EmployeeForm extends javax.swing.JFrame {
         try {
             var tableModel = (DefaultTableModel) empTable.getModel();
             var tableVector = tableModel.getDataVector();
-
+            
             var empID = Integer.parseInt(idSearchField.getText());
 
             // return if data already exists in table
@@ -255,34 +255,35 @@ public class EmployeeForm extends javax.swing.JFrame {
                     return;
                 }
             }
-
+            
             var db = new Database();
             var empDetails = db.getEmployeeDetails(empID);
-
+            
             if (empDetails == null) {
                 JOptionPane.showMessageDialog(this, "Employee not founded");
                 return;
             }
-
+            
             var empRole = db.getEmployeeRole(empDetails.employeeID);
-
+            
             tableModel.addRow(new Object[]{
                 empDetails.employeeID, empRole.roleName, empDetails.employeeName, empDetails.employeePhone,
                 empDetails.employeeAddress, empDetails.employeeSalary
             });
-
+            
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Employee not founded");
         }
     }//GEN-LAST:event_findButtonActionPerformed
-
+    
     private void newRoleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newRoleButtonActionPerformed
         var roleForm = new RoleForm();
         roleForm.setVisible(true);
+        roleForm.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_newRoleButtonActionPerformed
-
+    
     private void roleCBoxFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_roleCBoxFocusGained
         if (roleName != null) {
             roleCBox.addItem(roleName);

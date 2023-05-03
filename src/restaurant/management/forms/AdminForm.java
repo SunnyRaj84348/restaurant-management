@@ -56,6 +56,7 @@ public class AdminForm extends javax.swing.JFrame {
     private void empButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_empButtonActionPerformed
         var employeeForm = new EmployeeForm();
         employeeForm.setVisible(true);
+        employeeForm.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_empButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
