@@ -8,6 +8,8 @@ import restaurant.management.models.Database;
 
 public class EmployeeForm extends javax.swing.JFrame {
 
+    static String roleName;
+
     public EmployeeForm() {
         // Set FlatLaf Dark theme
         FlatDarkLaf.setup();
@@ -62,6 +64,7 @@ public class EmployeeForm extends javax.swing.JFrame {
         updateButton = new javax.swing.JButton();
         idLabel = new javax.swing.JLabel();
         idField = new javax.swing.JTextField();
+        newRoleButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,6 +98,11 @@ public class EmployeeForm extends javax.swing.JFrame {
         roleLabel.setText("Role");
 
         roleCBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        roleCBox.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                roleCBoxFocusGained(evt);
+            }
+        });
 
         passwordLabel.setText("Password");
 
@@ -120,6 +128,13 @@ public class EmployeeForm extends javax.swing.JFrame {
 
         idLabel.setText("ID");
 
+        newRoleButton.setText("New Role");
+        newRoleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newRoleButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -144,7 +159,10 @@ public class EmployeeForm extends javax.swing.JFrame {
                         .addContainerGap(806, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(roleCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(roleCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31)
+                                .addComponent(newRoleButton))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(idSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -183,7 +201,8 @@ public class EmployeeForm extends javax.swing.JFrame {
                         .addGap(33, 33, 33)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(roleLabel)
-                            .addComponent(roleCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(roleCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(newRoleButton))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(userLabel)
@@ -259,6 +278,18 @@ public class EmployeeForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_findButtonActionPerformed
 
+    private void newRoleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newRoleButtonActionPerformed
+        var roleForm = new RoleForm();
+        roleForm.setVisible(true);
+    }//GEN-LAST:event_newRoleButtonActionPerformed
+
+    private void roleCBoxFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_roleCBoxFocusGained
+        if (roleName != null) {
+            roleCBox.addItem(roleName);
+            roleName = null;
+        }
+    }//GEN-LAST:event_roleCBoxFocusGained
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JTextArea addressArea;
@@ -273,6 +304,7 @@ public class EmployeeForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField nameField;
     private javax.swing.JLabel nameLabel;
+    private javax.swing.JButton newRoleButton;
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JTextField phoneField;

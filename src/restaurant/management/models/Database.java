@@ -83,4 +83,13 @@ public class Database {
 
         return empDetails;
     }
+
+    public void setRole(String roleName) throws SQLException {
+        var stmt = con.prepareStatement(
+                "INSERT INTO employee_role VALUES(DEFAULT, ?)"
+        );
+
+        stmt.setString(1, roleName);
+        stmt.executeUpdate();
+    }
 }

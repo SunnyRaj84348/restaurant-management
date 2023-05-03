@@ -46,7 +46,11 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="roleCBox" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="roleCBox" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                              <Component id="newRoleButton" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="idSearchField" min="-2" pref="187" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -95,6 +99,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="roleLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="roleCBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="newRoleButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -236,6 +241,9 @@
           </StringArray>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="roleCBoxFocusGained"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
@@ -316,6 +324,14 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="idField">
+    </Component>
+    <Component class="javax.swing.JButton" name="newRoleButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="New Role"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newRoleButtonActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
