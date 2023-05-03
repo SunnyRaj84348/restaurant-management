@@ -2,6 +2,8 @@ package restaurant.management.forms;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import restaurant.management.models.Database;
 
 public class EmployeeForm extends javax.swing.JFrame {
@@ -84,6 +86,11 @@ public class EmployeeForm extends javax.swing.JFrame {
         idSearchLabel.setText("Employee's ID");
 
         findButton.setText("Find");
+        findButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                findButtonActionPerformed(evt);
+            }
+        });
 
         roleLabel.setText("Role");
 
@@ -215,6 +222,42 @@ public class EmployeeForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void findButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findButtonActionPerformed
+        try {
+            var tableModel = (DefaultTableModel) empTable.getModel();
+            var tableVector = tableModel.getDataVector();
+
+            var empID = Integer.parseInt(idSearchField.getText());
+
+            // return if data already exists in table
+            for (int i = 0; i < tableVector.size(); i++) {
+                if (tableVector.elementAt(i).elementAt(0).equals(empID)) {
+                    return;
+                }
+            }
+
+            var db = new Database();
+            var empDetails = db.getEmployeeDetails(empID);
+
+            if (empDetails == null) {
+                JOptionPane.showMessageDialog(this, "Employee not founded");
+                return;
+            }
+
+            var empRole = db.getEmployeeRole(empDetails.employeeID);
+
+            tableModel.addRow(new Object[]{
+                empDetails.employeeID, empRole.roleName, empDetails.employeeName, empDetails.employeePhone,
+                empDetails.employeeAddress, empDetails.employeeSalary
+            });
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Employee not founded");
+        }
+    }//GEN-LAST:event_findButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;

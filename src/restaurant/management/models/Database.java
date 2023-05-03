@@ -62,4 +62,25 @@ public class Database {
 
         return EmpRoleList;
     }
+
+    public EmployeeModel getEmployeeDetails(int employeeID) throws SQLException {
+        var stmt = con.prepareStatement(
+                "SELECT * FROM employee WHERE emp_id = ?"
+        );
+
+        stmt.setInt(1, employeeID);
+
+        var rs = stmt.executeQuery();
+
+        if (!rs.next()) {
+            return null;
+        }
+
+        var empDetails = new EmployeeModel(
+                rs.getInt(1), rs.getString(2), rs.getString(3),
+                rs.getString(4), rs.getInt(5), rs.getDouble(6)
+        );
+
+        return empDetails;
+    }
 }
