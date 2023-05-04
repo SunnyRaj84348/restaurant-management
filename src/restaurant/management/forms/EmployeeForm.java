@@ -1,6 +1,7 @@
 package restaurant.management.forms;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import java.math.BigInteger;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import javax.swing.JOptionPane;
@@ -71,10 +72,23 @@ public class EmployeeForm extends javax.swing.JFrame {
             }
         }
 
+        // Check phone number field length is correct
+        if ((phoneField.getText().length() != 10 && phoneField.getText().length() != 12)) {
+            JOptionPane.showMessageDialog(this, "Invalid phone number");
+            return false;
+        }
+
+        // Check salary field lies within range
+        if (salaryField.getText().length() > 10) {
+            JOptionPane.showMessageDialog(this, "Salary range too large");
+            return false;
+        }
+
         // Check if specified field's value is numeric
         try {
-            Integer.parseInt(phoneField.getText());
-            Integer.parseInt(salaryField.getText());
+            new BigInteger(phoneField.getText());
+            new BigInteger(salaryField.getText());
+
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Invalid value for phone or salary");
             return false;
