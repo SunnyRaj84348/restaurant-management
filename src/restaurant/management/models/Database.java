@@ -84,6 +84,24 @@ public class Database {
         return empDetails;
     }
 
+    public ArrayList<EmployeeModel> getAllEmployee() throws SQLException {
+        var stmt = con.prepareStatement(
+                "SELECT * FROM employee"
+        );
+
+        var rs = stmt.executeQuery();
+
+        var empList = new ArrayList<EmployeeModel>();
+        while (rs.next()) {
+            empList.add(new EmployeeModel(
+                    rs.getInt(1), rs.getString(2), rs.getString(3),
+                    rs.getString(4), rs.getInt(5), rs.getDouble(6))
+            );
+        }
+
+        return empList;
+    }
+
     public int getMaxEmployeeID() throws SQLException {
         var stmt = con.prepareStatement(
                 "SELECT emp_id FROM employee ORDER BY emp_id DESC LIMIT 1"

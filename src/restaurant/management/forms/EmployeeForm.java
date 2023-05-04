@@ -122,6 +122,7 @@ public class EmployeeForm extends javax.swing.JFrame {
         idLabel = new javax.swing.JLabel();
         idField = new javax.swing.JTextField();
         newRoleButton = new javax.swing.JButton();
+        showEmpButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -204,6 +205,13 @@ public class EmployeeForm extends javax.swing.JFrame {
             }
         });
 
+        showEmpButton.setText("Show All");
+        showEmpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showEmpButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -252,6 +260,8 @@ public class EmployeeForm extends javax.swing.JFrame {
                 .addComponent(updateButton)
                 .addGap(18, 18, 18)
                 .addComponent(removeButton)
+                .addGap(18, 18, 18)
+                .addComponent(showEmpButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -304,7 +314,8 @@ public class EmployeeForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addButton)
                     .addComponent(updateButton)
-                    .addComponent(removeButton))
+                    .addComponent(removeButton)
+                    .addComponent(showEmpButton))
                 .addGap(42, 42, 42))
         );
 
@@ -400,6 +411,33 @@ public class EmployeeForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_addButtonActionPerformed
 
+    private void showEmpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showEmpButtonActionPerformed
+        var tableModel = (DefaultTableModel) empTable.getModel();
+
+        // Clear table rows
+        tableModel.setRowCount(0);
+
+        try {
+            var db = new Database();
+            var empList = db.getAllEmployee();
+
+            if (empList.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No employee entry founded");
+                return;
+            }
+
+            for (var emp : empList) {
+                tableModel.addRow(new Object[]{
+                    emp.employeeID, db.getEmployeeRole(emp.employeeID).roleName, emp.employeeName,
+                    emp.employeePhone, emp.employeeAddress, emp.employeeSalary
+                });
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_showEmpButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JTextArea addressArea;
@@ -424,6 +462,7 @@ public class EmployeeForm extends javax.swing.JFrame {
     private javax.swing.JLabel roleLabel;
     private javax.swing.JTextField salaryField;
     private javax.swing.JLabel salaryLabel;
+    private javax.swing.JButton showEmpButton;
     private javax.swing.JButton updateButton;
     private javax.swing.JTextField userField;
     private javax.swing.JLabel userLabel;
