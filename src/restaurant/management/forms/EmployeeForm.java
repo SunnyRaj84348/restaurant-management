@@ -120,6 +120,11 @@ public class EmployeeForm extends javax.swing.JFrame {
                 roleCBoxFocusGained(evt);
             }
         });
+        roleCBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                roleCBoxActionPerformed(evt);
+            }
+        });
 
         passwordLabel.setText("Password");
 
@@ -310,6 +315,24 @@ public class EmployeeForm extends javax.swing.JFrame {
             roleName = null;
         }
     }//GEN-LAST:event_roleCBoxFocusGained
+
+    private void roleCBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roleCBoxActionPerformed
+        // Return if event triggered without mouse click
+        if (roleCBox.getSelectedItem() == null) {
+            return;
+        }
+
+        var role = roleCBox.getSelectedItem().toString();
+
+        // Enable/Disable fields based on employee's role
+        if (role.equals("Admin") || role.equals("Receptionist")) {
+            userField.setEnabled(true);
+            passwordField.setEnabled(true);
+        } else {
+            userField.setEnabled(false);
+            passwordField.setEnabled(false);
+        }
+    }//GEN-LAST:event_roleCBoxActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
