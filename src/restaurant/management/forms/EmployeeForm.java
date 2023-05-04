@@ -18,7 +18,6 @@ public class EmployeeForm extends javax.swing.JFrame {
 
         initComponents();
         addRoles();
-        setEmpID();
     }
 
     private void addRoles() {
@@ -31,22 +30,6 @@ public class EmployeeForm extends javax.swing.JFrame {
             empRoleList.forEach(role -> {
                 roleCBox.addItem(role.roleName);
             });
-
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void setEmpID() {
-        try {
-            var db = new Database();
-            var empID = db.getMaxEmployeeID();
-
-            if (empID != -1) {
-                idField.setText(String.valueOf(empID + 1));
-            } else {
-                idField.setText("1001");
-            }
 
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
