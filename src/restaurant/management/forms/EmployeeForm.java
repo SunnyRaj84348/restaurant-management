@@ -51,6 +51,37 @@ public class EmployeeForm extends javax.swing.JFrame {
         }
     }
 
+    private boolean validateData() {
+        // Check if specified fields are empty or contains whitespaces
+        if (nameField.getText().trim().isEmpty() || phoneField.getText().trim().isEmpty()
+                || addressArea.getText().trim().isEmpty() || salaryField.getText().trim().isEmpty()) {
+
+            JOptionPane.showMessageDialog(this, "One or more fields are empty");
+            return false;
+        }
+
+        // Check username and password field based on employee's role
+        if (roleCBox.getSelectedItem().equals("Admin")
+                || roleCBox.getSelectedItem().equals("Receptionist")) {
+
+            if (userField.getText().trim().isEmpty() || passwordField.getPassword().length == 0) {
+                JOptionPane.showMessageDialog(this, "One or more fields are empty");
+                return false;
+            }
+        }
+
+        // Check if specified field's value is numeric
+        try {
+            Integer.parseInt(phoneField.getText());
+            Integer.parseInt(salaryField.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid value for phone or salary");
+            return false;
+        }
+
+        return true;
+    }
+
     @SuppressWarnings("unchecked")
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
