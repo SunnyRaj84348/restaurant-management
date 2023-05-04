@@ -106,4 +106,25 @@ public class Database {
         stmt.setString(1, roleName);
         stmt.executeUpdate();
     }
+
+    public int insertEmployee(String empName, String empPhone, String empAddress, String empRole, String empSalary) throws SQLException {
+        var stmt = con.prepareStatement(
+                "INSERT INTO employee VALUES(DEFAULT, ?, ?, ?, (SELECT erole_id FROM employee_role WHERE erole_name = ?), ?)"
+        );
+
+        stmt.setString(1, empName);
+        stmt.setString(2, empPhone);
+        stmt.setString(3, empAddress);
+        stmt.setString(4, empRole);
+        stmt.setDouble(5, Double.parseDouble(empSalary));
+
+        stmt.executeUpdate();
+
+        stmt = con.prepareStatement("SELECT LAST_INSERT_ID()");
+
+        var rs = stmt.executeQuery();
+        rs.next();
+
+        return rs.getInt(1);
+    }
 }

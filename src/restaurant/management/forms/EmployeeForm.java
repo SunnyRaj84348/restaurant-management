@@ -2,6 +2,7 @@ package restaurant.management.forms;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import restaurant.management.models.Database;
@@ -174,6 +175,11 @@ public class EmployeeForm extends javax.swing.JFrame {
         jScrollPane2.setViewportView(addressArea);
 
         addButton.setText("Add");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
 
         removeButton.setText("Remove");
 
@@ -364,6 +370,26 @@ public class EmployeeForm extends javax.swing.JFrame {
             passwordField.setEnabled(false);
         }
     }//GEN-LAST:event_roleCBoxActionPerformed
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        if (!validateData()) {
+            return;
+        }
+
+        try {
+            var db = new Database();
+            var newEmpID = db.insertEmployee(nameField.getText(), phoneField.getText(),
+                    addressArea.getText(), roleCBox.getSelectedItem().toString(), salaryField.getText());
+
+            JOptionPane.showMessageDialog(this, "New employee's id = " + newEmpID);
+
+        } catch (SQLIntegrityConstraintViolationException e) {
+            JOptionPane.showMessageDialog(this, "Phone no. already exists");
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_addButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
