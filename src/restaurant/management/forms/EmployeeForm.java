@@ -97,6 +97,17 @@ public class EmployeeForm extends javax.swing.JFrame {
         return true;
     }
 
+    void clearData() {
+        idSearchField.setText("");
+        userField.setText("");
+        passwordField.setText("");
+        idField.setText("");
+        nameField.setText("");
+        phoneField.setText("");
+        addressArea.setText("");
+        salaryField.setText("");
+    }
+
     @SuppressWarnings("unchecked")
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -397,6 +408,7 @@ public class EmployeeForm extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "New employee's id = " + newEmpID);
 
+            clearData();
         } catch (SQLIntegrityConstraintViolationException e) {
             JOptionPane.showMessageDialog(this, "Phone no. already exists");
 
