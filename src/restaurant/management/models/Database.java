@@ -1,5 +1,6 @@
 package restaurant.management.models;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -10,8 +11,11 @@ public class Database {
     private Connection con;
 
     public Database() throws ClassNotFoundException, SQLException {
+        // Load .env variables
+        var dotenv = Dotenv.load();
+
         Class.forName("com.mysql.cj.jdbc.Driver");
-        con = DriverManager.getConnection("jdbc:mysql://localhost:3306", "user", "password");
+        con = DriverManager.getConnection(dotenv.get("DB_URL"), dotenv.get("USER"), dotenv.get("PASSWORD"));
     }
 
     public CredentialModel getCredentials(String username) throws SQLException {
