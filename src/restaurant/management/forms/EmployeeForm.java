@@ -67,13 +67,21 @@ public class EmployeeForm extends javax.swing.JFrame {
             return false;
         }
 
-        // Check if specified field's value is numeric
+        // Check if phone number is valid
         try {
             new BigInteger(phoneField.getText());
-            new BigInteger(salaryField.getText());
 
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Invalid value for phone or salary");
+            JOptionPane.showMessageDialog(this, "Invalid phone number");
+            return false;
+        }
+
+        // Check if salary value is valid
+        try {
+            Double.parseDouble(salaryField.getText());
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid value for salary");
             return false;
         }
 
