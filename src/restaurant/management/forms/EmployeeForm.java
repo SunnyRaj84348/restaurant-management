@@ -330,13 +330,6 @@ public class EmployeeForm extends javax.swing.JFrame {
 
             var empID = Integer.parseInt(idSearchField.getText());
 
-            // return if data already exists in table
-            for (int i = 0; i < tableVector.size(); i++) {
-                if (tableVector.elementAt(i).elementAt(0).equals(empID)) {
-                    return;
-                }
-            }
-
             var db = new Database();
             var empDetails = db.getEmployeeDetails(empID);
 
@@ -346,6 +339,9 @@ public class EmployeeForm extends javax.swing.JFrame {
             }
 
             var empRole = db.getEmployeeRole(empDetails.employeeID);
+
+            // Clear table rows
+            tableModel.setRowCount(0);
 
             tableModel.addRow(new Object[]{
                 empDetails.employeeID, empRole.roleName, empDetails.employeeName, empDetails.employeePhone,
