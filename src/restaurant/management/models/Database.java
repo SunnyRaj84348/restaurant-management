@@ -149,4 +149,16 @@ public class Database {
 
         return rs.getInt(1);
     }
+
+    public void insertCredentials(int empID, String username, String password) throws SQLException {
+        var stmt = con.prepareStatement(
+                "INSERT INTO credential VALUES(?, ?, ?)"
+        );
+
+        stmt.setInt(1, empID);
+        stmt.setString(2, username);
+        stmt.setString(3, password);
+
+        stmt.executeUpdate();
+    }
 }

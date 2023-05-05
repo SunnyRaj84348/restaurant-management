@@ -396,9 +396,16 @@ public class EmployeeForm extends javax.swing.JFrame {
         }
 
         try {
+            var role = roleCBox.getSelectedItem().toString();
+
             var db = new Database();
+
             var newEmpID = db.insertEmployee(nameField.getText(), phoneField.getText(),
-                    addressArea.getText(), roleCBox.getSelectedItem().toString(), salaryField.getText());
+                    addressArea.getText(), role, salaryField.getText());
+
+            if (role.equals("Admin") || role.equals("Receptionist")) {
+                db.insertCredentials(newEmpID, userField.getText(), String.valueOf(passwordField.getPassword()));
+            }
 
             JOptionPane.showMessageDialog(this, "New employee's id = " + newEmpID);
 
