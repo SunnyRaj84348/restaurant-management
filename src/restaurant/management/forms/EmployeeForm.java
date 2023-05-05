@@ -142,6 +142,11 @@ public class EmployeeForm extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        empTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                empTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(empTable);
 
         idSearchLabel.setText("Employee's ID");
@@ -440,6 +445,41 @@ public class EmployeeForm extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_showEmpButtonActionPerformed
+
+    private void empTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_empTableMouseClicked
+        var row = empTable.getSelectedRow();
+
+        var tableModel = (DefaultTableModel) empTable.getModel();
+        var tableVector = tableModel.getDataVector();
+
+        idField.setText(tableVector.elementAt(row).elementAt(0).toString());
+        roleCBox.setSelectedItem(tableVector.elementAt(row).elementAt(1));
+        nameField.setText(tableVector.elementAt(row).elementAt(2).toString());
+        phoneField.setText(tableVector.elementAt(row).elementAt(3).toString());
+        addressArea.setText(tableVector.elementAt(row).elementAt(4).toString());
+        salaryField.setText(tableVector.elementAt(row).elementAt(5).toString());
+
+        idSearchField.setText("");
+        userField.setText("");
+        passwordField.setText("");
+
+        var role = roleCBox.getSelectedItem().toString();
+
+        // set username field only if role is either admin or receptionist
+        if (role.equals("Admin") || role.equals("Receptionist")) {
+            try {
+                var empID = Integer.parseInt(tableVector.elementAt(row).elementAt(0).toString());
+
+                var db = new Database();
+                var creds = db.getCredentials(empID);
+
+                userField.setText(creds.username);
+
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_empTableMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;

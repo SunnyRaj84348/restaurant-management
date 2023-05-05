@@ -35,6 +35,21 @@ public class Database {
         return creds;
     }
 
+    public CredentialModel getCredentials(int employeeID) throws SQLException {
+        var stmt = con.prepareStatement(
+                "SELECT * FROM credential WHERE emp_id = ?"
+        );
+
+        stmt.setInt(1, employeeID);
+
+        var rs = stmt.executeQuery();
+
+        rs.next();
+
+        var creds = new CredentialModel(rs.getInt(1), rs.getString(2), rs.getString(3));
+        return creds;
+    }
+
     public EmployeeRoleModel getEmployeeRole(int employeeID) throws SQLException {
         var stmt = con.prepareStatement(
                 "SELECT employee_role.erole_id, employee_role.erole_name FROM employee "
