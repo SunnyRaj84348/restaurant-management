@@ -409,6 +409,15 @@ public class EmployeeForm extends javax.swing.JFrame {
 
             var db = new Database();
 
+            if (role.equals("Admin") || role.equals("Receptionist")) {
+                var creds = db.getCredentials(userField.getText());
+
+                if (creds != null) {
+                    JOptionPane.showMessageDialog(this, "Username already exists");
+                    return;
+                }
+            }
+
             var newEmpID = db.insertEmployee(nameField.getText(), phoneField.getText(),
                     addressArea.getText(), role, salaryField.getText());
 
@@ -419,6 +428,7 @@ public class EmployeeForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "New employee's id = " + newEmpID);
 
             clearData();
+
         } catch (SQLIntegrityConstraintViolationException e) {
             JOptionPane.showMessageDialog(this, "Phone no. already exists");
 
