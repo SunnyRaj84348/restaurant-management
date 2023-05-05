@@ -222,6 +222,11 @@ public class EmployeeForm extends javax.swing.JFrame {
         });
 
         removeButton.setText("Remove");
+        removeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeButtonActionPerformed(evt);
+            }
+        });
 
         updateButton.setText("Update");
         updateButton.addActionListener(new java.awt.event.ActionListener() {
@@ -600,6 +605,36 @@ public class EmployeeForm extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_updateButtonActionPerformed
+
+    private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
+        if (idField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Select employee row before deleting");
+            return;
+        }
+
+        try {
+            var db = new Database();
+            var empID = Integer.parseInt(idField.getText());
+
+            if (roleCBox.getSelectedItem().equals("Admin") || roleCBox.getSelectedItem().equals("Admin")) {
+                db.deleteCredentials(empID);
+            }
+
+            db.removeEmployee(empID);
+
+            var tableRow = empTable.getSelectedRow();
+            var tableModel = (DefaultTableModel) empTable.getModel();
+
+            tableModel.removeRow(tableRow);
+
+            JOptionPane.showMessageDialog(this, "Deleted successfully");
+
+            clearData();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_removeButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
