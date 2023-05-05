@@ -106,7 +106,7 @@ public class EmployeeForm extends javax.swing.JFrame {
         return true;
     }
 
-    void clearData() {
+    void clearFields() {
         idSearchField.setText("");
         userField.setText("");
         passwordField.setText("");
@@ -455,7 +455,7 @@ public class EmployeeForm extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "New employee's id = " + newEmpID);
 
-            clearData();
+            clearFields();
 
         } catch (SQLIntegrityConstraintViolationException e) {
             JOptionPane.showMessageDialog(this, "Phone no. already exists");
@@ -596,7 +596,7 @@ public class EmployeeForm extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "Data updated successfully");
 
-            clearData();
+            clearFields();
 
         } catch (SQLIntegrityConstraintViolationException e) {
             JOptionPane.showMessageDialog(this, "Phone number already exists");
@@ -629,7 +629,7 @@ public class EmployeeForm extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "Deleted successfully");
 
-            clearData();
+            clearFields();
 
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
