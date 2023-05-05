@@ -3,6 +3,7 @@ package restaurant.management.models;
 import io.github.cdimascio.dotenv.Dotenv;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -174,6 +175,56 @@ public class Database {
         stmt.setString(2, username);
         stmt.setString(3, password);
 
+        stmt.executeUpdate();
+    }
+
+    public void updateCredentials(int empID, String username, String password) throws SQLException {
+        PreparedStatement stmt = null;
+
+        if (!password.isEmpty()) {
+            stmt = con.prepareStatement(
+                    "UPDATE credential SET username = ?, password = ? WHERE emp_id = ?"
+            );
+
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            stmt.setInt(3, empID);
+
+        } else {
+            stmt = con.prepareStatement(
+                    "UPDATE credential SET username = ? WHERE emp_id = ?"
+            );
+
+            stmt.setString(1, username);
+            stmt.setInt(2, empID);
+        }
+
+        stmt.executeUpdate();
+    }
+
+    public void updateEmployee(int empID, String empName, String empPhone, String empAddress, String empRole, double empSalary) throws SQLException {
+        var stmt = con.prepareStatement(
+                "UPDATE employee SET emp_name = ?, emp_phone = ?, emp_address = ?,"
+                + " emp_role = (SELECT erole_id FROM employee_role WHERE erole_name = ?), emp_salary = ?"
+                + " WHERE emp_id = ?"
+        );
+
+        stmt.setString(1, empName);
+        stmt.setString(2, empPhone);
+        stmt.setString(3, empAddress);
+        stmt.setString(4, empRole);
+        stmt.setDouble(5, empSalary);
+        stmt.setInt(6, empID);
+
+        stmt.executeUpdate();
+    }
+
+    public void deleteCredentials(int empID) throws SQLException {
+        var stmt = con.prepareStatement(
+                "DELETE FROM credential WHERE emp_id = ?"
+        );
+
+        stmt.setInt(1, empID);
         stmt.executeUpdate();
     }
 }

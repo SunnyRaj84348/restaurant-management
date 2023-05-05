@@ -36,15 +36,7 @@ public class EmployeeForm extends javax.swing.JFrame {
         }
     }
 
-    private boolean validateData() {
-        // Check if specified fields are empty or contains whitespaces
-        if (nameField.getText().trim().isEmpty() || phoneField.getText().trim().isEmpty()
-                || addressArea.getText().trim().isEmpty() || salaryField.getText().trim().isEmpty()) {
-
-            JOptionPane.showMessageDialog(this, "One or more fields are empty");
-            return false;
-        }
-
+    private boolean validateInsertData() {
         // Check username and password field based on employee's role
         if (roleCBox.getSelectedItem().equals("Admin")
                 || roleCBox.getSelectedItem().equals("Receptionist")) {
@@ -53,6 +45,32 @@ public class EmployeeForm extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "One or more fields are empty");
                 return false;
             }
+        }
+
+        return true;
+    }
+
+    private boolean validateUpdateData() {
+        // Check username field based on employee's role
+        if (roleCBox.getSelectedItem().equals("Admin")
+                || roleCBox.getSelectedItem().equals("Receptionist")) {
+
+            if (userField.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "One or more fields are empty");
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean validateData() {
+        // Check if specified fields are empty or contains whitespaces
+        if (nameField.getText().trim().isEmpty() || phoneField.getText().trim().isEmpty()
+                || addressArea.getText().trim().isEmpty() || salaryField.getText().trim().isEmpty()) {
+
+            JOptionPane.showMessageDialog(this, "One or more fields are empty");
+            return false;
         }
 
         // Check phone number field length is correct
@@ -206,6 +224,11 @@ public class EmployeeForm extends javax.swing.JFrame {
         removeButton.setText("Remove");
 
         updateButton.setText("Update");
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateButtonActionPerformed(evt);
+            }
+        });
 
         idLabel.setText("ID");
 
@@ -400,7 +423,7 @@ public class EmployeeForm extends javax.swing.JFrame {
     }//GEN-LAST:event_roleCBoxActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        if (!validateData()) {
+        if (!validateData() || !validateInsertData()) {
             return;
         }
 
@@ -498,6 +521,85 @@ public class EmployeeForm extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_empTableMouseClicked
+
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        if (!validateData() || !validateUpdateData()) {
+            return;
+        }
+
+        try {
+            var db = new Database();
+
+            var empID = Integer.parseInt(idField.getText());
+            var role = roleCBox.getSelectedItem().toString();
+            var currentRole = db.getEmployeeRole(empID);
+
+            var credExists = false;
+
+            // Check new role 
+            if (role.equals("Admin") || role.equals("Receptionist")) {
+
+                // Check existing role
+                if (currentRole.roleName.equals("Admin") || currentRole.roleName.equals("Receptionist")) {
+                    var creds = db.getCredentials(empID);
+
+                    // Check if username field is modified
+                    if (!userField.getText().equals(creds.username)) {
+                        var otherUserCreds = db.getCredentials(userField.getText());
+
+                        // Check if specified username already exists
+                        if (otherUserCreds != null) {
+                            JOptionPane.showMessageDialog(this, "Username already exists");
+                            return;
+                        }
+                    }
+
+                    // Set status to true as credential is available already
+                    credExists = true;
+
+                } else if (String.valueOf(passwordField.getPassword()).trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Invalid password format");
+                    return;
+                }
+            }
+
+            // Update specified employee details
+            db.updateEmployee(empID, nameField.getText(), phoneField.getText(),
+                    addressArea.getText(), role, Double.parseDouble(salaryField.getText()));
+
+            if (role.equals("Admin") || role.equals("Receptionist")) {
+
+                if (credExists) {
+                    db.updateCredentials(empID, userField.getText(), String.valueOf(passwordField.getPassword()));
+                } else {
+                    db.insertCredentials(empID, userField.getText(), String.valueOf(passwordField.getPassword()));
+                }
+
+            } else if (currentRole.roleName.equals("Admin") || currentRole.roleName.equals("Receptionist")) {
+                db.deleteCredentials(empID);
+            }
+
+            var tableRow = empTable.getSelectedRow();
+            var tableModel = (DefaultTableModel) empTable.getModel();
+
+            tableModel.setValueAt(idField.getText(), tableRow, 0);
+            tableModel.setValueAt(roleCBox.getSelectedItem(), tableRow, 1);
+            tableModel.setValueAt(nameField.getText(), tableRow, 2);
+            tableModel.setValueAt(phoneField.getText(), tableRow, 3);
+            tableModel.setValueAt(addressArea.getText(), tableRow, 4);
+            tableModel.setValueAt(salaryField.getText(), tableRow, 5);
+
+            JOptionPane.showMessageDialog(this, "Data updated successfully");
+
+            clearData();
+
+        } catch (SQLIntegrityConstraintViolationException e) {
+            JOptionPane.showMessageDialog(this, "Phone number already exists");
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_updateButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
