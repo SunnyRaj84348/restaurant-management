@@ -141,6 +141,24 @@ public class Database {
         return -1;
     }
 
+    public ArrayList<ItemCategoryModel> getItemCategories() throws SQLException {
+        var stmt = con.prepareStatement(
+                "SELECT category_id, category_name, category_type.ctype_name FROM item_category "
+                + "INNER JOIN category_type ON item_category.category_type = category_type.ctype_id "
+        );
+
+        var rs = stmt.executeQuery();
+        var itemCategoryList = new ArrayList<ItemCategoryModel>();
+
+        while (rs.next()) {
+            itemCategoryList.add(new ItemCategoryModel(
+                    rs.getInt(1), rs.getString(2), rs.getString(3)
+            ));
+        }
+
+        return itemCategoryList;
+    }
+
     public void setRole(String roleName) throws SQLException {
         var stmt = con.prepareStatement(
                 "INSERT INTO employee_role VALUES(DEFAULT, ?)"
