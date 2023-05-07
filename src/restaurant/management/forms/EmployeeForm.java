@@ -556,6 +556,11 @@ public class EmployeeForm extends javax.swing.JFrame {
     }//GEN-LAST:event_empTableMouseClicked
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        if (idField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Select employee row before updating");
+            return;
+        }
+
         if (!validateData() || !validateUpdateData()) {
             return;
         }
