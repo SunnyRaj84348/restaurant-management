@@ -85,7 +85,10 @@ public class Database {
 
     public EmployeeModel getEmployeeDetails(int employeeID) throws SQLException {
         var stmt = con.prepareStatement(
-                "SELECT * FROM employee WHERE emp_id = ?"
+                "SELECT emp_id, emp_name, emp_phone, emp_address, employee_role.erole_name, emp_salary "
+                + "FROM employee INNER JOIN employee_role "
+                + "ON employee.emp_role = employee_role.erole_id "
+                + "WHERE emp_id = ?"
         );
 
         stmt.setInt(1, employeeID);
@@ -98,7 +101,7 @@ public class Database {
 
         var empDetails = new EmployeeModel(
                 rs.getInt(1), rs.getString(2), rs.getString(3),
-                rs.getString(4), rs.getInt(5), rs.getDouble(6)
+                rs.getString(4), rs.getString(5), rs.getDouble(6)
         );
 
         return empDetails;
@@ -106,7 +109,9 @@ public class Database {
 
     public ArrayList<EmployeeModel> getAllEmployee() throws SQLException {
         var stmt = con.prepareStatement(
-                "SELECT * FROM employee"
+                "SELECT emp_id, emp_name, emp_phone, emp_address, employee_role.erole_name, emp_salary "
+                + "FROM employee INNER JOIN employee_role "
+                + "ON employee.emp_role = employee_role.erole_id"
         );
 
         var rs = stmt.executeQuery();
@@ -115,7 +120,7 @@ public class Database {
         while (rs.next()) {
             empList.add(new EmployeeModel(
                     rs.getInt(1), rs.getString(2), rs.getString(3),
-                    rs.getString(4), rs.getInt(5), rs.getDouble(6))
+                    rs.getString(4), rs.getString(5), rs.getDouble(6))
             );
         }
 

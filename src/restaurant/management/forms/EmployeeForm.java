@@ -416,13 +416,11 @@ public class EmployeeForm extends javax.swing.JFrame {
                 return;
             }
 
-            var empRole = db.getEmployeeRole(empDetails.employeeID);
-
             // Clear table rows
             tableModel.setRowCount(0);
 
             tableModel.addRow(new Object[]{
-                empDetails.employeeID, empRole.roleName, empDetails.employeeName, empDetails.employeePhone,
+                empDetails.employeeID, empDetails.employeeRole, empDetails.employeeName, empDetails.employeePhone,
                 empDetails.employeeAddress, empDetails.employeeSalary
             });
 
@@ -512,7 +510,7 @@ public class EmployeeForm extends javax.swing.JFrame {
 
             for (var emp : empList) {
                 tableModel.addRow(new Object[]{
-                    emp.employeeID, db.getEmployeeRole(emp.employeeID).roleName, emp.employeeName,
+                    emp.employeeID, emp.employeeRole, emp.employeeName,
                     emp.employeePhone, emp.employeeAddress, emp.employeeSalary
                 });
             }

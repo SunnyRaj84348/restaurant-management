@@ -4,13 +4,13 @@ public class ItemModel {
 
     public int itemID;
     public String itemName;
-    public int itemTypeID;
+    public int itemCategoryID;
     public double itemPrice;
 
-    public ItemModel(int itemID, String itemName, int itemTypeID, double itemPrice) {
+    public ItemModel(int itemID, String itemName, int itemCategoryID, double itemPrice) {
         this.itemID = itemID;
         this.itemName = itemName;
-        this.itemTypeID = itemTypeID;
+        this.itemCategoryID = itemCategoryID;
         this.itemPrice = itemPrice;
     }
 

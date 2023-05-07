@@ -6,17 +6,17 @@ public class EmployeeModel {
     public String employeeName;
     public String employeePhone;
     public String employeeAddress;
-    public int employeeRoleID;
+    public String employeeRole;
     public double employeeSalary;
 
     public EmployeeModel(int employeeID, String employeeName, String employeePhone,
-            String employeeAddress, int employeeRoleID, double employeeSalary) {
+            String employeeAddress, String employeeRole, double employeeSalary) {
 
         this.employeeID = employeeID;
         this.employeeName = employeeName;
         this.employeePhone = employeePhone;
         this.employeeAddress = employeeAddress;
-        this.employeeRoleID = employeeRoleID;
+        this.employeeRole = employeeRole;
         this.employeeSalary = employeeSalary;
     }
 
