@@ -65,6 +65,11 @@ public class EmployeeForm extends javax.swing.JFrame {
     }
 
     private boolean validateData() {
+        if (roleCBox.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Select employee's role");
+            return false;
+        }
+
         // Check if specified fields are empty or contains whitespaces
         if (nameField.getText().trim().isEmpty() || phoneField.getText().trim().isEmpty()
                 || addressArea.getText().trim().isEmpty() || salaryField.getText().trim().isEmpty()) {
