@@ -3,14 +3,14 @@ package restaurant.management.forms;
 import com.formdev.flatlaf.FlatDarkLaf;
 
 public class AdminForm extends javax.swing.JFrame {
-    
+
     public AdminForm() {
         // Set FlatLaf Dark theme
         FlatDarkLaf.setup();
-        
+
         initComponents();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -28,6 +28,11 @@ public class AdminForm extends javax.swing.JFrame {
         });
 
         itemsButton.setText("Manage Dish Items");
+        itemsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemsButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -59,6 +64,12 @@ public class AdminForm extends javax.swing.JFrame {
         employeeForm.setVisible(true);
         employeeForm.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_empButtonActionPerformed
+
+    private void itemsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemsButtonActionPerformed
+        var itemsForm = new ItemsForm();
+        itemsForm.setVisible(true);
+        itemsForm.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }//GEN-LAST:event_itemsButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton empButton;
