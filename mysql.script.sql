@@ -1,15 +1,23 @@
-CREATE TABLE item_type (
-	itype_id INT PRIMARY KEY AUTO_INCREMENT,
-	itype_name VARCHAR(50) UNIQUE
+CREATE TABLE category_type (
+	ctype_id INT PRIMARY KEY AUTO_INCREMENT,
+	ctype_name VARCHAR(50) UNIQUE
+);
+
+CREATE TABLE item_category (
+	category_id INT PRIMARY KEY AUTO_INCREMENT,
+	category_name VARCHAR(50) UNIQUE,
+	category_type INT,
+	
+	FOREIGN KEY(category_type) REFERENCES category_type(ctype_id)
 );
 
 CREATE TABLE item (
 	item_id INT PRIMARY KEY AUTO_INCREMENT,
 	item_name VARCHAR(50) UNIQUE,
-	item_type INT,
+	item_category INT,
 	item_price DECIMAL(6, 2),
 	
-	FOREIGN KEY(item_type) REFERENCES item_type(itype_id)
+	FOREIGN KEY(item_category) REFERENCES item_category(category_id)
 );
 
 CREATE TABLE employee_role (
@@ -83,3 +91,7 @@ INSERT INTO credential VALUES (
 	'admin',
 	'12345'
 );
+
+INSERT INTO category_type VALUES
+(DEFAULT, 'Veg'),
+(DEFAULT, 'Non-Veg');
