@@ -183,6 +183,18 @@ public class Database {
         stmt.executeUpdate();
     }
 
+    public void insertItemCategory(String categoryName, String categoryType) throws SQLException {
+        var stmt = con.prepareStatement(
+                "INSERT INTO item_category VALUES"
+                + "(DEFAULT, ?, (SELECT ctype_id FROM category_type WHERE ctype_name = ?))"
+        );
+
+        stmt.setString(1, categoryName);
+        stmt.setString(2, categoryType);
+
+        stmt.executeUpdate();
+    }
+
     public void updateCredentials(int empID, String username, String password) throws SQLException {
         PreparedStatement stmt = null;
 

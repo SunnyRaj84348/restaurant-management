@@ -47,6 +47,11 @@ public class ItemsForm extends javax.swing.JFrame {
         categoryCBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         newCategoryButton.setText("New Category");
+        newCategoryButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newCategoryButtonActionPerformed(evt);
+            }
+        });
 
         idLabel.setText("ID");
 
@@ -129,8 +134,7 @@ public class ItemsForm extends javax.swing.JFrame {
                                 .addGap(40, 40, 40)
                                 .addComponent(showItemsButton)
                                 .addGap(42, 42, 42)
-                                .addComponent(clearButton)
-                                .addGap(42, 42, 42)))))
+                                .addComponent(clearButton)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -186,6 +190,12 @@ public class ItemsForm extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void newCategoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newCategoryButtonActionPerformed
+        var categoryForm = new ItemCategoryForm();
+        categoryForm.setVisible(true);
+        categoryForm.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }//GEN-LAST:event_newCategoryButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
