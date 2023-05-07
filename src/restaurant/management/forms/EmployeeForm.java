@@ -10,7 +10,7 @@ import restaurant.management.models.Database;
 
 public class EmployeeForm extends javax.swing.JFrame {
 
-    static String roleName;
+    static String newRoleName;
 
     public EmployeeForm() {
         // Set FlatLaf Dark theme
@@ -189,9 +189,13 @@ public class EmployeeForm extends javax.swing.JFrame {
         roleLabel.setText("Role");
 
         roleCBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        roleCBox.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                roleCBoxFocusGained(evt);
+        roleCBox.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+                roleCBoxPopupMenuWillBecomeVisible(evt);
             }
         });
         roleCBox.addActionListener(new java.awt.event.ActionListener() {
@@ -430,13 +434,6 @@ public class EmployeeForm extends javax.swing.JFrame {
         roleForm.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_newRoleButtonActionPerformed
 
-    private void roleCBoxFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_roleCBoxFocusGained
-        if (roleName != null) {
-            roleCBox.addItem(roleName);
-            roleName = null;
-        }
-    }//GEN-LAST:event_roleCBoxFocusGained
-
     private void roleCBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roleCBoxActionPerformed
         // Return if event triggered without mouse click
         if (roleCBox.getSelectedItem() == null) {
@@ -672,6 +669,13 @@ public class EmployeeForm extends javax.swing.JFrame {
         var tableModel = (DefaultTableModel) empTable.getModel();
         tableModel.setRowCount(0);
     }//GEN-LAST:event_clearTableButtonActionPerformed
+
+    private void roleCBoxPopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_roleCBoxPopupMenuWillBecomeVisible
+        if (newRoleName != null) {
+            roleCBox.addItem(newRoleName);
+            newRoleName = null;
+        }
+    }//GEN-LAST:event_roleCBoxPopupMenuWillBecomeVisible
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;

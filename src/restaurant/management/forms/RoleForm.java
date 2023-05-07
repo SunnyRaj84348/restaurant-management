@@ -70,7 +70,7 @@ public class RoleForm extends javax.swing.JFrame {
             var db = new Database();
             db.setRole(roleField.getText());
 
-            EmployeeForm.roleName = roleField.getText();
+            EmployeeForm.newRoleName = roleField.getText();
             JOptionPane.showMessageDialog(this, "Role added");
 
         } catch (SQLIntegrityConstraintViolationException e) {
