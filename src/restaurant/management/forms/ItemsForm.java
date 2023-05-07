@@ -4,6 +4,8 @@ import com.formdev.flatlaf.FlatDarkLaf;
 
 public class ItemsForm extends javax.swing.JFrame {
 
+    static String newItemcategory;
+
     public ItemsForm() {
         // Set FlatLaf Dark theme
         FlatDarkLaf.setup();
@@ -45,6 +47,15 @@ public class ItemsForm extends javax.swing.JFrame {
         categoryLabel.setText("Category");
 
         categoryCBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        categoryCBox.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+                categoryCBoxPopupMenuWillBecomeVisible(evt);
+            }
+        });
 
         newCategoryButton.setText("New Category");
         newCategoryButton.addActionListener(new java.awt.event.ActionListener() {
@@ -196,6 +207,13 @@ public class ItemsForm extends javax.swing.JFrame {
         categoryForm.setVisible(true);
         categoryForm.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_newCategoryButtonActionPerformed
+
+    private void categoryCBoxPopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_categoryCBoxPopupMenuWillBecomeVisible
+        if (newItemcategory != null) {
+            categoryCBox.addItem(newItemcategory);
+            newItemcategory = null;
+        }
+    }//GEN-LAST:event_categoryCBoxPopupMenuWillBecomeVisible
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
