@@ -569,30 +569,29 @@ public class EmployeeForm extends javax.swing.JFrame {
 
             var credExists = false;
 
+            // Check existing role
+            if (currentRole.roleName.equals("Admin") || currentRole.roleName.equals("Receptionist")) {
+                // Set status to true as credential is available already
+                credExists = true;
+            }
+
             // Check new role 
             if (role.equals("Admin") || role.equals("Receptionist")) {
 
-                // Check existing role
-                if (currentRole.roleName.equals("Admin") || currentRole.roleName.equals("Receptionist")) {
-                    var creds = db.getCredentials(empID);
+                var otherUserCreds = db.getCredentials(userField.getText());
 
-                    // Check if username field is modified
-                    if (!userField.getText().equals(creds.username)) {
-                        var otherUserCreds = db.getCredentials(userField.getText());
-
-                        // Check if specified username already exists
-                        if (otherUserCreds != null) {
-                            JOptionPane.showMessageDialog(this, "Username already exists");
-                            return;
-                        }
-                    }
-
-                    // Set status to true as credential is available already
-                    credExists = true;
-
-                } else if (String.valueOf(passwordField.getPassword()).trim().isEmpty()) {
-                    JOptionPane.showMessageDialog(this, "Invalid password format");
+                // Check if specified username already exists
+                if (otherUserCreds != null && empID != otherUserCreds.employeeID) {
+                    JOptionPane.showMessageDialog(this, "Username already exists");
                     return;
+                }
+
+                if (!credExists) {
+                    // Validate password field for new credential
+                    if (String.valueOf(passwordField.getPassword()).trim().isEmpty()) {
+                        JOptionPane.showMessageDialog(this, "Invalid password format");
+                        return;
+                    }
                 }
             }
 
@@ -608,7 +607,7 @@ public class EmployeeForm extends javax.swing.JFrame {
                     db.insertCredentials(empID, userField.getText(), String.valueOf(passwordField.getPassword()));
                 }
 
-            } else if (currentRole.roleName.equals("Admin") || currentRole.roleName.equals("Receptionist")) {
+            } else if (credExists) {
                 db.deleteCredentials(empID);
             }
 
