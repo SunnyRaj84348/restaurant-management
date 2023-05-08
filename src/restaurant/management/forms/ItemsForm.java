@@ -4,6 +4,7 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import restaurant.management.models.Database;
 
 public class ItemsForm extends javax.swing.JFrame {
@@ -154,6 +155,11 @@ public class ItemsForm extends javax.swing.JFrame {
         removeButton.setText("Remove");
 
         showItemsButton.setText("Show All");
+        showItemsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showItemsButtonActionPerformed(evt);
+            }
+        });
 
         clearButton.setText("Clear");
 
@@ -296,6 +302,34 @@ public class ItemsForm extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_addButtonActionPerformed
+
+    private void showItemsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showItemsButtonActionPerformed
+        var tableModel = (DefaultTableModel) itemsTable.getModel();
+
+        // Clear table rows
+        tableModel.setRowCount(0);
+
+        try {
+            var db = new Database();
+
+            var itemList = db.getItems();
+
+            if (itemList.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No item entry founded");
+                return;
+            }
+
+            for (var item : itemList) {
+                tableModel.addRow(new Object[]{
+                    item.itemID, db.getCategory(item.itemCategoryID).itemCategoryName, item.itemName, item.itemPrice
+                });
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }//GEN-LAST:event_showItemsButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
