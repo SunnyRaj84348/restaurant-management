@@ -130,11 +130,11 @@ public class ItemsForm extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Category", "Name", "Price"
+                "ID", "Category", "Type", "Name", "Price"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -216,14 +216,14 @@ public class ItemsForm extends javax.swing.JFrame {
                                 .addComponent(showItemsButton)
                                 .addGap(42, 42, 42)
                                 .addComponent(clearButton)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 561, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(clearTableButton)
-                        .addGap(248, 248, 248))))
+                        .addGap(248, 248, 248))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -326,7 +326,8 @@ public class ItemsForm extends javax.swing.JFrame {
 
             for (var item : itemList) {
                 tableModel.addRow(new Object[]{
-                    item.itemID, db.getCategory(item.itemCategoryID).itemCategoryName, item.itemName, item.itemPrice
+                    item.itemID, db.getCategory(item.itemCategoryID).itemCategoryName,
+                    db.getCategory(item.itemCategoryID).itemCategoryType, item.itemName, item.itemPrice
                 });
             }
 
@@ -344,8 +345,8 @@ public class ItemsForm extends javax.swing.JFrame {
 
         categoryCBox.setSelectedItem(arr.elementAt(selectedRow).elementAt(1));
         idField.setText(arr.elementAt(selectedRow).elementAt(0).toString());
-        nameField.setText(arr.elementAt(selectedRow).elementAt(2).toString());
-        priceField.setText(arr.elementAt(selectedRow).elementAt(3).toString());
+        nameField.setText(arr.elementAt(selectedRow).elementAt(3).toString());
+        priceField.setText(arr.elementAt(selectedRow).elementAt(4).toString());
     }//GEN-LAST:event_itemsTableMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
