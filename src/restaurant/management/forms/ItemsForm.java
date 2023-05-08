@@ -2,6 +2,8 @@ package restaurant.management.forms;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
+import javax.swing.JOptionPane;
 import restaurant.management.models.Database;
 
 public class ItemsForm extends javax.swing.JFrame {
@@ -30,6 +32,37 @@ public class ItemsForm extends javax.swing.JFrame {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean validateData() {
+        // Check if item category list is empty
+        if (categoryCBox.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Select item's category");
+            return false;
+        }
+
+        // Check if name field is empty or contains only whitespaces
+        if (nameField.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Provide item's name");
+            return false;
+        }
+
+        // Check if price format is invalid
+        try {
+            Double.parseDouble(priceField.getText());
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid value for price");
+            return false;
+        }
+
+        // Check if price range is too large
+        if (priceField.getText().length() > 6) {
+            JOptionPane.showMessageDialog(this, "Price range too large");
+            return false;
+        }
+
+        return true;
     }
 
     @SuppressWarnings("unchecked")
@@ -112,6 +145,11 @@ public class ItemsForm extends javax.swing.JFrame {
         updateButton.setText("Update");
 
         addButton.setText("Add");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
 
         removeButton.setText("Remove");
 
@@ -235,6 +273,29 @@ public class ItemsForm extends javax.swing.JFrame {
             newItemcategory = null;
         }
     }//GEN-LAST:event_categoryCBoxPopupMenuWillBecomeVisible
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        if (!validateData()) {
+            return;
+        }
+
+        try {
+            var db = new Database();
+
+            db.insertItem(
+                    nameField.getText(), categoryCBox.getSelectedItem().toString(),
+                    Double.parseDouble(priceField.getText())
+            );
+
+            JOptionPane.showMessageDialog(this, "Item added");
+
+        } catch (SQLIntegrityConstraintViolationException e) {
+            JOptionPane.showMessageDialog(this, "Item already exists");
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_addButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
