@@ -327,6 +327,8 @@ public class ItemsForm extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "Item added");
 
+            clearFields();
+
         } catch (SQLIntegrityConstraintViolationException e) {
             JOptionPane.showMessageDialog(this, "Item already exists");
 
@@ -403,6 +405,8 @@ public class ItemsForm extends javax.swing.JFrame {
             tableModel.setValueAt(priceField.getText(), selectedRow, 4);
 
             JOptionPane.showMessageDialog(this, "Item Updated");
+
+            clearFields();
 
         } catch (SQLIntegrityConstraintViolationException e) {
             JOptionPane.showMessageDialog(this, "Item already exists");
