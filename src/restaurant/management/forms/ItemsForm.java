@@ -5,33 +5,33 @@ import java.sql.SQLException;
 import restaurant.management.models.Database;
 
 public class ItemsForm extends javax.swing.JFrame {
-    
+
     static String newItemcategory;
-    
+
     public ItemsForm() {
         // Set FlatLaf Dark theme
         FlatDarkLaf.setup();
-        
+
         initComponents();
         addItemCategory();
     }
-    
+
     private void addItemCategory() {
         try {
             var db = new Database();
             var itemCategoryList = db.getItemCategories();
-            
+
             categoryCBox.removeAllItems();
-            
+
             itemCategoryList.forEach(category -> {
                 categoryCBox.addItem(category.itemCategoryName);
             });
-            
+
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -84,6 +84,8 @@ public class ItemsForm extends javax.swing.JFrame {
         });
 
         idLabel.setText("ID");
+
+        idField.setEnabled(false);
 
         nameLabel.setText("Name");
 
@@ -226,7 +228,7 @@ public class ItemsForm extends javax.swing.JFrame {
         categoryForm.setVisible(true);
         categoryForm.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_newCategoryButtonActionPerformed
-    
+
     private void categoryCBoxPopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_categoryCBoxPopupMenuWillBecomeVisible
         if (newItemcategory != null) {
             categoryCBox.addItem(newItemcategory);
