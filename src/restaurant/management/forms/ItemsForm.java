@@ -141,6 +141,11 @@ public class ItemsForm extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        itemsTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                itemsTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(itemsTable);
 
         updateButton.setText("Update");
@@ -330,6 +335,18 @@ public class ItemsForm extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_showItemsButtonActionPerformed
+
+    private void itemsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemsTableMouseClicked
+        var selectedRow = itemsTable.getSelectedRow();
+
+        var tableModel = (DefaultTableModel) itemsTable.getModel();
+        var arr = tableModel.getDataVector();
+
+        categoryCBox.setSelectedItem(arr.elementAt(selectedRow).elementAt(1));
+        idField.setText(arr.elementAt(selectedRow).elementAt(0).toString());
+        nameField.setText(arr.elementAt(selectedRow).elementAt(2).toString());
+        priceField.setText(arr.elementAt(selectedRow).elementAt(3).toString());
+    }//GEN-LAST:event_itemsTableMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
