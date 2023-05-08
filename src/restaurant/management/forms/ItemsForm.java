@@ -149,6 +149,11 @@ public class ItemsForm extends javax.swing.JFrame {
         jScrollPane1.setViewportView(itemsTable);
 
         updateButton.setText("Update");
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateButtonActionPerformed(evt);
+            }
+        });
 
         addButton.setText("Add");
         addButton.addActionListener(new java.awt.event.ActionListener() {
@@ -348,6 +353,42 @@ public class ItemsForm extends javax.swing.JFrame {
         nameField.setText(arr.elementAt(selectedRow).elementAt(3).toString());
         priceField.setText(arr.elementAt(selectedRow).elementAt(4).toString());
     }//GEN-LAST:event_itemsTableMouseClicked
+
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        if (idField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Select item row before updating");
+            return;
+        }
+
+        if (!validateData()) {
+            return;
+        }
+
+        try {
+            var db = new Database();
+
+            db.updateItem(
+                    Integer.parseInt(idField.getText()), nameField.getText(),
+                    categoryCBox.getSelectedItem().toString(), Double.parseDouble(priceField.getText())
+            );
+
+            var tableModel = (DefaultTableModel) itemsTable.getModel();
+            var selectedRow = itemsTable.getSelectedRow();
+
+            tableModel.setValueAt(categoryCBox.getSelectedItem(), selectedRow, 1);
+            tableModel.setValueAt(db.getCategory(categoryCBox.getSelectedItem().toString()).itemCategoryType, selectedRow, 2);
+            tableModel.setValueAt(nameField.getText(), selectedRow, 3);
+            tableModel.setValueAt(priceField.getText(), selectedRow, 4);
+
+            JOptionPane.showMessageDialog(this, "Item Updated");
+
+        } catch (SQLIntegrityConstraintViolationException e) {
+            JOptionPane.showMessageDialog(this, "Item already exists");
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_updateButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
