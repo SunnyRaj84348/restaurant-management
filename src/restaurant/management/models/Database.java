@@ -362,4 +362,13 @@ public class Database {
         stmt.setInt(1, empID);
         stmt.executeUpdate();
     }
+
+    public void removeItem(int itemID) throws SQLException {
+        var stmt = con.prepareStatement(
+                "DELETE FROM item WHERE item_id = ?"
+        );
+
+        stmt.setInt(1, itemID);
+        stmt.executeUpdate();
+    }
 }
