@@ -43,12 +43,7 @@
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="nameSearchField" min="-2" pref="194" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="findButton" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="categoryCBox" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -57,6 +52,7 @@
                           <Component id="nameField" alignment="0" min="-2" pref="239" max="-2" attributes="0"/>
                           <Component id="idField" alignment="0" min="-2" pref="115" max="-2" attributes="0"/>
                           <Component id="priceField" alignment="0" min="-2" pref="143" max="-2" attributes="0"/>
+                          <Component id="nameSearchField" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -78,7 +74,7 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="46" max="32767" attributes="0"/>
+              <EmptySpace pref="75" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="clearTableButton" min="-2" max="-2" attributes="0"/>
@@ -99,7 +95,6 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="nameSearchLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="nameSearchField" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="findButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -148,15 +143,13 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="nameSearchLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Item&apos;s Name"/>
+        <Property name="text" type="java.lang.String" value="Search Item"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="nameSearchField">
-    </Component>
-    <Component class="javax.swing.JButton" name="findButton">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Find"/>
-      </Properties>
+      <Events>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="nameSearchFieldKeyReleased"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="categoryLabel">
       <Properties>

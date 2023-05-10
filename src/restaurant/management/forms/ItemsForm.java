@@ -4,7 +4,9 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import restaurant.management.models.Database;
 
 public class ItemsForm extends javax.swing.JFrame {
@@ -73,13 +75,40 @@ public class ItemsForm extends javax.swing.JFrame {
         priceField.setText("");
     }
 
+    void showAllItems() {
+        var tableModel = (DefaultTableModel) itemsTable.getModel();
+
+        // Clear table rows
+        tableModel.setRowCount(0);
+
+        try {
+            var db = new Database();
+
+            var itemList = db.getItems();
+
+            if (itemList.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No item entry founded");
+                return;
+            }
+
+            for (var item : itemList) {
+                tableModel.addRow(new Object[]{
+                    item.itemID, db.getCategory(item.itemCategoryID).itemCategoryName,
+                    db.getCategory(item.itemCategoryID).itemCategoryType, item.itemName, item.itemPrice
+                });
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         nameSearchLabel = new javax.swing.JLabel();
         nameSearchField = new javax.swing.JTextField();
-        findButton = new javax.swing.JButton();
         categoryLabel = new javax.swing.JLabel();
         categoryCBox = new javax.swing.JComboBox<>();
         newCategoryButton = new javax.swing.JButton();
@@ -100,9 +129,13 @@ public class ItemsForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        nameSearchLabel.setText("Item's Name");
+        nameSearchLabel.setText("Search Item");
 
-        findButton.setText("Find");
+        nameSearchField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                nameSearchFieldKeyReleased(evt);
+            }
+        });
 
         categoryLabel.setText("Category");
 
@@ -217,18 +250,15 @@ public class ItemsForm extends javax.swing.JFrame {
                                 .addContainerGap()
                                 .addComponent(nameSearchLabel)
                                 .addGap(18, 18, 18)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(nameSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(findButton))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(categoryCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(newCategoryButton))
                             .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nameSearchField)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(54, 54, 54)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,7 +273,7 @@ public class ItemsForm extends javax.swing.JFrame {
                                 .addComponent(showItemsButton)
                                 .addGap(42, 42, 42)
                                 .addComponent(clearButton)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(clearTableButton)
@@ -258,8 +288,7 @@ public class ItemsForm extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nameSearchLabel)
-                    .addComponent(nameSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(findButton))
+                    .addComponent(nameSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(72, 72, 72)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(categoryCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -338,32 +367,7 @@ public class ItemsForm extends javax.swing.JFrame {
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void showItemsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showItemsButtonActionPerformed
-        var tableModel = (DefaultTableModel) itemsTable.getModel();
-
-        // Clear table rows
-        tableModel.setRowCount(0);
-
-        try {
-            var db = new Database();
-
-            var itemList = db.getItems();
-
-            if (itemList.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "No item entry founded");
-                return;
-            }
-
-            for (var item : itemList) {
-                tableModel.addRow(new Object[]{
-                    item.itemID, db.getCategory(item.itemCategoryID).itemCategoryName,
-                    db.getCategory(item.itemCategoryID).itemCategoryType, item.itemName, item.itemPrice
-                });
-            }
-
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
+        showAllItems();
     }//GEN-LAST:event_showItemsButtonActionPerformed
 
     private void itemsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemsTableMouseClicked
@@ -449,13 +453,43 @@ public class ItemsForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_removeButtonActionPerformed
 
+    private void nameSearchFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameSearchFieldKeyReleased
+        showAllItems();
+
+        var tableModel = (DefaultTableModel) itemsTable.getModel();
+        var sorter = new TableRowSorter<>(tableModel);
+
+        itemsTable.setRowSorter(sorter);
+
+        var text = nameSearchField.getText();
+
+        var pattern = "^";
+
+        for (int i = 0; i < text.length(); i++) {
+            // Append space and skip iteration
+            if (text.charAt(i) == ' ') {
+                pattern += " ";
+                continue;
+            }
+
+            // Append character sets to match both lower and upper case
+            pattern += "[" + Character.toLowerCase(text.charAt(i))
+                    + Character.toUpperCase(text.charAt(i))
+                    + "]";
+        }
+
+        // Append asterisk quantifier wildcard at end to match char if exists
+        pattern += ".*";
+
+        sorter.setRowFilter(RowFilter.regexFilter(pattern));
+    }//GEN-LAST:event_nameSearchFieldKeyReleased
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JComboBox<String> categoryCBox;
     private javax.swing.JLabel categoryLabel;
     private javax.swing.JButton clearButton;
     private javax.swing.JButton clearTableButton;
-    private javax.swing.JButton findButton;
     private javax.swing.JTextField idField;
     private javax.swing.JLabel idLabel;
     private javax.swing.JTable itemsTable;
