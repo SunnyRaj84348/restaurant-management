@@ -1,6 +1,6 @@
 package restaurant.management.forms;
 
-import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.FlatDarkLaf;
 import java.awt.Image;
 import java.sql.SQLException;
 import javax.swing.ImageIcon;
@@ -200,8 +200,8 @@ public class LoginForm extends javax.swing.JFrame {
     }
 
     public static void main(String args[]) {
-        // Set FlatLaf Light theme
-        FlatLightLaf.setup();
+        // Set FlatLaf Dark theme
+        FlatDarkLaf.setup();
 
         // Create and display the form
         java.awt.EventQueue.invokeLater(new Runnable() {
