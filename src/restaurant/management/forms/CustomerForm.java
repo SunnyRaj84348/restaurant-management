@@ -137,6 +137,11 @@ public class CustomerForm extends javax.swing.JFrame {
         addressLabel.setText("Address");
 
         removeButton.setText("Remove");
+        removeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeButtonActionPerformed(evt);
+            }
+        });
 
         clearButton.setText("Clear");
 
@@ -357,6 +362,28 @@ public class CustomerForm extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_updateButtonActionPerformed
+
+    private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
+        if (idField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Select Customer row before deleting");
+            return;
+        }
+
+        try {
+            var db = new Database();
+            db.removeCustomer(Integer.parseInt(idField.getText()));
+
+            var tableModel = (DefaultTableModel) customerTable.getModel();
+            var selectedRow = customerTable.getSelectedRow();
+
+            tableModel.removeRow(selectedRow);
+
+            JOptionPane.showMessageDialog(this, "Customer entry deleted");
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_removeButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
