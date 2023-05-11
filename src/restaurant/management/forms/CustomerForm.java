@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import restaurant.management.models.Database;
 
 public class CustomerForm extends javax.swing.JFrame {
@@ -85,6 +86,11 @@ public class CustomerForm extends javax.swing.JFrame {
         nameLabel.setText("Name");
 
         showAllButton.setText("Show All");
+        showAllButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showAllButtonActionPerformed(evt);
+            }
+        });
 
         orderHistoryButton.setText("Order History");
 
@@ -269,6 +275,32 @@ public class CustomerForm extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_addButtonActionPerformed
+
+    private void showAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showAllButtonActionPerformed
+        try {
+            var db = new Database();
+
+            var customerList = db.getAllCustomers();
+
+            if (customerList.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No customer entry founded");
+                return;
+            }
+
+            var tableModel = (DefaultTableModel) customerTable.getModel();
+            tableModel.setRowCount(0);
+
+            for (var customer : customerList) {
+                tableModel.addRow(new Object[]{
+                    customer.customerID, customer.customerName,
+                    customer.customerPhone, customer.customerAddress
+                });
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_showAllButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;

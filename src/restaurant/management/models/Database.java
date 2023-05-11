@@ -223,6 +223,25 @@ public class Database {
         return itemCategory;
     }
 
+    public ArrayList<CustomerModel> getAllCustomers() throws SQLException {
+        var stmt = con.prepareStatement(
+                "SELECT * FROM customer"
+        );
+
+        var rs = stmt.executeQuery();
+
+        var customerList = new ArrayList<CustomerModel>();
+
+        while (rs.next()) {
+            customerList.add(new CustomerModel(
+                    rs.getInt(1), rs.getString(2),
+                    rs.getString(3), rs.getString(4)
+            ));
+        }
+
+        return customerList;
+    }
+
     public void setRole(String roleName) throws SQLException {
         var stmt = con.prepareStatement(
                 "INSERT INTO employee_role VALUES(DEFAULT, ?)"
