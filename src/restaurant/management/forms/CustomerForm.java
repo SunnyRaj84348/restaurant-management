@@ -43,6 +43,14 @@ public class CustomerForm extends javax.swing.JFrame {
         return true;
     }
 
+    void clearFields() {
+        searchCustomerField.setText("");
+        idField.setText("");
+        nameField.setText("");
+        phoneField.setText("");
+        addressArea.setText("");
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -133,6 +141,11 @@ public class CustomerForm extends javax.swing.JFrame {
         jScrollPane1.setViewportView(addressArea);
 
         clearTableButton.setText("Clear Table");
+        clearTableButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearTableButtonActionPerformed(evt);
+            }
+        });
 
         addressLabel.setText("Address");
 
@@ -144,6 +157,11 @@ public class CustomerForm extends javax.swing.JFrame {
         });
 
         clearButton.setText("Clear");
+        clearButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearButtonActionPerformed(evt);
+            }
+        });
 
         idField.setEnabled(false);
 
@@ -384,6 +402,15 @@ public class CustomerForm extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_removeButtonActionPerformed
+
+    private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
+        clearFields();
+    }//GEN-LAST:event_clearButtonActionPerformed
+
+    private void clearTableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearTableButtonActionPerformed
+        var tableModel = (DefaultTableModel) customerTable.getModel();
+        tableModel.setRowCount(0);
+    }//GEN-LAST:event_clearTableButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
