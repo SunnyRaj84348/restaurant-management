@@ -73,6 +73,11 @@ public class CustomerForm extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         updateButton.setText("Update");
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateButtonActionPerformed(evt);
+            }
+        });
 
         addButton.setText("Add");
         addButton.addActionListener(new java.awt.event.ActionListener() {
@@ -108,6 +113,11 @@ public class CustomerForm extends javax.swing.JFrame {
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+        });
+        customerTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                customerTableMouseClicked(evt);
             }
         });
         jScrollPane2.setViewportView(customerTable);
@@ -301,6 +311,52 @@ public class CustomerForm extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_showAllButtonActionPerformed
+
+    private void customerTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customerTableMouseClicked
+        var selectedRow = customerTable.getSelectedRow();
+
+        var tableModel = (DefaultTableModel) customerTable.getModel();
+        var arr = tableModel.getDataVector();
+
+        idField.setText(arr.elementAt(selectedRow).elementAt(0).toString());
+        nameField.setText(arr.elementAt(selectedRow).elementAt(1).toString());
+        phoneField.setText(arr.elementAt(selectedRow).elementAt(2).toString());
+        addressArea.setText(arr.elementAt(selectedRow).elementAt(3).toString());
+    }//GEN-LAST:event_customerTableMouseClicked
+
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        if (idField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Select Customer row before updating");
+            return;
+        }
+
+        if (!validateData()) {
+            return;
+        }
+
+        try {
+            var db = new Database();
+
+            db.updateCustomer(Integer.parseInt(idField.getText()), nameField.getText(),
+                    phoneField.getText(), addressArea.getText());
+
+            var selectedRow = customerTable.getSelectedRow();
+            var tableModel = (DefaultTableModel) customerTable.getModel();
+
+            tableModel.setValueAt(idField.getText(), selectedRow, 0);
+            tableModel.setValueAt(nameField.getText(), selectedRow, 1);
+            tableModel.setValueAt(phoneField.getText(), selectedRow, 2);
+            tableModel.setValueAt(addressArea.getText(), selectedRow, 3);
+
+            JOptionPane.showMessageDialog(this, "Data updated");
+
+        } catch (SQLIntegrityConstraintViolationException e) {
+            JOptionPane.showMessageDialog(this, "Phone no. already exists");
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_updateButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;

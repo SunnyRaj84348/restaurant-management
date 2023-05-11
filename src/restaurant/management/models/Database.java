@@ -376,6 +376,20 @@ public class Database {
         stmt.executeUpdate();
     }
 
+    public void updateCustomer(int customerID, String customerName, String customerPhone, String customerAddress) throws SQLException {
+        var stmt = con.prepareStatement(
+                "UPDATE customer SET cust_name = ?, cust_phone = ?, cust_address = ? "
+                + "WHERE cust_id = ?"
+        );
+
+        stmt.setString(1, customerName);
+        stmt.setString(2, customerPhone);
+        stmt.setString(3, customerAddress);
+        stmt.setInt(4, customerID);
+
+        stmt.executeUpdate();
+    }
+
     public void deleteCredentials(int empID) throws SQLException {
         var stmt = con.prepareStatement(
                 "DELETE FROM credential WHERE emp_id = ?"
