@@ -93,9 +93,9 @@
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="searchCustomerLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="CustomerSearchLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="searchCustomerField" min="-2" pref="216" max="-2" attributes="0"/>
+                          <Component id="customerSearchField" min="-2" pref="216" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace pref="115" max="32767" attributes="0"/>
@@ -129,8 +129,8 @@
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="searchCustomerLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="searchCustomerField" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="CustomerSearchLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="customerSearchField" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -198,7 +198,10 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addButtonActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="searchCustomerField">
+        <Component class="javax.swing.JTextField" name="customerSearchField">
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="customerSearchFieldKeyReleased"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="phoneField">
         </Component>
@@ -276,7 +279,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JLabel" name="searchCustomerLabel">
+        <Component class="javax.swing.JLabel" name="CustomerSearchLabel">
           <Properties>
             <Property name="text" type="java.lang.String" value="Search Customer"/>
           </Properties>

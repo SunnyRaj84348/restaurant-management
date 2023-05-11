@@ -5,7 +5,9 @@ import java.math.BigInteger;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import restaurant.management.models.Database;
 
 public class CustomerForm extends javax.swing.JFrame {
@@ -44,11 +46,37 @@ public class CustomerForm extends javax.swing.JFrame {
     }
 
     void clearFields() {
-        searchCustomerField.setText("");
+        customerSearchField.setText("");
         idField.setText("");
         nameField.setText("");
         phoneField.setText("");
         addressArea.setText("");
+    }
+
+    void showAllCustomers() {
+        try {
+            var db = new Database();
+
+            var customerList = db.getAllCustomers();
+
+            if (customerList.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No customer entry founded");
+                return;
+            }
+
+            var tableModel = (DefaultTableModel) customerTable.getModel();
+            tableModel.setRowCount(0);
+
+            for (var customer : customerList) {
+                tableModel.addRow(new Object[]{
+                    customer.customerID, customer.customerName,
+                    customer.customerPhone, customer.customerAddress
+                });
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -58,7 +86,7 @@ public class CustomerForm extends javax.swing.JFrame {
         rootPanel = new javax.swing.JPanel();
         updateButton = new javax.swing.JButton();
         addButton = new javax.swing.JButton();
-        searchCustomerField = new javax.swing.JTextField();
+        customerSearchField = new javax.swing.JTextField();
         phoneField = new javax.swing.JTextField();
         idLabel = new javax.swing.JLabel();
         nameLabel = new javax.swing.JLabel();
@@ -66,7 +94,7 @@ public class CustomerForm extends javax.swing.JFrame {
         orderHistoryButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         customerTable = new javax.swing.JTable();
-        searchCustomerLabel = new javax.swing.JLabel();
+        CustomerSearchLabel = new javax.swing.JLabel();
         phoneLabel = new javax.swing.JLabel();
         invoiceDashButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -91,6 +119,12 @@ public class CustomerForm extends javax.swing.JFrame {
         addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addButtonActionPerformed(evt);
+            }
+        });
+
+        customerSearchField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                customerSearchFieldKeyReleased(evt);
             }
         });
 
@@ -130,7 +164,7 @@ public class CustomerForm extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(customerTable);
 
-        searchCustomerLabel.setText("Search Customer");
+        CustomerSearchLabel.setText("Search Customer");
 
         phoneLabel.setText("Phone");
 
@@ -208,9 +242,9 @@ public class CustomerForm extends javax.swing.JFrame {
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(rootPanelLayout.createSequentialGroup()
-                        .addComponent(searchCustomerLabel)
+                        .addComponent(CustomerSearchLabel)
                         .addGap(18, 18, 18)
-                        .addComponent(searchCustomerField, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(customerSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
                 .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rootPanelLayout.createSequentialGroup()
@@ -234,8 +268,8 @@ public class CustomerForm extends javax.swing.JFrame {
                     .addGroup(rootPanelLayout.createSequentialGroup()
                         .addGap(35, 35, 35)
                         .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(searchCustomerLabel)
-                            .addComponent(searchCustomerField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(CustomerSearchLabel)
+                            .addComponent(customerSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(60, 60, 60)
                         .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -312,29 +346,7 @@ public class CustomerForm extends javax.swing.JFrame {
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void showAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showAllButtonActionPerformed
-        try {
-            var db = new Database();
-
-            var customerList = db.getAllCustomers();
-
-            if (customerList.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "No customer entry founded");
-                return;
-            }
-
-            var tableModel = (DefaultTableModel) customerTable.getModel();
-            tableModel.setRowCount(0);
-
-            for (var customer : customerList) {
-                tableModel.addRow(new Object[]{
-                    customer.customerID, customer.customerName,
-                    customer.customerPhone, customer.customerAddress
-                });
-            }
-
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        showAllCustomers();
     }//GEN-LAST:event_showAllButtonActionPerformed
 
     private void customerTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customerTableMouseClicked
@@ -418,12 +430,45 @@ public class CustomerForm extends javax.swing.JFrame {
         tableModel.setRowCount(0);
     }//GEN-LAST:event_clearTableButtonActionPerformed
 
+    private void customerSearchFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_customerSearchFieldKeyReleased
+        showAllCustomers();
+
+        var tableModel = (DefaultTableModel) customerTable.getModel();
+        var sorter = new TableRowSorter<>(tableModel);
+
+        customerTable.setRowSorter(sorter);
+
+        var text = customerSearchField.getText();
+
+        var pattern = "^";
+
+        for (int i = 0; i < text.length(); i++) {
+            // Append space and skip iteration
+            if (text.charAt(i) == ' ') {
+                pattern += " ";
+                continue;
+            }
+
+            // Append character sets to match both lower and upper case
+            pattern += "[" + Character.toLowerCase(text.charAt(i))
+                    + Character.toUpperCase(text.charAt(i))
+                    + "]";
+        }
+
+        // Append asterisk quantifier wildcard at end to match char if exists
+        pattern += ".*";
+
+        sorter.setRowFilter(RowFilter.regexFilter(pattern));
+    }//GEN-LAST:event_customerSearchFieldKeyReleased
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel CustomerSearchLabel;
     private javax.swing.JButton addButton;
     private javax.swing.JTextArea addressArea;
     private javax.swing.JLabel addressLabel;
     private javax.swing.JButton clearButton;
     private javax.swing.JButton clearTableButton;
+    private javax.swing.JTextField customerSearchField;
     private javax.swing.JTable customerTable;
     private javax.swing.JTextField idField;
     private javax.swing.JLabel idLabel;
@@ -437,8 +482,6 @@ public class CustomerForm extends javax.swing.JFrame {
     private javax.swing.JLabel phoneLabel;
     private javax.swing.JButton removeButton;
     private javax.swing.JPanel rootPanel;
-    private javax.swing.JTextField searchCustomerField;
-    private javax.swing.JLabel searchCustomerLabel;
     private javax.swing.JButton showAllButton;
     private javax.swing.JButton updateButton;
     // End of variables declaration//GEN-END:variables
