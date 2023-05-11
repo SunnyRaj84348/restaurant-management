@@ -163,11 +163,15 @@ public class LoginForm extends javax.swing.JFrame {
 
             // Check role of employee
             if (employeeRole.roleName.equals("Admin")) {
-                this.dispose();
-
                 var adminForm = new AdminForm();
                 adminForm.setVisible(true);
+
+            } else if (employeeRole.roleName.equals("Receptionist")) {
+                var customerForm = new CustomerForm();
+                customerForm.setVisible(true);
             }
+
+            this.dispose();
 
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
