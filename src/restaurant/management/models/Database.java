@@ -290,6 +290,18 @@ public class Database {
         stmt.executeUpdate();
     }
 
+    public void insertCustomer(String customerName, String customerPhone, String customerAddress) throws SQLException {
+        var stmt = con.prepareStatement(
+                "INSERT INTO customer VALUES (DEFAULT, ?, ?, ?)"
+        );
+
+        stmt.setString(1, customerName);
+        stmt.setString(2, customerPhone);
+        stmt.setString(3, customerAddress);
+
+        stmt.executeUpdate();
+    }
+
     public void updateCredentials(int empID, String username, String password) throws SQLException {
         PreparedStatement stmt = null;
 

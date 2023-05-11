@@ -2,7 +2,10 @@ package restaurant.management.forms;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.math.BigInteger;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import javax.swing.JOptionPane;
+import restaurant.management.models.Database;
 
 public class CustomerForm extends javax.swing.JFrame {
 
@@ -71,6 +74,11 @@ public class CustomerForm extends javax.swing.JFrame {
         updateButton.setText("Update");
 
         addButton.setText("Add");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
 
         idLabel.setText("ID");
 
@@ -241,6 +249,26 @@ public class CustomerForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        if (!validateData()) {
+            return;
+        }
+
+        try {
+            var db = new Database();
+
+            db.insertCustomer(nameField.getText(), phoneField.getText(), addressArea.getText());
+
+            JOptionPane.showMessageDialog(this, "Customer added");
+
+        } catch (SQLIntegrityConstraintViolationException e) {
+            JOptionPane.showMessageDialog(this, "Phone no. already exists");
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_addButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
