@@ -301,6 +301,8 @@ public class CustomerForm extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "Customer added");
 
+            clearFields();
+
         } catch (SQLIntegrityConstraintViolationException e) {
             JOptionPane.showMessageDialog(this, "Phone no. already exists");
 
@@ -373,6 +375,8 @@ public class CustomerForm extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "Data updated");
 
+            clearFields();
+
         } catch (SQLIntegrityConstraintViolationException e) {
             JOptionPane.showMessageDialog(this, "Phone no. already exists");
 
@@ -397,6 +401,8 @@ public class CustomerForm extends javax.swing.JFrame {
             tableModel.removeRow(selectedRow);
 
             JOptionPane.showMessageDialog(this, "Customer entry deleted");
+
+            clearFields();
 
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
