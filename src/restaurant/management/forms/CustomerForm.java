@@ -1,6 +1,8 @@
 package restaurant.management.forms;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import java.math.BigInteger;
+import javax.swing.JOptionPane;
 
 public class CustomerForm extends javax.swing.JFrame {
 
@@ -9,6 +11,32 @@ public class CustomerForm extends javax.swing.JFrame {
         FlatDarkLaf.setup();
 
         initComponents();
+    }
+
+    boolean validateData() {
+        if (nameField.getText().trim().isEmpty() || phoneField.getText().trim().isEmpty()
+                || addressArea.getText().trim().isEmpty()) {
+
+            JOptionPane.showMessageDialog(this, "One or more fields are empty");
+            return false;
+        }
+
+        // Check phone number field length is correct
+        if ((phoneField.getText().length() != 10 && phoneField.getText().length() != 12)) {
+            JOptionPane.showMessageDialog(this, "Invalid phone number");
+            return false;
+        }
+
+        // Check if phone number is valid
+        try {
+            new BigInteger(phoneField.getText());
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid phone number");
+            return false;
+        }
+
+        return true;
     }
 
     @SuppressWarnings("unchecked")
