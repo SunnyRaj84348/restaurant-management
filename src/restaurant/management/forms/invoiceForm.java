@@ -178,6 +178,11 @@ public class invoiceForm extends javax.swing.JFrame {
         cartItemQtLabel.setText("Quantity");
 
         itemQtUpdateButton.setText("Update");
+        itemQtUpdateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemQtUpdateButtonActionPerformed(evt);
+            }
+        });
 
         cartItemRemoveButton.setText("Remove");
 
@@ -338,10 +343,23 @@ public class invoiceForm extends javax.swing.JFrame {
             return;
         }
 
-        var tableModel = (DefaultTableModel) cartTable.getModel();
+        var name = itemsTable.getValueAt(selectedRow, 0).toString();
+        var price = Double.parseDouble(itemsTable.getValueAt(selectedRow, 3).toString());
+        var quantity = Integer.parseInt(itemQtField.getText());
 
-        double price = Double.parseDouble(itemsTable.getValueAt(selectedRow, 3).toString());
-        int quantity = Integer.parseInt(itemQtField.getText());
+        var tableModel = (DefaultTableModel) cartTable.getModel();
+        var arr = tableModel.getDataVector();
+
+        for (var i = 0; i < arr.size(); i++) {
+            if (arr.elementAt(i).elementAt(0).toString().equals(name)) {
+                var currentQuantity = Integer.parseInt(arr.elementAt(0).elementAt(2).toString());
+
+                tableModel.setValueAt((currentQuantity + quantity), i, 2);
+                tableModel.setValueAt((currentQuantity + quantity) * price, i, 3);
+
+                return;
+            }
+        }
 
         tableModel.addRow(new Object[]{
             itemsTable.getValueAt(selectedRow, 0),
@@ -350,6 +368,25 @@ public class invoiceForm extends javax.swing.JFrame {
             price * quantity
         });
     }//GEN-LAST:event_itemAddButtonActionPerformed
+
+    private void itemQtUpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemQtUpdateButtonActionPerformed
+        int selectedRow = itemsTable.getSelectedRow();
+
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Select item row before updating quantity");
+            return;
+        }
+
+        if (!validateData(cartItemQtField)) {
+            return;
+        }
+
+        var newQuantity = Integer.parseInt(cartItemQtField.getText());
+        var price = Double.parseDouble(cartTable.getValueAt(selectedRow, 1).toString());
+
+        cartTable.setValueAt(newQuantity, selectedRow, 2);
+        cartTable.setValueAt(newQuantity * price, selectedRow, 3);
+    }//GEN-LAST:event_itemQtUpdateButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField cartItemQtField;
