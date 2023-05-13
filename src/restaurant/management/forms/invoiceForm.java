@@ -58,8 +58,8 @@ public class invoiceForm extends javax.swing.JFrame {
 
             for (var item : itemList) {
                 tableModel.addRow(new Object[]{
-                    item.itemID, db.getCategory(item.itemCategoryID).itemCategoryName,
-                    db.getCategory(item.itemCategoryID).itemCategoryType, item.itemName, item.itemPrice
+                    item.itemName, db.getCategory(item.itemCategoryID).itemCategoryName,
+                    db.getCategory(item.itemCategoryID).itemCategoryType, item.itemPrice
                 });
             }
 
