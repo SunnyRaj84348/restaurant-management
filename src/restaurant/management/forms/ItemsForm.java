@@ -383,7 +383,9 @@ public class ItemsForm extends javax.swing.JFrame {
     }//GEN-LAST:event_itemsTableMouseClicked
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-        if (idField.getText().isEmpty()) {
+        var selectedRow = itemsTable.getSelectedRow();
+
+        if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Select item row before updating");
             return;
         }
@@ -401,7 +403,6 @@ public class ItemsForm extends javax.swing.JFrame {
             );
 
             var tableModel = (DefaultTableModel) itemsTable.getModel();
-            var selectedRow = itemsTable.getSelectedRow();
 
             tableModel.setValueAt(categoryCBox.getSelectedItem(), selectedRow, 1);
             tableModel.setValueAt(db.getCategory(categoryCBox.getSelectedItem().toString()).itemCategoryType, selectedRow, 2);
@@ -430,7 +431,9 @@ public class ItemsForm extends javax.swing.JFrame {
     }//GEN-LAST:event_clearTableButtonActionPerformed
 
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
-        if (idField.getText().isEmpty()) {
+        var selectedRow = itemsTable.getSelectedRow();
+
+        if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Select item row before deleting");
             return;
         }
@@ -440,7 +443,6 @@ public class ItemsForm extends javax.swing.JFrame {
             db.removeItem(Integer.parseInt(idField.getText()));
 
             var tableModel = (DefaultTableModel) itemsTable.getModel();
-            var selectedRow = itemsTable.getSelectedRow();
 
             tableModel.removeRow(selectedRow);
 

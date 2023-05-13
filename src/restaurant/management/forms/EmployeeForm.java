@@ -586,7 +586,9 @@ public class EmployeeForm extends javax.swing.JFrame {
     }//GEN-LAST:event_empTableMouseClicked
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-        if (idField.getText().isEmpty()) {
+        var selectedRow = empTable.getSelectedRow();
+
+        if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Select employee row before updating");
             return;
         }
@@ -646,15 +648,14 @@ public class EmployeeForm extends javax.swing.JFrame {
                 db.deleteCredentials(empID);
             }
 
-            var tableRow = empTable.getSelectedRow();
             var tableModel = (DefaultTableModel) empTable.getModel();
 
-            tableModel.setValueAt(idField.getText(), tableRow, 0);
-            tableModel.setValueAt(roleCBox.getSelectedItem(), tableRow, 1);
-            tableModel.setValueAt(nameField.getText(), tableRow, 2);
-            tableModel.setValueAt(phoneField.getText(), tableRow, 3);
-            tableModel.setValueAt(addressArea.getText(), tableRow, 4);
-            tableModel.setValueAt(salaryField.getText(), tableRow, 5);
+            tableModel.setValueAt(idField.getText(), selectedRow, 0);
+            tableModel.setValueAt(roleCBox.getSelectedItem(), selectedRow, 1);
+            tableModel.setValueAt(nameField.getText(), selectedRow, 2);
+            tableModel.setValueAt(phoneField.getText(), selectedRow, 3);
+            tableModel.setValueAt(addressArea.getText(), selectedRow, 4);
+            tableModel.setValueAt(salaryField.getText(), selectedRow, 5);
 
             JOptionPane.showMessageDialog(this, "Data updated successfully");
 
@@ -669,7 +670,9 @@ public class EmployeeForm extends javax.swing.JFrame {
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
-        if (idField.getText().isEmpty()) {
+        var selectedRow = empTable.getSelectedRow();
+
+        if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Select employee row before deleting");
             return;
         }
@@ -684,10 +687,9 @@ public class EmployeeForm extends javax.swing.JFrame {
 
             db.removeEmployee(empID);
 
-            var tableRow = empTable.getSelectedRow();
             var tableModel = (DefaultTableModel) empTable.getModel();
 
-            tableModel.removeRow(tableRow);
+            tableModel.removeRow(selectedRow);
 
             JOptionPane.showMessageDialog(this, "Deleted successfully");
 

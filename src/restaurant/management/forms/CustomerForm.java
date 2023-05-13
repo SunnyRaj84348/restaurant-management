@@ -368,7 +368,9 @@ public class CustomerForm extends javax.swing.JFrame {
     }//GEN-LAST:event_customerTableMouseClicked
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-        if (idField.getText().isEmpty()) {
+        var selectedRow = customerTable.getSelectedRow();
+
+        if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Select Customer row before updating");
             return;
         }
@@ -383,7 +385,6 @@ public class CustomerForm extends javax.swing.JFrame {
             db.updateCustomer(Integer.parseInt(idField.getText()), nameField.getText(),
                     phoneField.getText(), addressArea.getText());
 
-            var selectedRow = customerTable.getSelectedRow();
             var tableModel = (DefaultTableModel) customerTable.getModel();
 
             tableModel.setValueAt(idField.getText(), selectedRow, 0);
@@ -404,7 +405,9 @@ public class CustomerForm extends javax.swing.JFrame {
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
-        if (idField.getText().isEmpty()) {
+        var selectedRow = customerTable.getSelectedRow();
+
+        if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Select Customer row before deleting");
             return;
         }
@@ -414,7 +417,6 @@ public class CustomerForm extends javax.swing.JFrame {
             db.removeCustomer(Integer.parseInt(idField.getText()));
 
             var tableModel = (DefaultTableModel) customerTable.getModel();
-            var selectedRow = customerTable.getSelectedRow();
 
             tableModel.removeRow(selectedRow);
 
