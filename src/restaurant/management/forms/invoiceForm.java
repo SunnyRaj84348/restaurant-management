@@ -352,7 +352,7 @@ public class invoiceForm extends javax.swing.JFrame {
 
         for (var i = 0; i < arr.size(); i++) {
             if (arr.elementAt(i).elementAt(0).toString().equals(name)) {
-                var currentQuantity = Integer.parseInt(arr.elementAt(0).elementAt(2).toString());
+                var currentQuantity = Integer.parseInt(arr.elementAt(i).elementAt(2).toString());
 
                 tableModel.setValueAt((currentQuantity + quantity), i, 2);
                 tableModel.setValueAt((currentQuantity + quantity) * price, i, 3);
@@ -372,7 +372,7 @@ public class invoiceForm extends javax.swing.JFrame {
     }//GEN-LAST:event_itemAddButtonActionPerformed
 
     private void itemQtUpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemQtUpdateButtonActionPerformed
-        int selectedRow = itemsTable.getSelectedRow();
+        int selectedRow = cartTable.getSelectedRow();
 
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Select item row before updating quantity");
