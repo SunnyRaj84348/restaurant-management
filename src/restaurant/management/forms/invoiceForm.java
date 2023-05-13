@@ -4,6 +4,10 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import restaurant.management.models.Database;
 
 public class invoiceForm extends javax.swing.JFrame {
@@ -35,6 +39,34 @@ public class invoiceForm extends javax.swing.JFrame {
         dateField.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
     }
 
+    void showAllItems() {
+        var tableModel = (DefaultTableModel) itemsTable.getModel();
+
+        // Clear table rows
+        tableModel.setRowCount(0);
+
+        try {
+            var db = new Database();
+
+            var itemList = db.getItems();
+
+            if (itemList.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No item entry founded");
+                return;
+            }
+
+            for (var item : itemList) {
+                tableModel.addRow(new Object[]{
+                    item.itemID, db.getCategory(item.itemCategoryID).itemCategoryName,
+                    db.getCategory(item.itemCategoryID).itemCategoryType, item.itemName, item.itemPrice
+                });
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -44,7 +76,7 @@ public class invoiceForm extends javax.swing.JFrame {
         customerNameLabel = new javax.swing.JLabel();
         dateLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        itemTable = new javax.swing.JTable();
+        itemsTable = new javax.swing.JTable();
         itemSearchField = new javax.swing.JTextField();
         itemQtLabel = new javax.swing.JLabel();
         dateField = new javax.swing.JTextField();
@@ -70,7 +102,7 @@ public class invoiceForm extends javax.swing.JFrame {
 
         dateLabel.setText("Order Date");
 
-        itemTable.setModel(new javax.swing.table.DefaultTableModel(
+        itemsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -86,7 +118,13 @@ public class invoiceForm extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(itemTable);
+        jScrollPane1.setViewportView(itemsTable);
+
+        itemSearchField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                itemSearchFieldKeyReleased(evt);
+            }
+        });
 
         itemQtLabel.setText("Quantity");
 
@@ -234,6 +272,37 @@ public class invoiceForm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void itemSearchFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_itemSearchFieldKeyReleased
+        showAllItems();
+
+        var tableModel = (DefaultTableModel) itemsTable.getModel();
+        var sorter = new TableRowSorter<>(tableModel);
+
+        itemsTable.setRowSorter(sorter);
+
+        var text = itemSearchField.getText();
+
+        var pattern = "^";
+
+        for (int i = 0; i < text.length(); i++) {
+            // Append space and skip iteration
+            if (text.charAt(i) == ' ') {
+                pattern += " ";
+                continue;
+            }
+
+            // Append character sets to match both lower and upper case
+            pattern += "[" + Character.toLowerCase(text.charAt(i))
+                    + Character.toUpperCase(text.charAt(i))
+                    + "]";
+        }
+
+        // Append asterisk quantifier wildcard at end to match char if exists
+        pattern += ".*";
+
+        sorter.setRowFilter(RowFilter.regexFilter(pattern));
+    }//GEN-LAST:event_itemSearchFieldKeyReleased
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField cartItemQtField;
     private javax.swing.JLabel cartItemQtLabel;
@@ -252,7 +321,7 @@ public class invoiceForm extends javax.swing.JFrame {
     private javax.swing.JButton itemQtUpdateButton;
     private javax.swing.JTextField itemSearchField;
     private javax.swing.JLabel itemSearchLabel;
-    private javax.swing.JTable itemTable;
+    private javax.swing.JTable itemsTable;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
