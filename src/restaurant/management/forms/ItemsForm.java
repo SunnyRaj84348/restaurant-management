@@ -431,20 +431,24 @@ public class ItemsForm extends javax.swing.JFrame {
     }//GEN-LAST:event_clearTableButtonActionPerformed
 
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
-        var selectedRow = itemsTable.getSelectedRow();
+        var selectedRows = itemsTable.getSelectedRows();
 
-        if (selectedRow == -1) {
+        if (selectedRows.length == 0) {
             JOptionPane.showMessageDialog(this, "Select item row before deleting");
             return;
         }
 
         try {
             var db = new Database();
-            db.removeItem(Integer.parseInt(idField.getText()));
 
-            var tableModel = (DefaultTableModel) itemsTable.getModel();
+            for (var i = 0; i < selectedRows.length; i++) {
+                var itemID = Integer.parseInt(itemsTable.getValueAt(selectedRows[i] - i, 0).toString());
+                db.removeItem(itemID);
 
-            tableModel.removeRow(selectedRow);
+                var tableModel = (DefaultTableModel) itemsTable.getModel();
+
+                tableModel.removeRow(selectedRows[i] - i);
+            }
 
             JOptionPane.showMessageDialog(this, "Item Removed");
 

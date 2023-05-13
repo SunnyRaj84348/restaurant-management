@@ -405,23 +405,26 @@ public class CustomerForm extends javax.swing.JFrame {
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
-        var selectedRow = customerTable.getSelectedRow();
+        var selectedRows = customerTable.getSelectedRows();
 
-        if (selectedRow == -1) {
+        if (selectedRows.length == 0) {
             JOptionPane.showMessageDialog(this, "Select Customer row before deleting");
             return;
         }
 
         try {
             var db = new Database();
-            db.removeCustomer(Integer.parseInt(idField.getText()));
 
-            var tableModel = (DefaultTableModel) customerTable.getModel();
+            for (var i = 0; i <= selectedRows.length - i; i++) {
+                var id = Integer.parseInt(customerTable.getValueAt(selectedRows[i] - i, 0).toString());
+                db.removeCustomer(id);
 
-            tableModel.removeRow(selectedRow);
+                var tableModel = (DefaultTableModel) customerTable.getModel();
+
+                tableModel.removeRow(selectedRows[i] - i);
+            }
 
             JOptionPane.showMessageDialog(this, "Customer entry deleted");
-
             clearFields();
 
         } catch (SQLException | ClassNotFoundException e) {

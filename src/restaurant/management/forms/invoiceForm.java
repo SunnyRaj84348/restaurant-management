@@ -402,15 +402,17 @@ public class invoiceForm extends javax.swing.JFrame {
     }//GEN-LAST:event_itemQtUpdateButtonActionPerformed
 
     private void cartItemRemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cartItemRemoveButtonActionPerformed
-        int selectedRow = cartTable.getSelectedRow();
+        var selectedRows = cartTable.getSelectedRows();
 
-        if (selectedRow == -1) {
+        if (selectedRows.length == 0) {
             JOptionPane.showMessageDialog(this, "Select item row before removing");
             return;
         }
 
-        var tableModel = (DefaultTableModel) cartTable.getModel();
-        tableModel.removeRow(selectedRow);
+        for (var i = 0; i < selectedRows.length; i++) {
+            var tableModel = (DefaultTableModel) cartTable.getModel();
+            tableModel.removeRow(selectedRows[i] - i);
+        }
     }//GEN-LAST:event_cartItemRemoveButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -670,26 +670,29 @@ public class EmployeeForm extends javax.swing.JFrame {
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
-        var selectedRow = empTable.getSelectedRow();
+        var selectedRows = empTable.getSelectedRows();
 
-        if (selectedRow == -1) {
+        if (selectedRows.length == 0) {
             JOptionPane.showMessageDialog(this, "Select employee row before deleting");
             return;
         }
 
         try {
             var db = new Database();
-            var empID = Integer.parseInt(idField.getText());
 
-            if (roleCBox.getSelectedItem().equals("Admin") || roleCBox.getSelectedItem().equals("Admin")) {
-                db.deleteCredentials(empID);
+            for (var i = 0; i < selectedRows.length; i++) {
+                var empID = Integer.parseInt(empTable.getValueAt(selectedRows[i] - i, 0).toString());
+
+                if (roleCBox.getSelectedItem().equals("Admin") || roleCBox.getSelectedItem().equals("Admin")) {
+                    db.deleteCredentials(empID);
+                }
+
+                db.removeEmployee(empID);
+
+                var tableModel = (DefaultTableModel) empTable.getModel();
+
+                tableModel.removeRow(selectedRows[i] - i);
             }
-
-            db.removeEmployee(empID);
-
-            var tableModel = (DefaultTableModel) empTable.getModel();
-
-            tableModel.removeRow(selectedRow);
 
             JOptionPane.showMessageDialog(this, "Deleted successfully");
 
