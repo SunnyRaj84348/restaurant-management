@@ -361,12 +361,14 @@ public class invoiceForm extends javax.swing.JFrame {
             }
         }
 
-        tableModel.addRow(new Object[]{
-            itemsTable.getValueAt(selectedRow, 0),
-            price,
-            quantity,
-            price * quantity
-        });
+        if (quantity > 0) {
+            tableModel.addRow(new Object[]{
+                itemsTable.getValueAt(selectedRow, 0),
+                price,
+                quantity,
+                price * quantity
+            });
+        }
     }//GEN-LAST:event_itemAddButtonActionPerformed
 
     private void itemQtUpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemQtUpdateButtonActionPerformed
@@ -384,8 +386,14 @@ public class invoiceForm extends javax.swing.JFrame {
         var newQuantity = Integer.parseInt(cartItemQtField.getText());
         var price = Double.parseDouble(cartTable.getValueAt(selectedRow, 1).toString());
 
-        cartTable.setValueAt(newQuantity, selectedRow, 2);
-        cartTable.setValueAt(newQuantity * price, selectedRow, 3);
+        if (newQuantity == 0) {
+            var tableModel = (DefaultTableModel) cartTable.getModel();
+            tableModel.removeRow(selectedRow);
+
+        } else if (newQuantity > 0) {
+            cartTable.setValueAt(newQuantity, selectedRow, 2);
+            cartTable.setValueAt(newQuantity * price, selectedRow, 3);
+        }
     }//GEN-LAST:event_itemQtUpdateButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
