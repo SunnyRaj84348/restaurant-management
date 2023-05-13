@@ -5,7 +5,9 @@ import java.math.BigInteger;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import restaurant.management.models.Database;
 
 public class EmployeeForm extends javax.swing.JFrame {
@@ -112,7 +114,7 @@ public class EmployeeForm extends javax.swing.JFrame {
     }
 
     void clearFields() {
-        idSearchField.setText("");
+        empSearchField.setText("");
         userField.setText("");
         passwordField.setText("");
         idField.setText("");
@@ -122,6 +124,33 @@ public class EmployeeForm extends javax.swing.JFrame {
         salaryField.setText("");
     }
 
+    void showAllEmployee() {
+        var tableModel = (DefaultTableModel) empTable.getModel();
+
+        // Clear table rows
+        tableModel.setRowCount(0);
+
+        try {
+            var db = new Database();
+            var empList = db.getAllEmployee();
+
+            if (empList.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No employee entry founded");
+                return;
+            }
+
+            for (var emp : empList) {
+                tableModel.addRow(new Object[]{
+                    emp.employeeID, emp.employeeRole, emp.employeeName,
+                    emp.employeePhone, emp.employeeAddress, emp.employeeSalary
+                });
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     @SuppressWarnings("unchecked")
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -129,9 +158,8 @@ public class EmployeeForm extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         empTable = new javax.swing.JTable();
-        idSearchField = new javax.swing.JTextField();
-        idSearchLabel = new javax.swing.JLabel();
-        findButton = new javax.swing.JButton();
+        empSearchField = new javax.swing.JTextField();
+        empSearchLabel = new javax.swing.JLabel();
         roleLabel = new javax.swing.JLabel();
         roleCBox = new javax.swing.JComboBox<>();
         passwordLabel = new javax.swing.JLabel();
@@ -189,18 +217,14 @@ public class EmployeeForm extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(empTable);
 
-        idSearchLabel.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        idSearchLabel.setText("Employee's ID");
-
-        findButton.setBackground(new java.awt.Color(0, 102, 102));
-        findButton.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        findButton.setForeground(new java.awt.Color(255, 255, 255));
-        findButton.setText("Find");
-        findButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                findButtonActionPerformed(evt);
+        empSearchField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                empSearchFieldKeyReleased(evt);
             }
         });
+
+        empSearchLabel.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        empSearchLabel.setText("Search Employee");
 
         roleLabel.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         roleLabel.setText("Role");
@@ -340,73 +364,60 @@ public class EmployeeForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(empHeadingLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(headingLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 769, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
+                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(roleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(userLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(phoneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(idLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(passwordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(empSearchLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(empListLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 774, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(30, 30, 30)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(roleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addComponent(userLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(nameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(phoneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(idLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(passwordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(idSearchLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(roleCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(31, 31, 31)
-                                                .addComponent(newRoleButton))
-                                            .addComponent(userField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(idSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(phoneField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(59, 59, 59)
-                                        .addComponent(addButton)
-                                        .addGap(44, 44, 44)
-                                        .addComponent(updateButton)
-                                        .addGap(43, 43, 43)
-                                        .addComponent(removeButton)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(29, 29, 29)
-                                        .addComponent(showEmpButton)
-                                        .addGap(35, 35, 35)
-                                        .addComponent(clearButton)
-                                        .addGap(44, 44, 44)
-                                        .addComponent(findButton)
-                                        .addGap(73, 73, 73))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(addressLabel)
-                                            .addComponent(salaryLabel))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(salaryField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(34, 34, 34)))))))
-                .addContainerGap())
+                        .addComponent(roleCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(newRoleButton))
+                    .addComponent(userField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(empSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(phoneField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(addressLabel)
+                    .addComponent(salaryLabel))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(salaryField, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(addButton)
+                .addGap(44, 44, 44)
+                .addComponent(updateButton)
+                .addGap(43, 43, 43)
+                .addComponent(removeButton)
+                .addGap(29, 29, 29)
+                .addComponent(showEmpButton)
+                .addGap(35, 35, 35)
+                .addComponent(clearButton)
+                .addGap(134, 134, 134))
+            .addComponent(empListLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(clearTableButton)
-                .addGap(334, 334, 334))
+                .addGap(356, 356, 356))
+            .addComponent(headingLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(empHeadingLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -418,8 +429,8 @@ public class EmployeeForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(idSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(idSearchLabel))
+                            .addComponent(empSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(empSearchLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(roleCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -459,8 +470,7 @@ public class EmployeeForm extends javax.swing.JFrame {
                     .addComponent(updateButton)
                     .addComponent(removeButton)
                     .addComponent(showEmpButton)
-                    .addComponent(clearButton)
-                    .addComponent(findButton))
+                    .addComponent(clearButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(empListLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -473,36 +483,6 @@ public class EmployeeForm extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void findButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findButtonActionPerformed
-        try {
-            var tableModel = (DefaultTableModel) empTable.getModel();
-            var tableVector = tableModel.getDataVector();
-
-            var empID = Integer.parseInt(idSearchField.getText());
-
-            var db = new Database();
-            var empDetails = db.getEmployeeDetails(empID);
-
-            if (empDetails == null) {
-                JOptionPane.showMessageDialog(this, "Employee not founded");
-                return;
-            }
-
-            // Clear table rows
-            tableModel.setRowCount(0);
-
-            tableModel.addRow(new Object[]{
-                empDetails.employeeID, empDetails.employeeRole, empDetails.employeeName, empDetails.employeePhone,
-                empDetails.employeeAddress, empDetails.employeeSalary
-            });
-
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Employee not founded");
-        }
-    }//GEN-LAST:event_findButtonActionPerformed
 
     private void newRoleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newRoleButtonActionPerformed
         var roleForm = new RoleForm();
@@ -567,30 +547,7 @@ public class EmployeeForm extends javax.swing.JFrame {
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void showEmpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showEmpButtonActionPerformed
-        var tableModel = (DefaultTableModel) empTable.getModel();
-
-        // Clear table rows
-        tableModel.setRowCount(0);
-
-        try {
-            var db = new Database();
-            var empList = db.getAllEmployee();
-
-            if (empList.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "No employee entry founded");
-                return;
-            }
-
-            for (var emp : empList) {
-                tableModel.addRow(new Object[]{
-                    emp.employeeID, emp.employeeRole, emp.employeeName,
-                    emp.employeePhone, emp.employeeAddress, emp.employeeSalary
-                });
-            }
-
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        showAllEmployee();
     }//GEN-LAST:event_showEmpButtonActionPerformed
 
     private void empTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_empTableMouseClicked
@@ -606,7 +563,7 @@ public class EmployeeForm extends javax.swing.JFrame {
         addressArea.setText(tableVector.elementAt(row).elementAt(4).toString());
         salaryField.setText(tableVector.elementAt(row).elementAt(5).toString());
 
-        idSearchField.setText("");
+        empSearchField.setText("");
         userField.setText("");
         passwordField.setText("");
 
@@ -757,6 +714,37 @@ public class EmployeeForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_roleCBoxPopupMenuWillBecomeVisible
 
+    private void empSearchFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_empSearchFieldKeyReleased
+        showAllEmployee();
+
+        var tableModel = (DefaultTableModel) empTable.getModel();
+        var sorter = new TableRowSorter<>(tableModel);
+
+        empTable.setRowSorter(sorter);
+
+        var text = empSearchField.getText();
+
+        var pattern = "^";
+
+        for (int i = 0; i < text.length(); i++) {
+            // Append space and skip iteration
+            if (text.charAt(i) == ' ') {
+                pattern += " ";
+                continue;
+            }
+
+            // Append character sets to match both lower and upper case
+            pattern += "[" + Character.toLowerCase(text.charAt(i))
+                    + Character.toUpperCase(text.charAt(i))
+                    + "]";
+        }
+
+        // Append asterisk quantifier wildcard at end to match char if exists
+        pattern += ".*";
+
+        sorter.setRowFilter(RowFilter.regexFilter(pattern));
+    }//GEN-LAST:event_empSearchFieldKeyReleased
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JTextArea addressArea;
@@ -765,13 +753,12 @@ public class EmployeeForm extends javax.swing.JFrame {
     private javax.swing.JButton clearTableButton;
     private javax.swing.JLabel empHeadingLabel;
     private javax.swing.JLabel empListLabel;
+    private javax.swing.JTextField empSearchField;
+    private javax.swing.JLabel empSearchLabel;
     private javax.swing.JTable empTable;
-    private javax.swing.JButton findButton;
     private javax.swing.JLabel headingLabel;
     private javax.swing.JTextField idField;
     private javax.swing.JLabel idLabel;
-    private javax.swing.JTextField idSearchField;
-    private javax.swing.JLabel idSearchLabel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField nameField;
