@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -67,6 +68,23 @@ public class invoiceForm extends javax.swing.JFrame {
         }
     }
 
+    boolean validateData(JTextField quantityField) {
+        if (quantityField.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Enter item quantity");
+            return false;
+        }
+
+        try {
+            Integer.parseInt(quantityField.getText());
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid quantity value");
+            return false;
+        }
+
+        return true;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -97,6 +115,11 @@ public class invoiceForm extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         itemAddButton.setText("Add");
+        itemAddButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemAddButtonActionPerformed(evt);
+            }
+        });
 
         customerNameLabel.setText("Customer Name");
 
@@ -302,6 +325,31 @@ public class invoiceForm extends javax.swing.JFrame {
 
         sorter.setRowFilter(RowFilter.regexFilter(pattern));
     }//GEN-LAST:event_itemSearchFieldKeyReleased
+
+    private void itemAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAddButtonActionPerformed
+        int selectedRow = itemsTable.getSelectedRow();
+
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Select item row before adding to cart");
+            return;
+        }
+
+        if (!validateData(itemQtField)) {
+            return;
+        }
+
+        var tableModel = (DefaultTableModel) cartTable.getModel();
+
+        double price = Double.parseDouble(itemsTable.getValueAt(selectedRow, 3).toString());
+        int quantity = Integer.parseInt(itemQtField.getText());
+
+        tableModel.addRow(new Object[]{
+            itemsTable.getValueAt(selectedRow, 0),
+            price,
+            quantity,
+            price * quantity
+        });
+    }//GEN-LAST:event_itemAddButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField cartItemQtField;
