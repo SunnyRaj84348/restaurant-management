@@ -169,6 +169,11 @@ public class CustomerForm extends javax.swing.JFrame {
         phoneLabel.setText("Phone");
 
         invoiceDashButton.setText("Invoice Dashboard");
+        invoiceDashButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                invoiceDashButtonActionPerformed(evt);
+            }
+        });
 
         addressArea.setColumns(20);
         addressArea.setRows(5);
@@ -461,6 +466,17 @@ public class CustomerForm extends javax.swing.JFrame {
 
         sorter.setRowFilter(RowFilter.regexFilter(pattern));
     }//GEN-LAST:event_customerSearchFieldKeyReleased
+
+    private void invoiceDashButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_invoiceDashButtonActionPerformed
+        if (customerTable.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Select customer row before proceeding");
+            return;
+        }
+
+        var invoiceForm = new invoiceForm(Integer.parseInt(idField.getText()));
+        invoiceForm.setVisible(true);
+        invoiceForm.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }//GEN-LAST:event_invoiceDashButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel CustomerSearchLabel;

@@ -1,14 +1,38 @@
 package restaurant.management.forms;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import restaurant.management.models.Database;
 
 public class invoiceForm extends javax.swing.JFrame {
 
-    public invoiceForm() {
+    private int customerID;
+
+    public invoiceForm(int customerID) {
         // Set FlatLaf Dark theme
         FlatDarkLaf.setup();
 
         initComponents();
+
+        this.customerID = customerID;
+
+        initFields();
+    }
+
+    private void initFields() {
+        try {
+            var db = new Database();
+
+            var customer = db.getCustomer(customerID);
+            customerNameField.setText(customer.customerName);
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        dateField.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
     }
 
     @SuppressWarnings("unchecked")

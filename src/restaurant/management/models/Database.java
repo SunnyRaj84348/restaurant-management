@@ -242,6 +242,26 @@ public class Database {
         return customerList;
     }
 
+    public CustomerModel getCustomer(int customerID) throws SQLException {
+        var stmt = con.prepareStatement(
+                "SELECT * FROM customer WHERE cust_id = ?"
+        );
+
+        stmt.setInt(1, customerID);
+        var rs = stmt.executeQuery();
+
+        if (!rs.next()) {
+            return null;
+        }
+
+        var customer = new CustomerModel(
+                rs.getInt(1), rs.getString(2),
+                rs.getString(3), rs.getString(4)
+        );
+
+        return customer;
+    }
+
     public void setRole(String roleName) throws SQLException {
         var stmt = con.prepareStatement(
                 "INSERT INTO employee_role VALUES(DEFAULT, ?)"
