@@ -185,6 +185,11 @@ public class invoiceForm extends javax.swing.JFrame {
         });
 
         cartItemRemoveButton.setText("Remove");
+        cartItemRemoveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cartItemRemoveButtonActionPerformed(evt);
+            }
+        });
 
         cartLabel.setText("CART");
 
@@ -395,6 +400,18 @@ public class invoiceForm extends javax.swing.JFrame {
             cartTable.setValueAt(newQuantity * price, selectedRow, 3);
         }
     }//GEN-LAST:event_itemQtUpdateButtonActionPerformed
+
+    private void cartItemRemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cartItemRemoveButtonActionPerformed
+        int selectedRow = cartTable.getSelectedRow();
+
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Select item row before removing");
+            return;
+        }
+
+        var tableModel = (DefaultTableModel) cartTable.getModel();
+        tableModel.removeRow(selectedRow);
+    }//GEN-LAST:event_cartItemRemoveButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField cartItemQtField;
