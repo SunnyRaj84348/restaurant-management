@@ -360,6 +360,7 @@ public class invoiceForm extends javax.swing.JFrame {
         var tableModel = (DefaultTableModel) cartTable.getModel();
         var arr = tableModel.getDataVector();
 
+        // Append item quantity if item already exists in cart
         for (var i = 0; i < arr.size(); i++) {
             if (arr.elementAt(i).elementAt(0).toString().equals(name)) {
                 var currentQuantity = Integer.parseInt(arr.elementAt(i).elementAt(2).toString());
@@ -414,6 +415,7 @@ public class invoiceForm extends javax.swing.JFrame {
             return;
         }
 
+        // Remove selected items from cart
         for (var i = 0; i < selectedRows.length; i++) {
             var tableModel = (DefaultTableModel) cartTable.getModel();
             tableModel.removeRow(selectedRows[i] - i);
@@ -433,6 +435,7 @@ public class invoiceForm extends javax.swing.JFrame {
             var tableModel = (DefaultTableModel) cartTable.getModel();
             var arr = tableModel.getDataVector();
 
+            // Insert each item from cart
             for (var item : arr) {
                 var itemName = item.elementAt(0).toString();
                 var quantity = Integer.parseInt(item.elementAt(2).toString());
