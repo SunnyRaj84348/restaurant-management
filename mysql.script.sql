@@ -53,7 +53,7 @@ CREATE TABLE customer (
 
 CREATE TABLE order_history (
 	order_id INT PRIMARY KEY AUTO_INCREMENT,
-	order_date TIMESTAMP,
+	order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	cust_id INT,
 	
 	FOREIGN KEY(cust_id) REFERENCES customer(cust_id)
