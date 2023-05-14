@@ -1,6 +1,10 @@
 package restaurant.management.forms;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import javax.swing.table.DefaultTableModel;
+import restaurant.management.models.Database;
 
 public class OrderHistoryForm extends javax.swing.JFrame {
 
@@ -13,6 +17,27 @@ public class OrderHistoryForm extends javax.swing.JFrame {
         initComponents();
 
         this.customerID = customerID;
+
+        showOrders();
+    }
+
+    private void showOrders() {
+        try {
+            var db = new Database();
+            var orderHistory = db.getOrderHistory(customerID);
+
+            var tableModel = (DefaultTableModel) orderTable.getModel();
+
+            for (var order : orderHistory) {
+                tableModel.addRow(new Object[]{
+                    new SimpleDateFormat("dd/MM/yyyy hh:mm:ss aa").format(order.orderDate),
+                    order.orderID
+                });
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @SuppressWarnings("unchecked")

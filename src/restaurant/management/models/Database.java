@@ -262,6 +262,25 @@ public class Database {
         return customer;
     }
 
+    public ArrayList<OrderModel> getOrderHistory(int customerID) throws SQLException {
+        var stmt = con.prepareStatement(
+                "SELECT * FROM order_history WHERE cust_id = ?"
+        );
+
+        stmt.setInt(1, customerID);
+        var rs = stmt.executeQuery();
+
+        var orderHistory = new ArrayList<OrderModel>();
+
+        while (rs.next()) {
+            orderHistory.add(new OrderModel(
+                    rs.getInt(1), rs.getTimestamp(2), rs.getInt(3)
+            ));
+        }
+
+        return orderHistory;
+    }
+
     public void setRole(String roleName) throws SQLException {
         var stmt = con.prepareStatement(
                 "INSERT INTO employee_role VALUES(DEFAULT, ?)"
