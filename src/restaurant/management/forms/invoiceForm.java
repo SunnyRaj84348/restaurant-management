@@ -24,6 +24,7 @@ public class invoiceForm extends javax.swing.JFrame {
         this.customerID = customerID;
 
         initFields();
+        showAllItems();
     }
 
     private void initFields() {
@@ -50,11 +51,6 @@ public class invoiceForm extends javax.swing.JFrame {
             var db = new Database();
 
             var itemList = db.getItems();
-
-            if (itemList.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "No item entry founded");
-                return;
-            }
 
             for (var item : itemList) {
                 tableModel.addRow(new Object[]{
@@ -311,8 +307,6 @@ public class invoiceForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void itemSearchFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_itemSearchFieldKeyReleased
-        showAllItems();
-
         var tableModel = (DefaultTableModel) itemsTable.getModel();
         var sorter = new TableRowSorter<>(tableModel);
 
