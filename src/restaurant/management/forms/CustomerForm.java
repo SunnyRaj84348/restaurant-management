@@ -140,6 +140,11 @@ public class CustomerForm extends javax.swing.JFrame {
         });
 
         orderHistoryButton.setText("Order History");
+        orderHistoryButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                orderHistoryButtonActionPerformed(evt);
+            }
+        });
 
         customerTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -482,6 +487,17 @@ public class CustomerForm extends javax.swing.JFrame {
         invoiceForm.setVisible(true);
         invoiceForm.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_invoiceDashButtonActionPerformed
+
+    private void orderHistoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderHistoryButtonActionPerformed
+        if (customerTable.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "Select customer row before proceeding");
+            return;
+        }
+
+        var orderHistoryForm = new OrderHistoryForm(Integer.parseInt(idField.getText()));
+        orderHistoryForm.setVisible(true);
+        orderHistoryForm.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }//GEN-LAST:event_orderHistoryButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel CustomerSearchLabel;
