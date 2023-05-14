@@ -194,6 +194,11 @@ public class invoiceForm extends javax.swing.JFrame {
         cartLabel.setText("CART");
 
         genInvoiceButton.setText("Generate Invoice");
+        genInvoiceButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                genInvoiceButtonActionPerformed(evt);
+            }
+        });
 
         invoiceArea.setColumns(20);
         invoiceArea.setRows(5);
@@ -414,6 +419,31 @@ public class invoiceForm extends javax.swing.JFrame {
             tableModel.removeRow(selectedRows[i] - i);
         }
     }//GEN-LAST:event_cartItemRemoveButtonActionPerformed
+
+    private void genInvoiceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genInvoiceButtonActionPerformed
+        if (cartTable.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Cart is empty");
+            return;
+        }
+
+        try {
+            var db = new Database();
+            var orderID = db.insertOrder(customerID);
+
+            var tableModel = (DefaultTableModel) cartTable.getModel();
+            var arr = tableModel.getDataVector();
+
+            for (var item : arr) {
+                var itemName = item.elementAt(0).toString();
+                var quantity = Integer.parseInt(item.elementAt(2).toString());
+
+                db.insertOrderItem(orderID, itemName, quantity);
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_genInvoiceButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField cartItemQtField;

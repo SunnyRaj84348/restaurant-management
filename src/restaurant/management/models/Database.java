@@ -341,6 +341,41 @@ public class Database {
         stmt.executeUpdate();
     }
 
+    public int insertOrder(int customerID) throws SQLException {
+        var stmt = con.prepareStatement(
+                "INSERT INTO order_history VALUES (DEFAULT, DEFAULT, ?)"
+        );
+
+        stmt.setInt(1, customerID);
+
+        stmt.executeUpdate();
+
+        stmt = con.prepareStatement(
+                "SELECT LAST_INSERT_ID()"
+        );
+
+        var rs = stmt.executeQuery();
+
+        if (!rs.next()) {
+            return -1;
+        }
+
+        return rs.getInt(1);
+    }
+
+    public void insertOrderItem(int orderID, String itemName, int itemQuantity) throws SQLException {
+        var stmt = con.prepareStatement(
+                "INSERT INTO ordered_item VALUES "
+                + "(?, (SELECT item_id FROM item WHERE item_name = ?), ?)"
+        );
+
+        stmt.setInt(1, orderID);
+        stmt.setString(2, itemName);
+        stmt.setInt(3, itemQuantity);
+
+        stmt.executeUpdate();
+    }
+
     public void updateCredentials(int empID, String username, String password) throws SQLException {
         PreparedStatement stmt = null;
 
