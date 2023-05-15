@@ -115,6 +115,9 @@ public class InvoiceForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        itemAddButton.setBackground(new java.awt.Color(0, 102, 102));
+        itemAddButton.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        itemAddButton.setForeground(new java.awt.Color(255, 255, 255));
         itemAddButton.setText("Add");
         itemAddButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -122,10 +125,15 @@ public class InvoiceForm extends javax.swing.JFrame {
             }
         });
 
+        customerNameLabel.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         customerNameLabel.setText("Customer Name");
 
+        dateLabel.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         dateLabel.setText("Order Date");
 
+        itemsTable.setBackground(new java.awt.Color(102, 102, 102));
+        itemsTable.setBorder(new javax.swing.border.MatteBorder(null));
+        itemsTable.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         itemsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -144,20 +152,30 @@ public class InvoiceForm extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(itemsTable);
 
+        itemSearchField.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         itemSearchField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 itemSearchFieldKeyReleased(evt);
             }
         });
 
+        itemQtLabel.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         itemQtLabel.setText("Quantity");
 
+        dateField.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         dateField.setEnabled(false);
 
+        itemSearchLabel.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         itemSearchLabel.setText("Search Item");
 
+        customerNameField.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         customerNameField.setEnabled(false);
 
+        itemQtField.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+
+        cartTable.setBackground(new java.awt.Color(102, 102, 102));
+        cartTable.setBorder(new javax.swing.border.MatteBorder(null));
+        cartTable.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         cartTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -176,8 +194,14 @@ public class InvoiceForm extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(cartTable);
 
+        cartItemQtLabel.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         cartItemQtLabel.setText("Quantity");
 
+        cartItemQtField.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+
+        itemQtUpdateButton.setBackground(new java.awt.Color(0, 102, 102));
+        itemQtUpdateButton.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        itemQtUpdateButton.setForeground(new java.awt.Color(255, 255, 255));
         itemQtUpdateButton.setText("Update");
         itemQtUpdateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -185,6 +209,9 @@ public class InvoiceForm extends javax.swing.JFrame {
             }
         });
 
+        cartItemRemoveButton.setBackground(new java.awt.Color(0, 102, 102));
+        cartItemRemoveButton.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        cartItemRemoveButton.setForeground(new java.awt.Color(255, 255, 255));
         cartItemRemoveButton.setText("Remove");
         cartItemRemoveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -192,8 +219,15 @@ public class InvoiceForm extends javax.swing.JFrame {
             }
         });
 
+        cartLabel.setBackground(new java.awt.Color(0, 0, 0));
+        cartLabel.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
+        cartLabel.setForeground(new java.awt.Color(255, 255, 255));
+        cartLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         cartLabel.setText("CART");
 
+        genInvoiceButton.setBackground(new java.awt.Color(0, 102, 102));
+        genInvoiceButton.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        genInvoiceButton.setForeground(new java.awt.Color(255, 255, 255));
         genInvoiceButton.setText("Generate Invoice");
         genInvoiceButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -202,6 +236,7 @@ public class InvoiceForm extends javax.swing.JFrame {
         });
 
         invoiceArea.setColumns(20);
+        invoiceArea.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         invoiceArea.setRows(5);
         jScrollPane3.setViewportView(invoiceArea);
 
@@ -209,58 +244,63 @@ public class InvoiceForm extends javax.swing.JFrame {
         rootPanel.setLayout(rootPanelLayout);
         rootPanelLayout.setHorizontalGroup(
             rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rootPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(genInvoiceButton)
-                .addGap(458, 458, 458))
             .addGroup(rootPanelLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(rootPanelLayout.createSequentialGroup()
                         .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 496, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(rootPanelLayout.createSequentialGroup()
-                                .addGap(26, 26, 26)
-                                .addComponent(itemSearchLabel)
-                                .addGap(18, 18, 18)
-                                .addComponent(itemSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(rootPanelLayout.createSequentialGroup()
                                 .addGap(71, 71, 71)
                                 .addComponent(itemQtLabel)
                                 .addGap(18, 18, 18)
                                 .addComponent(itemQtField, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(28, 28, 28)
-                                .addComponent(itemAddButton)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
+                                .addComponent(itemAddButton))
+                            .addGroup(rootPanelLayout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(rootPanelLayout.createSequentialGroup()
+                                        .addComponent(dateLabel)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(rootPanelLayout.createSequentialGroup()
+                                        .addComponent(itemSearchLabel)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(itemSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rootPanelLayout.createSequentialGroup()
-                                .addComponent(cartLabel)
-                                .addGap(223, 223, 223))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rootPanelLayout.createSequentialGroup()
                                 .addComponent(cartItemQtLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(18, 18, 18)
                                 .addComponent(cartItemQtField, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(itemQtUpdateButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(29, 29, 29)
                                 .addComponent(cartItemRemoveButton)
-                                .addGap(64, 64, 64))
+                                .addGap(184, 184, 184))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rootPanelLayout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(17, 17, 17))))
+                                .addComponent(cartLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(273, 273, 273))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rootPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(370, 370, 370))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(170, 170, 170))
                     .addGroup(rootPanelLayout.createSequentialGroup()
-                        .addComponent(dateLabel)
-                        .addGap(18, 18, 18)
-                        .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(249, 249, 249)
                         .addComponent(customerNameLabel)
-                        .addGap(18, 18, 18)
-                        .addComponent(customerNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(customerNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(rootPanelLayout.createSequentialGroup()
+                .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(rootPanelLayout.createSequentialGroup()
+                        .addGap(185, 185, 185)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(rootPanelLayout.createSequentialGroup()
+                        .addGap(221, 221, 221)
+                        .addComponent(genInvoiceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         rootPanelLayout.setVerticalGroup(
             rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -271,40 +311,49 @@ public class InvoiceForm extends javax.swing.JFrame {
                     .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(customerNameLabel)
                     .addComponent(customerNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(itemSearchLabel)
-                    .addComponent(itemSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cartLabel))
+                .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(rootPanelLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(itemSearchLabel)
+                            .addComponent(itemSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(rootPanelLayout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(cartLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(23, 23, 23)
-                .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(itemQtLabel)
-                    .addComponent(itemQtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(itemAddButton)
-                    .addComponent(cartItemQtLabel)
-                    .addComponent(cartItemQtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(itemQtUpdateButton)
-                    .addComponent(cartItemRemoveButton))
-                .addGap(37, 37, 37)
-                .addComponent(genInvoiceButton)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(rootPanelLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(itemQtLabel)
+                            .addComponent(itemQtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(itemAddButton)
+                            .addComponent(cartItemQtLabel)
+                            .addComponent(cartItemQtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(itemQtUpdateButton)
+                            .addComponent(cartItemRemoveButton)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(genInvoiceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(157, 157, 157))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rootPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(rootPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 977, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rootPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(rootPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 708, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
