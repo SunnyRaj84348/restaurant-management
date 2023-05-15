@@ -71,7 +71,12 @@ public class InvoiceForm extends javax.swing.JFrame {
         }
 
         try {
-            Integer.parseInt(quantityField.getText());
+            var quantity = Integer.parseInt(quantityField.getText());
+
+            if (quantity < 0) {
+                JOptionPane.showMessageDialog(this, "Invalid quantity value");
+                return false;
+            }
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Invalid quantity value");
@@ -366,14 +371,12 @@ public class InvoiceForm extends javax.swing.JFrame {
             }
         }
 
-        if (quantity > 0) {
-            tableModel.addRow(new Object[]{
-                itemsTable.getValueAt(selectedRow, 0),
-                price,
-                quantity,
-                price * quantity
-            });
-        }
+        tableModel.addRow(new Object[]{
+            itemsTable.getValueAt(selectedRow, 0),
+            price,
+            quantity,
+            price * quantity
+        });
     }//GEN-LAST:event_itemAddButtonActionPerformed
 
     private void itemQtUpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemQtUpdateButtonActionPerformed
@@ -395,7 +398,7 @@ public class InvoiceForm extends javax.swing.JFrame {
             var tableModel = (DefaultTableModel) cartTable.getModel();
             tableModel.removeRow(selectedRow);
 
-        } else if (newQuantity > 0) {
+        } else {
             cartTable.setValueAt(newQuantity, selectedRow, 2);
             cartTable.setValueAt(newQuantity * price, selectedRow, 3);
         }
