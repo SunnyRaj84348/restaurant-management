@@ -11,11 +11,11 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import restaurant.management.models.Database;
 
-public class invoiceForm extends javax.swing.JFrame {
+public class InvoiceForm extends javax.swing.JFrame {
 
     private int customerID;
 
-    public invoiceForm(int customerID) {
+    public InvoiceForm(int customerID) {
         // Set FlatLaf Dark theme
         FlatDarkLaf.setup();
 

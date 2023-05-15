@@ -483,7 +483,7 @@ public class CustomerForm extends javax.swing.JFrame {
             return;
         }
 
-        var invoiceForm = new invoiceForm(Integer.parseInt(idField.getText()));
+        var invoiceForm = new InvoiceForm(Integer.parseInt(idField.getText()));
         invoiceForm.setVisible(true);
         invoiceForm.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_invoiceDashButtonActionPerformed
