@@ -281,6 +281,45 @@ public class Database {
         return orderHistory;
     }
 
+    public ArrayList<OrderedItemModel> getOrderedItems(int orderID) throws SQLException {
+        var stmt = con.prepareStatement(
+                "SELECT * FROM ordered_item WHERE order_id = ?"
+        );
+
+        stmt.setInt(1, orderID);
+        var rs = stmt.executeQuery();
+
+        var orderedItems = new ArrayList<OrderedItemModel>();
+
+        while (rs.next()) {
+            orderedItems.add(new OrderedItemModel(
+                    rs.getInt(1), rs.getInt(2), rs.getInt(3)
+            ));
+        }
+
+        return orderedItems;
+    }
+
+    public ItemModel getItem(int itemID) throws SQLException {
+        var stmt = con.prepareStatement(
+                "SELECT * FROM item WHERE item_id = ?"
+        );
+
+        stmt.setInt(1, itemID);
+        var rs = stmt.executeQuery();
+
+        if (!rs.next()) {
+            return null;
+        }
+
+        var item = new ItemModel(
+                rs.getInt(1), rs.getString(2),
+                rs.getInt(3), rs.getDouble(4)
+        );
+
+        return item;
+    }
+
     public void setRole(String roleName) throws SQLException {
         var stmt = con.prepareStatement(
                 "INSERT INTO employee_role VALUES(DEFAULT, ?)"

@@ -69,6 +69,11 @@ public class OrderHistoryForm extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        orderTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                orderTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(orderTable);
 
         itemsTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -124,6 +129,41 @@ public class OrderHistoryForm extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void orderTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_orderTableMouseClicked
+        int selectedRow = orderTable.getSelectedRow();
+
+        int orderID = Integer.parseInt(orderTable.getValueAt(selectedRow, 1).toString());
+
+        try {
+            var db = new Database();
+            var orderedItems = db.getOrderedItems(orderID);
+
+            var tableModel = (DefaultTableModel) itemsTable.getModel();
+
+            // Clear table rows
+            tableModel.setRowCount(0);
+
+            double totalAmount = 0;
+
+            for (var orderedItem : orderedItems) {
+                var item = db.getItem(orderedItem.itemID);
+
+                var totalPrice = item.itemPrice * orderedItem.itemQuantity;
+                totalAmount += totalPrice;
+
+                tableModel.addRow(new Object[]{
+                    item.itemName, item.itemPrice,
+                    orderedItem.itemQuantity, totalPrice
+                });
+            }
+
+            totalAmountField.setText(String.valueOf(totalAmount));
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_orderTableMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable itemsTable;
