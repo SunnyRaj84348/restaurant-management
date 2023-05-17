@@ -20,7 +20,7 @@ public class AdminForm extends javax.swing.JFrame {
         itemsButton = new javax.swing.JButton();
         headerPanel = new javax.swing.JPanel();
         dashLabel = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        logoutButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(89, 92, 87));
@@ -65,9 +65,14 @@ public class AdminForm extends javax.swing.JFrame {
             .addComponent(dashLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
         );
 
-        jButton1.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Logout");
+        logoutButton.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        logoutButton.setForeground(new java.awt.Color(255, 255, 255));
+        logoutButton.setText("Logout");
+        logoutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout rootPanelLayout = new javax.swing.GroupLayout(rootPanel);
         rootPanel.setLayout(rootPanelLayout);
@@ -83,7 +88,7 @@ public class AdminForm extends javax.swing.JFrame {
                         .addComponent(itemsButton))
                     .addGroup(rootPanelLayout.createSequentialGroup()
                         .addGap(141, 141, 141)
-                        .addComponent(jButton1)))
+                        .addComponent(logoutButton)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         rootPanelLayout.setVerticalGroup(
@@ -95,7 +100,7 @@ public class AdminForm extends javax.swing.JFrame {
                     .addComponent(empButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(itemsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
@@ -118,20 +123,39 @@ public class AdminForm extends javax.swing.JFrame {
         var employeeForm = new EmployeeForm();
         employeeForm.setVisible(true);
         employeeForm.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+        // Add employee form to subForm list
+        LoginForm.subForms.add(employeeForm);
     }//GEN-LAST:event_empButtonActionPerformed
 
     private void itemsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemsButtonActionPerformed
         var itemsForm = new ItemsForm();
         itemsForm.setVisible(true);
         itemsForm.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+        // Add items form to subForm list
+        LoginForm.subForms.add(itemsForm);
     }//GEN-LAST:event_itemsButtonActionPerformed
+
+    private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
+        // Dispose all allocated forms
+        for (var form : LoginForm.subForms) {
+            form.dispose();
+        }
+
+        // Remove all forms from list
+        LoginForm.subForms.clear();
+
+        var loginForm = new LoginForm();
+        loginForm.setVisible(true);
+    }//GEN-LAST:event_logoutButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel dashLabel;
     private javax.swing.JButton empButton;
     private javax.swing.JPanel headerPanel;
     private javax.swing.JButton itemsButton;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton logoutButton;
     private javax.swing.JPanel rootPanel;
     // End of variables declaration//GEN-END:variables
 }

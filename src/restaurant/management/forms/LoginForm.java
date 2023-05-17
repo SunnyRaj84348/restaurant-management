@@ -2,10 +2,18 @@ package restaurant.management.forms;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import restaurant.management.models.Database;
 
 public class LoginForm extends javax.swing.JFrame {
+
+    static ArrayList<JFrame> subForms;
+
+    static {
+        subForms = new ArrayList<>();
+    }
 
     public LoginForm() {
         initComponents();
@@ -166,9 +174,15 @@ public class LoginForm extends javax.swing.JFrame {
                 var adminForm = new AdminForm();
                 adminForm.setVisible(true);
 
+                // Add admin form to subForm list
+                subForms.add(adminForm);
+
             } else if (employeeRole.roleName.equals("Receptionist")) {
                 var customerForm = new CustomerForm();
                 customerForm.setVisible(true);
+
+                // Add customer form to subForm list
+                subForms.add(customerForm);
             }
 
             this.dispose();

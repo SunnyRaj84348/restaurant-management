@@ -545,6 +545,9 @@ public class CustomerForm extends javax.swing.JFrame {
         var invoiceForm = new InvoiceForm(Integer.parseInt(idField.getText()));
         invoiceForm.setVisible(true);
         invoiceForm.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+        // Add invoice form to subForm list
+        LoginForm.subForms.add(invoiceForm);
     }//GEN-LAST:event_invoiceDashButtonActionPerformed
 
     private void orderHistoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderHistoryButtonActionPerformed
@@ -556,6 +559,9 @@ public class CustomerForm extends javax.swing.JFrame {
         var orderHistoryForm = new OrderHistoryForm(Integer.parseInt(idField.getText()));
         orderHistoryForm.setVisible(true);
         orderHistoryForm.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+        // Add orderHistory form to subForm list
+        LoginForm.subForms.add(orderHistoryForm);
     }//GEN-LAST:event_orderHistoryButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
