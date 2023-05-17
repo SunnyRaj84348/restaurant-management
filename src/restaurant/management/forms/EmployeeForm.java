@@ -485,6 +485,9 @@ public class EmployeeForm extends javax.swing.JFrame {
         var roleForm = new RoleForm();
         roleForm.setVisible(true);
         roleForm.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+        // Add role form to subForm list
+        LoginForm.subForms.add(roleForm);
     }//GEN-LAST:event_newRoleButtonActionPerformed
 
     private void roleCBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roleCBoxActionPerformed

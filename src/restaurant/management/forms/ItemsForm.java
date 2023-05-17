@@ -395,6 +395,9 @@ public class ItemsForm extends javax.swing.JFrame {
         var categoryForm = new ItemCategoryForm();
         categoryForm.setVisible(true);
         categoryForm.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+        // Add category form to subForm list
+        LoginForm.subForms.add(categoryForm);
     }//GEN-LAST:event_newCategoryButtonActionPerformed
 
     private void categoryCBoxPopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_categoryCBoxPopupMenuWillBecomeVisible
