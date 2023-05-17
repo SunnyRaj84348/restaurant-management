@@ -12,80 +12,80 @@ import javax.swing.table.TableRowSorter;
 import restaurant.management.models.Database;
 
 public class InvoiceForm extends javax.swing.JFrame {
-    
+
     private int customerID;
-    
+
     public InvoiceForm(int customerID) {
         // Set FlatLaf Dark theme
         FlatDarkLaf.setup();
-        
+
         initComponents();
-        
+
         this.customerID = customerID;
-        
+
         initFields();
         showAllItems();
     }
-    
+
     private void initFields() {
         try {
             var db = new Database();
-            
+
             var customer = db.getCustomer(customerID);
             customerNameField.setText(customer.customerName);
-            
+
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        
+
         dateField.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
     }
-    
+
     void showAllItems() {
         var tableModel = (DefaultTableModel) itemsTable.getModel();
 
         // Clear table rows
         tableModel.setRowCount(0);
-        
+
         try {
             var db = new Database();
-            
+
             var itemList = db.getItems();
-            
+
             for (var item : itemList) {
                 tableModel.addRow(new Object[]{
                     item.itemName, db.getCategory(item.itemCategoryID).itemCategoryName,
                     db.getCategory(item.itemCategoryID).itemCategoryType, item.itemPrice
                 });
             }
-            
+
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
-    
+
     boolean validateData(JTextField quantityField) {
         if (quantityField.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Enter item quantity");
             return false;
         }
-        
+
         try {
             var quantity = Integer.parseInt(quantityField.getText());
-            
+
             if (quantity < 0) {
                 JOptionPane.showMessageDialog(this, "Invalid quantity value");
                 return false;
             }
-            
+
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Invalid quantity value");
             return false;
         }
-        
+
         return true;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -373,13 +373,13 @@ public class InvoiceForm extends javax.swing.JFrame {
     private void itemSearchFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_itemSearchFieldKeyReleased
         var tableModel = (DefaultTableModel) itemsTable.getModel();
         var sorter = new TableRowSorter<>(tableModel);
-        
+
         itemsTable.setRowSorter(sorter);
-        
+
         var text = itemSearchField.getText();
-        
+
         var pattern = "^";
-        
+
         for (int i = 0; i < text.length(); i++) {
             // Append space and skip iteration
             if (text.charAt(i) == ' ') {
@@ -395,26 +395,26 @@ public class InvoiceForm extends javax.swing.JFrame {
 
         // Append asterisk quantifier wildcard at end to match char if exists
         pattern += ".*";
-        
+
         sorter.setRowFilter(RowFilter.regexFilter(pattern));
     }//GEN-LAST:event_itemSearchFieldKeyReleased
-    
+
     private void itemAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAddButtonActionPerformed
         int selectedRow = itemsTable.getSelectedRow();
-        
+
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Select item row before adding to cart");
             return;
         }
-        
+
         if (!validateData(itemQtField)) {
             return;
         }
-        
+
         var name = itemsTable.getValueAt(selectedRow, 0).toString();
         var price = Double.parseDouble(itemsTable.getValueAt(selectedRow, 3).toString());
         var quantity = Integer.parseInt(itemQtField.getText());
-        
+
         var tableModel = (DefaultTableModel) cartTable.getModel();
         var arr = tableModel.getDataVector();
 
@@ -422,14 +422,14 @@ public class InvoiceForm extends javax.swing.JFrame {
         for (var i = 0; i < arr.size(); i++) {
             if (arr.elementAt(i).elementAt(0).toString().equals(name)) {
                 var currentQuantity = Integer.parseInt(arr.elementAt(i).elementAt(2).toString());
-                
+
                 tableModel.setValueAt((currentQuantity + quantity), i, 2);
                 tableModel.setValueAt((currentQuantity + quantity) * price, i, 3);
-                
+
                 return;
             }
         }
-        
+
         tableModel.addRow(new Object[]{
             itemsTable.getValueAt(selectedRow, 0),
             price,
@@ -437,35 +437,35 @@ public class InvoiceForm extends javax.swing.JFrame {
             price * quantity
         });
     }//GEN-LAST:event_itemAddButtonActionPerformed
-    
+
     private void itemQtUpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemQtUpdateButtonActionPerformed
         int selectedRow = cartTable.getSelectedRow();
-        
+
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Select item row before updating quantity");
             return;
         }
-        
+
         if (!validateData(cartItemQtField)) {
             return;
         }
-        
+
         var newQuantity = Integer.parseInt(cartItemQtField.getText());
         var price = Double.parseDouble(cartTable.getValueAt(selectedRow, 1).toString());
-        
+
         if (newQuantity == 0) {
             var tableModel = (DefaultTableModel) cartTable.getModel();
             tableModel.removeRow(selectedRow);
-            
+
         } else {
             cartTable.setValueAt(newQuantity, selectedRow, 2);
             cartTable.setValueAt(newQuantity * price, selectedRow, 3);
         }
     }//GEN-LAST:event_itemQtUpdateButtonActionPerformed
-    
+
     private void cartItemRemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cartItemRemoveButtonActionPerformed
         var selectedRows = cartTable.getSelectedRows();
-        
+
         if (selectedRows.length == 0) {
             JOptionPane.showMessageDialog(this, "Select item row before removing");
             return;
@@ -477,17 +477,17 @@ public class InvoiceForm extends javax.swing.JFrame {
             tableModel.removeRow(selectedRows[i] - i);
         }
     }//GEN-LAST:event_cartItemRemoveButtonActionPerformed
-    
+
     private void genInvoiceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genInvoiceButtonActionPerformed
         if (cartTable.getRowCount() == 0) {
             JOptionPane.showMessageDialog(this, "Cart is empty");
             return;
         }
-        
+
         try {
             var db = new Database();
             var orderID = db.insertOrder(customerID);
-            
+
             var tableModel = (DefaultTableModel) cartTable.getModel();
             var arr = tableModel.getDataVector();
 
@@ -495,15 +495,15 @@ public class InvoiceForm extends javax.swing.JFrame {
             for (var item : arr) {
                 var itemName = item.elementAt(0).toString();
                 var quantity = Integer.parseInt(item.elementAt(2).toString());
-                
+
                 db.insertOrderItem(orderID, itemName, quantity);
             }
-            
+
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_genInvoiceButtonActionPerformed
-    
+
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
         var tableModel = (DefaultTableModel) cartTable.getModel();
         tableModel.setRowCount(0);
