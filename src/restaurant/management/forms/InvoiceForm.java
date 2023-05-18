@@ -1,6 +1,5 @@
 package restaurant.management.forms;
 
-import com.formdev.flatlaf.FlatDarkLaf;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -11,14 +10,11 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import restaurant.management.models.Database;
 
-public class InvoiceForm extends javax.swing.JFrame {
+public class InvoiceForm extends javax.swing.JPanel {
 
-    private int customerID;
+    int customerID;
 
     public InvoiceForm(int customerID) {
-        // Set FlatLaf Dark theme
-        FlatDarkLaf.setup();
-
         initComponents();
 
         this.customerID = customerID;
@@ -33,7 +29,6 @@ public class InvoiceForm extends javax.swing.JFrame {
 
             var customer = db.getCustomer(customerID);
             customerNameField.setText(customer.customerName);
-
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -90,44 +85,85 @@ public class InvoiceForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        rootPanel = new javax.swing.JPanel();
-        itemAddButton = new javax.swing.JButton();
-        customerNameLabel = new javax.swing.JLabel();
+        itemQtField = new javax.swing.JTextField();
+        dateField = new javax.swing.JTextField();
+        cartItemQtLabel = new javax.swing.JLabel();
+        itemQtLabel = new javax.swing.JLabel();
+        clearButton = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        cartTable = new javax.swing.JTable();
+        itemQtUpdateButton = new javax.swing.JButton();
+        cartItemQtField = new javax.swing.JTextField();
         dateLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         itemsTable = new javax.swing.JTable();
-        itemSearchField = new javax.swing.JTextField();
-        itemQtLabel = new javax.swing.JLabel();
-        dateField = new javax.swing.JTextField();
-        itemSearchLabel = new javax.swing.JLabel();
-        customerNameField = new javax.swing.JTextField();
-        itemQtField = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        cartTable = new javax.swing.JTable();
-        cartItemQtLabel = new javax.swing.JLabel();
-        cartItemQtField = new javax.swing.JTextField();
-        itemQtUpdateButton = new javax.swing.JButton();
-        cartItemRemoveButton = new javax.swing.JButton();
-        cartLabel = new javax.swing.JLabel();
         genInvoiceButton = new javax.swing.JButton();
+        itemSearchLabel = new javax.swing.JLabel();
+        cartItemRemoveButton = new javax.swing.JButton();
+        customerNameLabel = new javax.swing.JLabel();
+        customerNameField = new javax.swing.JTextField();
+        itemAddButton = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         invoiceArea = new javax.swing.JTextArea();
-        clearButton = new javax.swing.JButton();
+        itemSearchField = new javax.swing.JTextField();
+        cartLabel = new javax.swing.JLabel();
+        headingLabel = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(980, 720));
 
-        itemAddButton.setBackground(new java.awt.Color(0, 102, 102));
-        itemAddButton.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        itemAddButton.setForeground(new java.awt.Color(255, 255, 255));
-        itemAddButton.setText("Add");
-        itemAddButton.addActionListener(new java.awt.event.ActionListener() {
+        itemQtField.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+
+        dateField.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        dateField.setEnabled(false);
+
+        cartItemQtLabel.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        cartItemQtLabel.setText("Quantity");
+
+        itemQtLabel.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        itemQtLabel.setText("Quantity");
+
+        clearButton.setBackground(new java.awt.Color(0, 102, 102));
+        clearButton.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        clearButton.setForeground(new java.awt.Color(255, 255, 255));
+        clearButton.setText("Clear");
+        clearButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemAddButtonActionPerformed(evt);
+                clearButtonActionPerformed(evt);
             }
         });
 
-        customerNameLabel.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        customerNameLabel.setText("Customer Name");
+        cartTable.setBackground(new java.awt.Color(102, 102, 102));
+        cartTable.setBorder(new javax.swing.border.MatteBorder(null));
+        cartTable.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        cartTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Item Name", "Price", "Quantity", "Total Price"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(cartTable);
+
+        itemQtUpdateButton.setBackground(new java.awt.Color(0, 102, 102));
+        itemQtUpdateButton.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        itemQtUpdateButton.setForeground(new java.awt.Color(255, 255, 255));
+        itemQtUpdateButton.setText("Update");
+        itemQtUpdateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemQtUpdateButtonActionPerformed(evt);
+            }
+        });
+
+        cartItemQtField.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
         dateLabel.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         dateLabel.setText("Order Date");
@@ -153,62 +189,18 @@ public class InvoiceForm extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(itemsTable);
 
-        itemSearchField.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        itemSearchField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                itemSearchFieldKeyReleased(evt);
+        genInvoiceButton.setBackground(new java.awt.Color(0, 102, 102));
+        genInvoiceButton.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        genInvoiceButton.setForeground(new java.awt.Color(255, 255, 255));
+        genInvoiceButton.setText("Generate Invoice");
+        genInvoiceButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                genInvoiceButtonActionPerformed(evt);
             }
         });
-
-        itemQtLabel.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        itemQtLabel.setText("Quantity");
-
-        dateField.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        dateField.setEnabled(false);
 
         itemSearchLabel.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         itemSearchLabel.setText("Search Item");
-
-        customerNameField.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        customerNameField.setEnabled(false);
-
-        itemQtField.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-
-        cartTable.setBackground(new java.awt.Color(102, 102, 102));
-        cartTable.setBorder(new javax.swing.border.MatteBorder(null));
-        cartTable.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        cartTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Item Name", "Price", "Quantity", "Total Price"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jScrollPane2.setViewportView(cartTable);
-
-        cartItemQtLabel.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        cartItemQtLabel.setText("Quantity");
-
-        cartItemQtField.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-
-        itemQtUpdateButton.setBackground(new java.awt.Color(0, 102, 102));
-        itemQtUpdateButton.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        itemQtUpdateButton.setForeground(new java.awt.Color(255, 255, 255));
-        itemQtUpdateButton.setText("Update");
-        itemQtUpdateButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemQtUpdateButtonActionPerformed(evt);
-            }
-        });
 
         cartItemRemoveButton.setBackground(new java.awt.Color(0, 102, 102));
         cartItemRemoveButton.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
@@ -220,19 +212,19 @@ public class InvoiceForm extends javax.swing.JFrame {
             }
         });
 
-        cartLabel.setBackground(new java.awt.Color(0, 0, 0));
-        cartLabel.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
-        cartLabel.setForeground(new java.awt.Color(255, 255, 255));
-        cartLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        cartLabel.setText("CART");
+        customerNameLabel.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        customerNameLabel.setText("Customer Name");
 
-        genInvoiceButton.setBackground(new java.awt.Color(0, 102, 102));
-        genInvoiceButton.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        genInvoiceButton.setForeground(new java.awt.Color(255, 255, 255));
-        genInvoiceButton.setText("Generate Invoice");
-        genInvoiceButton.addActionListener(new java.awt.event.ActionListener() {
+        customerNameField.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        customerNameField.setEnabled(false);
+
+        itemAddButton.setBackground(new java.awt.Color(0, 102, 102));
+        itemAddButton.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        itemAddButton.setForeground(new java.awt.Color(255, 255, 255));
+        itemAddButton.setText("Add");
+        itemAddButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                genInvoiceButtonActionPerformed(evt);
+                itemAddButtonActionPerformed(evt);
             }
         });
 
@@ -241,163 +233,191 @@ public class InvoiceForm extends javax.swing.JFrame {
         invoiceArea.setRows(5);
         jScrollPane3.setViewportView(invoiceArea);
 
-        clearButton.setBackground(new java.awt.Color(0, 102, 102));
-        clearButton.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        clearButton.setForeground(new java.awt.Color(255, 255, 255));
-        clearButton.setText("Clear");
-        clearButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clearButtonActionPerformed(evt);
+        itemSearchField.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        itemSearchField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                itemSearchFieldKeyReleased(evt);
             }
         });
 
-        javax.swing.GroupLayout rootPanelLayout = new javax.swing.GroupLayout(rootPanel);
-        rootPanel.setLayout(rootPanelLayout);
-        rootPanelLayout.setHorizontalGroup(
-            rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rootPanelLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rootPanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(rootPanelLayout.createSequentialGroup()
-                        .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(rootPanelLayout.createSequentialGroup()
-                                .addGap(71, 71, 71)
-                                .addComponent(itemQtLabel)
-                                .addGap(18, 18, 18)
-                                .addComponent(itemQtField, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(28, 28, 28)
-                                .addComponent(itemAddButton))
-                            .addGroup(rootPanelLayout.createSequentialGroup()
-                                .addGap(26, 26, 26)
-                                .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(rootPanelLayout.createSequentialGroup()
-                                        .addComponent(dateLabel)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(rootPanelLayout.createSequentialGroup()
-                                        .addComponent(itemSearchLabel)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(itemSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(rootPanelLayout.createSequentialGroup()
-                                .addGap(277, 277, 277)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cartLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(273, 273, 273))
-                    .addGroup(rootPanelLayout.createSequentialGroup()
-                        .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(rootPanelLayout.createSequentialGroup()
-                                .addGap(249, 249, 249)
-                                .addComponent(customerNameLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(customerNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(rootPanelLayout.createSequentialGroup()
-                                .addGap(365, 365, 365)
-                                .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(cartItemQtLabel)
-                                    .addComponent(genInvoiceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(27, 27, 27)
-                                .addComponent(cartItemQtField, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(itemQtUpdateButton)
-                                .addGap(18, 18, 18)
-                                .addComponent(cartItemRemoveButton)
-                                .addGap(20, 20, 20)
-                                .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
-        );
-        rootPanelLayout.setVerticalGroup(
-            rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rootPanelLayout.createSequentialGroup()
+        cartLabel.setBackground(new java.awt.Color(0, 0, 0));
+        cartLabel.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
+        cartLabel.setForeground(new java.awt.Color(255, 255, 255));
+        cartLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        cartLabel.setText("CART");
+
+        headingLabel.setBackground(new java.awt.Color(0, 0, 0));
+        headingLabel.setFont(new java.awt.Font("Century Gothic", 1, 32)); // NOI18N
+        headingLabel.setForeground(new java.awt.Color(255, 255, 255));
+        headingLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        headingLabel.setText("Invoice Dashboard");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(headingLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cartLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(115, 115, 115))
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jScrollPane1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(145, 145, 145)
+                .addComponent(itemQtLabel)
+                .addGap(18, 18, 18)
+                .addComponent(itemQtField, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(itemAddButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cartItemQtLabel)
+                .addGap(27, 27, 27)
+                .addComponent(cartItemQtField, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(itemQtUpdateButton)
+                .addGap(18, 18, 18)
+                .addComponent(cartItemRemoveButton)
+                .addGap(20, 20, 20)
+                .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(itemSearchLabel)
+                                .addGap(18, 18, 18)
+                                .addComponent(itemSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(dateLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(customerNameLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(customerNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(401, 401, 401)
+                        .addComponent(genInvoiceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(291, 291, 291)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(319, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(headingLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(dateLabel)
                     .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(customerNameLabel)
                     .addComponent(customerNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(rootPanelLayout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(itemSearchLabel)
-                            .addComponent(itemSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(rootPanelLayout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(cartLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(23, 23, 23)
-                .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(rootPanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(itemQtLabel)
-                            .addComponent(itemQtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(itemAddButton)
-                            .addComponent(cartItemQtLabel)
-                            .addComponent(cartItemQtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(itemQtUpdateButton)
-                            .addComponent(cartItemRemoveButton)
-                            .addComponent(clearButton)))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(genInvoiceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cartLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(itemSearchLabel)
+                    .addComponent(itemSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(itemQtLabel)
+                    .addComponent(itemQtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(itemAddButton)
+                    .addComponent(cartItemQtLabel)
+                    .addComponent(cartItemQtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(itemQtUpdateButton)
+                    .addComponent(cartItemRemoveButton)
+                    .addComponent(clearButton))
+                .addGap(18, 18, 18)
+                .addComponent(genInvoiceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(9, Short.MAX_VALUE))
         );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(rootPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 931, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(rootPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-
-        pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void itemSearchFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_itemSearchFieldKeyReleased
-        var tableModel = (DefaultTableModel) itemsTable.getModel();
-        var sorter = new TableRowSorter<>(tableModel);
+    private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
+        var tableModel = (DefaultTableModel) cartTable.getModel();
+        tableModel.setRowCount(0);
+    }//GEN-LAST:event_clearButtonActionPerformed
 
-        itemsTable.setRowSorter(sorter);
+    private void itemQtUpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemQtUpdateButtonActionPerformed
+        int selectedRow = cartTable.getSelectedRow();
 
-        var text = itemSearchField.getText();
-
-        var pattern = "^";
-
-        for (int i = 0; i < text.length(); i++) {
-            // Append space and skip iteration
-            if (text.charAt(i) == ' ') {
-                pattern += " ";
-                continue;
-            }
-
-            // Append character sets to match both lower and upper case
-            pattern += "[" + Character.toLowerCase(text.charAt(i))
-                    + Character.toUpperCase(text.charAt(i))
-                    + "]";
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Select item row before updating quantity");
+            return;
         }
 
-        // Append asterisk quantifier wildcard at end to match char if exists
-        pattern += ".*";
+        if (!validateData(cartItemQtField)) {
+            return;
+        }
 
-        sorter.setRowFilter(RowFilter.regexFilter(pattern));
-    }//GEN-LAST:event_itemSearchFieldKeyReleased
+        var newQuantity = Integer.parseInt(cartItemQtField.getText());
+        var price = Double.parseDouble(cartTable.getValueAt(selectedRow, 1).toString());
+
+        if (newQuantity == 0) {
+            var tableModel = (DefaultTableModel) cartTable.getModel();
+            tableModel.removeRow(selectedRow);
+
+        } else {
+            cartTable.setValueAt(newQuantity, selectedRow, 2);
+            cartTable.setValueAt(newQuantity * price, selectedRow, 3);
+        }
+    }//GEN-LAST:event_itemQtUpdateButtonActionPerformed
+
+    private void genInvoiceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genInvoiceButtonActionPerformed
+        if (cartTable.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Cart is empty");
+            return;
+        }
+
+        try {
+            var db = new Database();
+            var orderID = db.insertOrder(customerID);
+
+            var tableModel = (DefaultTableModel) cartTable.getModel();
+            var arr = tableModel.getDataVector();
+
+            // Insert each item from cart
+            for (var item : arr) {
+                var itemName = item.elementAt(0).toString();
+                var quantity = Integer.parseInt(item.elementAt(2).toString());
+
+                db.insertOrderItem(orderID, itemName, quantity);
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_genInvoiceButtonActionPerformed
+
+    private void cartItemRemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cartItemRemoveButtonActionPerformed
+        var selectedRows = cartTable.getSelectedRows();
+
+        if (selectedRows.length == 0) {
+            JOptionPane.showMessageDialog(this, "Select item row before removing");
+            return;
+        }
+
+        // Remove selected items from cart
+        for (var i = 0; i < selectedRows.length; i++) {
+            var tableModel = (DefaultTableModel) cartTable.getModel();
+            tableModel.removeRow(selectedRows[i] - i);
+        }
+    }//GEN-LAST:event_cartItemRemoveButtonActionPerformed
 
     private void itemAddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAddButtonActionPerformed
         int selectedRow = itemsTable.getSelectedRow();
@@ -438,76 +458,34 @@ public class InvoiceForm extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_itemAddButtonActionPerformed
 
-    private void itemQtUpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemQtUpdateButtonActionPerformed
-        int selectedRow = cartTable.getSelectedRow();
+    private void itemSearchFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_itemSearchFieldKeyReleased
+        var tableModel = (DefaultTableModel) itemsTable.getModel();
+        var sorter = new TableRowSorter<>(tableModel);
 
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Select item row before updating quantity");
-            return;
-        }
+        itemsTable.setRowSorter(sorter);
 
-        if (!validateData(cartItemQtField)) {
-            return;
-        }
+        var text = itemSearchField.getText();
 
-        var newQuantity = Integer.parseInt(cartItemQtField.getText());
-        var price = Double.parseDouble(cartTable.getValueAt(selectedRow, 1).toString());
+        var pattern = "^";
 
-        if (newQuantity == 0) {
-            var tableModel = (DefaultTableModel) cartTable.getModel();
-            tableModel.removeRow(selectedRow);
-
-        } else {
-            cartTable.setValueAt(newQuantity, selectedRow, 2);
-            cartTable.setValueAt(newQuantity * price, selectedRow, 3);
-        }
-    }//GEN-LAST:event_itemQtUpdateButtonActionPerformed
-
-    private void cartItemRemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cartItemRemoveButtonActionPerformed
-        var selectedRows = cartTable.getSelectedRows();
-
-        if (selectedRows.length == 0) {
-            JOptionPane.showMessageDialog(this, "Select item row before removing");
-            return;
-        }
-
-        // Remove selected items from cart
-        for (var i = 0; i < selectedRows.length; i++) {
-            var tableModel = (DefaultTableModel) cartTable.getModel();
-            tableModel.removeRow(selectedRows[i] - i);
-        }
-    }//GEN-LAST:event_cartItemRemoveButtonActionPerformed
-
-    private void genInvoiceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genInvoiceButtonActionPerformed
-        if (cartTable.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "Cart is empty");
-            return;
-        }
-
-        try {
-            var db = new Database();
-            var orderID = db.insertOrder(customerID);
-
-            var tableModel = (DefaultTableModel) cartTable.getModel();
-            var arr = tableModel.getDataVector();
-
-            // Insert each item from cart
-            for (var item : arr) {
-                var itemName = item.elementAt(0).toString();
-                var quantity = Integer.parseInt(item.elementAt(2).toString());
-
-                db.insertOrderItem(orderID, itemName, quantity);
+        for (int i = 0; i < text.length(); i++) {
+            // Append space and skip iteration
+            if (text.charAt(i) == ' ') {
+                pattern += " ";
+                continue;
             }
 
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            // Append character sets to match both lower and upper case
+            pattern += "[" + Character.toLowerCase(text.charAt(i))
+                    + Character.toUpperCase(text.charAt(i))
+                    + "]";
         }
-    }//GEN-LAST:event_genInvoiceButtonActionPerformed
 
-    private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
-        var tableModel = (DefaultTableModel) cartTable.getModel();
-        tableModel.setRowCount(0);
-    }//GEN-LAST:event_clearButtonActionPerformed
+        // Append asterisk quantifier wildcard at end to match char if exists
+        pattern += ".*";
+
+        sorter.setRowFilter(RowFilter.regexFilter(pattern));
+    }//GEN-LAST:event_itemSearchFieldKeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField cartItemQtField;
@@ -521,6 +499,7 @@ public class InvoiceForm extends javax.swing.JFrame {
     private javax.swing.JTextField dateField;
     private javax.swing.JLabel dateLabel;
     private javax.swing.JButton genInvoiceButton;
+    private javax.swing.JLabel headingLabel;
     private javax.swing.JTextArea invoiceArea;
     private javax.swing.JButton itemAddButton;
     private javax.swing.JTextField itemQtField;
@@ -532,6 +511,5 @@ public class InvoiceForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JPanel rootPanel;
     // End of variables declaration//GEN-END:variables
 }

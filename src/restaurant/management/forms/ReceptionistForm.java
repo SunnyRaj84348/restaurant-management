@@ -2,10 +2,31 @@ package restaurant.management.forms;
 
 public class ReceptionistForm extends javax.swing.JFrame {
 
+    private InvoiceForm invoiceForm;
+    private OrderHistoryForm orderHistoryForm;
+
+    private int customerID;
+
     public ReceptionistForm() {
         initComponents();
 
-        jTabbedPane1.add(new CustomerPanel());
+        jTabbedPane1.addTab("", new CustomerForm(this));
+    }
+
+    void enableButtons() {
+        invoiceButton.setEnabled(true);
+        orderHistoryButton.setEnabled(true);
+    }
+
+    void initInvoiceForm(int customerID) {
+        this.customerID = customerID;
+
+        invoiceForm = new InvoiceForm(customerID);
+        jTabbedPane1.addTab("", invoiceForm);
+    }
+
+    private void initOrderHistoryForm() {
+        orderHistoryForm = new OrderHistoryForm(customerID);
     }
 
     @SuppressWarnings("unchecked")
@@ -17,9 +38,9 @@ public class ReceptionistForm extends javax.swing.JFrame {
         dashLabel = new javax.swing.JLabel();
         logoutButton = new javax.swing.JButton();
         leftPanel = new javax.swing.JPanel();
-        empButton = new javax.swing.JButton();
-        itemsButton = new javax.swing.JButton();
-        itemsButton1 = new javax.swing.JButton();
+        customerButton = new javax.swing.JButton();
+        orderHistoryButton = new javax.swing.JButton();
+        invoiceButton = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -53,35 +74,37 @@ public class ReceptionistForm extends javax.swing.JFrame {
         leftPanel.setBackground(new java.awt.Color(49, 51, 53));
         leftPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        empButton.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        empButton.setForeground(new java.awt.Color(255, 255, 255));
-        empButton.setText("Customer");
-        empButton.addActionListener(new java.awt.event.ActionListener() {
+        customerButton.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        customerButton.setForeground(new java.awt.Color(255, 255, 255));
+        customerButton.setText("Customer");
+        customerButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                empButtonActionPerformed(evt);
+                customerButtonActionPerformed(evt);
             }
         });
-        leftPanel.add(empButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 130, 44));
+        leftPanel.add(customerButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 130, 44));
 
-        itemsButton.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        itemsButton.setForeground(new java.awt.Color(255, 255, 255));
-        itemsButton.setText("Order History");
-        itemsButton.addActionListener(new java.awt.event.ActionListener() {
+        orderHistoryButton.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        orderHistoryButton.setForeground(new java.awt.Color(255, 255, 255));
+        orderHistoryButton.setText("Order History");
+        orderHistoryButton.setEnabled(false);
+        orderHistoryButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemsButtonActionPerformed(evt);
+                orderHistoryButtonActionPerformed(evt);
             }
         });
-        leftPanel.add(itemsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 130, 44));
+        leftPanel.add(orderHistoryButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 130, 44));
 
-        itemsButton1.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        itemsButton1.setForeground(new java.awt.Color(255, 255, 255));
-        itemsButton1.setText("Invoice");
-        itemsButton1.addActionListener(new java.awt.event.ActionListener() {
+        invoiceButton.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        invoiceButton.setForeground(new java.awt.Color(255, 255, 255));
+        invoiceButton.setText("Invoice");
+        invoiceButton.setEnabled(false);
+        invoiceButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemsButton1ActionPerformed(evt);
+                invoiceButtonActionPerformed(evt);
             }
         });
-        leftPanel.add(itemsButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 130, 44));
+        leftPanel.add(invoiceButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 130, 44));
 
         rootPanel.add(leftPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 58, 190, 710));
         rootPanel.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(193, 18, 980, 750));
@@ -100,6 +123,7 @@ public class ReceptionistForm extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
@@ -115,29 +139,29 @@ public class ReceptionistForm extends javax.swing.JFrame {
         loginForm.setVisible(true);
     }//GEN-LAST:event_logoutButtonActionPerformed
 
-    private void empButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_empButtonActionPerformed
+    private void customerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerButtonActionPerformed
         jTabbedPane1.setSelectedIndex(0);
-    }//GEN-LAST:event_empButtonActionPerformed
+    }//GEN-LAST:event_customerButtonActionPerformed
 
-    private void itemsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemsButtonActionPerformed
-        jTabbedPane1.add(new OrderHistoryPanel());
-        jTabbedPane1.setSelectedIndex(1);
-    }//GEN-LAST:event_itemsButtonActionPerformed
+    private void orderHistoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderHistoryButtonActionPerformed
+        initOrderHistoryForm();
+        jTabbedPane1.addTab("", orderHistoryForm);
+        jTabbedPane1.setSelectedComponent(orderHistoryForm);
+    }//GEN-LAST:event_orderHistoryButtonActionPerformed
 
-    private void itemsButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemsButton1ActionPerformed
-        jTabbedPane1.add(new InvoicePanel());
-        jTabbedPane1.setSelectedIndex(1);
-    }//GEN-LAST:event_itemsButton1ActionPerformed
+    private void invoiceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_invoiceButtonActionPerformed
+        jTabbedPane1.setSelectedComponent(invoiceForm);
+    }//GEN-LAST:event_invoiceButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton customerButton;
     private javax.swing.JLabel dashLabel;
-    private javax.swing.JButton empButton;
     private javax.swing.JPanel headerPanel;
-    private javax.swing.JButton itemsButton;
-    private javax.swing.JButton itemsButton1;
+    private javax.swing.JButton invoiceButton;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel leftPanel;
     private javax.swing.JButton logoutButton;
+    private javax.swing.JButton orderHistoryButton;
     private javax.swing.JPanel rootPanel;
     // End of variables declaration//GEN-END:variables
 }
