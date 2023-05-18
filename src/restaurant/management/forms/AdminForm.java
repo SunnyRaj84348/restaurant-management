@@ -3,19 +3,19 @@ package restaurant.management.forms;
 import com.formdev.flatlaf.FlatDarkLaf;
 
 public class AdminForm extends javax.swing.JFrame {
-    
+
     public AdminForm() {
         // Set FlatLaf Dark theme
         FlatDarkLaf.setup();
-        
+
         initComponents();
-        
+
         jTabbedPane1.add(new EmployeeForm());
         jTabbedPane1.add(new ItemsForm());
-        
+
         empButton.grabFocus();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -82,20 +82,20 @@ public class AdminForm extends javax.swing.JFrame {
         });
         leftPanel.add(itemsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 170, 44));
 
-        rootPanel.add(leftPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 58, 210, 630));
-        rootPanel.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(213, 18, 740, 670));
+        rootPanel.add(leftPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 58, 210, 650));
+        rootPanel.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(213, 18, 740, 690));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(rootPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 955, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(rootPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 950, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rootPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(rootPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 708, Short.MAX_VALUE)
         );
 
         pack();
@@ -105,11 +105,11 @@ public class AdminForm extends javax.swing.JFrame {
     private void itemsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemsButtonActionPerformed
         jTabbedPane1.setSelectedIndex(1);
     }//GEN-LAST:event_itemsButtonActionPerformed
-    
+
     private void empButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_empButtonActionPerformed
         jTabbedPane1.setSelectedIndex(0);
     }//GEN-LAST:event_empButtonActionPerformed
-    
+
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
         // Dispose all allocated forms
         for (var form : LoginForm.subForms) {
@@ -118,7 +118,7 @@ public class AdminForm extends javax.swing.JFrame {
 
         // Remove all forms from list
         LoginForm.subForms.clear();
-        
+
         var loginForm = new LoginForm();
         loginForm.setVisible(true);
     }//GEN-LAST:event_logoutButtonActionPerformed

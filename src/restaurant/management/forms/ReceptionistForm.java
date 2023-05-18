@@ -44,6 +44,7 @@ public class ReceptionistForm extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         rootPanel.setBackground(new java.awt.Color(51, 51, 51));
         rootPanel.setPreferredSize(new java.awt.Dimension(929, 688));

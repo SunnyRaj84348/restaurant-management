@@ -276,6 +276,7 @@ public class ItemsForm extends javax.swing.JPanel {
         clearTableButton1.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         clearTableButton1.setForeground(new java.awt.Color(255, 255, 255));
         clearTableButton1.setText("Clear Table ");
+        clearTableButton1.setPreferredSize(new java.awt.Dimension(101, 22));
         clearTableButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 clearTableButton1ActionPerformed(evt);
@@ -288,21 +289,21 @@ public class ItemsForm extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(headingLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 694, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(96, Short.MAX_VALUE)
+                .addComponent(addButton)
+                .addGap(34, 34, 34)
+                .addComponent(updateButton)
+                .addGap(34, 34, 34)
+                .addComponent(removeButton)
+                .addGap(34, 34, 34)
+                .addComponent(showItemsButton)
+                .addGap(34, 34, 34)
+                .addComponent(clearButton)
+                .addGap(111, 111, 111))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(103, 103, 103)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(100, 100, 100)
-                                .addComponent(updateButton)
-                                .addGap(32, 32, 32)
-                                .addComponent(removeButton)
-                                .addGap(34, 34, 34)
-                                .addComponent(showItemsButton)
-                                .addGap(39, 39, 39)
-                                .addComponent(clearButton))
-                            .addComponent(addButton)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(69, 69, 69)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -328,13 +329,11 @@ public class ItemsForm extends javax.swing.JPanel {
                                         .addGap(12, 12, 12)
                                         .addComponent(categoryRemoveButton))
                                     .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nameSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(109, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(clearTableButton1)
-                .addGap(304, 304, 304))
-            .addComponent(jScrollPane1)
+                                    .addComponent(nameSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(306, 306, 306)
+                        .addComponent(clearTableButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
