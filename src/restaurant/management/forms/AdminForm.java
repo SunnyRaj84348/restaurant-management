@@ -3,140 +3,113 @@ package restaurant.management.forms;
 import com.formdev.flatlaf.FlatDarkLaf;
 
 public class AdminForm extends javax.swing.JFrame {
-
+    
     public AdminForm() {
         // Set FlatLaf Dark theme
         FlatDarkLaf.setup();
-
+        
         initComponents();
+        
+        jTabbedPane1.add(new EmployeeForm());
+        jTabbedPane1.add(new ItemsForm());
+        
+        empButton.grabFocus();
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         rootPanel = new javax.swing.JPanel();
-        empButton = new javax.swing.JButton();
-        itemsButton = new javax.swing.JButton();
         headerPanel = new javax.swing.JPanel();
         dashLabel = new javax.swing.JLabel();
         logoutButton = new javax.swing.JButton();
+        leftPanel = new javax.swing.JPanel();
+        empButton = new javax.swing.JButton();
+        itemsButton = new javax.swing.JButton();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(89, 92, 87));
-        setUndecorated(true);
+        setResizable(false);
 
         rootPanel.setBackground(new java.awt.Color(51, 51, 51));
-
-        empButton.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        empButton.setForeground(new java.awt.Color(255, 255, 255));
-        empButton.setText("Manage Employee");
-        empButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                empButtonActionPerformed(evt);
-            }
-        });
-
-        itemsButton.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        itemsButton.setForeground(new java.awt.Color(255, 255, 255));
-        itemsButton.setText("Manage Dish Items");
-        itemsButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemsButtonActionPerformed(evt);
-            }
-        });
+        rootPanel.setPreferredSize(new java.awt.Dimension(929, 688));
+        rootPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         headerPanel.setBackground(new java.awt.Color(13, 13, 18));
+        headerPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         dashLabel.setBackground(new java.awt.Color(0, 0, 0));
         dashLabel.setFont(new java.awt.Font("Century Gothic", 1, 20)); // NOI18N
         dashLabel.setForeground(new java.awt.Color(255, 255, 255));
         dashLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         dashLabel.setText("Admin Dashboard");
+        headerPanel.add(dashLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 60));
 
-        logoutButton.setFont(new java.awt.Font("Century Gothic", 1, 10)); // NOI18N
+        logoutButton.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
         logoutButton.setForeground(new java.awt.Color(255, 255, 255));
-        logoutButton.setText("Logout");
+        logoutButton.setText("LOGOUT");
         logoutButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 logoutButtonActionPerformed(evt);
             }
         });
+        headerPanel.add(logoutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 10, 80, 20));
 
-        javax.swing.GroupLayout headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
-        headerPanel.setLayout(headerPanelLayout);
-        headerPanelLayout.setHorizontalGroup(
-            headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(headerPanelLayout.createSequentialGroup()
-                .addComponent(dashLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(logoutButton)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        headerPanelLayout.setVerticalGroup(
-            headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(dashLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
-            .addGroup(headerPanelLayout.createSequentialGroup()
-                .addComponent(logoutButton)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+        rootPanel.add(headerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, -1));
 
-        javax.swing.GroupLayout rootPanelLayout = new javax.swing.GroupLayout(rootPanel);
-        rootPanel.setLayout(rootPanelLayout);
-        rootPanelLayout.setHorizontalGroup(
-            rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(rootPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(empButton)
-                .addGap(25, 25, 25)
-                .addComponent(itemsButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        rootPanelLayout.setVerticalGroup(
-            rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rootPanelLayout.createSequentialGroup()
-                .addComponent(headerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(65, 65, 65)
-                .addGroup(rootPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(empButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(itemsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(74, Short.MAX_VALUE))
-        );
+        leftPanel.setBackground(new java.awt.Color(49, 51, 53));
+        leftPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        empButton.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        empButton.setForeground(new java.awt.Color(255, 255, 255));
+        empButton.setText("Employee");
+        empButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                empButtonActionPerformed(evt);
+            }
+        });
+        leftPanel.add(empButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 170, 44));
+
+        itemsButton.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        itemsButton.setForeground(new java.awt.Color(255, 255, 255));
+        itemsButton.setText("Dish Items");
+        itemsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemsButtonActionPerformed(evt);
+            }
+        });
+        leftPanel.add(itemsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 170, 44));
+
+        rootPanel.add(leftPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 58, 210, 630));
+        rootPanel.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(213, 18, 740, 670));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rootPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(rootPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 955, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rootPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(rootPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void empButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_empButtonActionPerformed
-        var employeeForm = new EmployeeForm();
-        employeeForm.setVisible(true);
-        employeeForm.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-
-        // Add employee form to subForm list
-        LoginForm.subForms.add(employeeForm);
-    }//GEN-LAST:event_empButtonActionPerformed
-
     private void itemsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemsButtonActionPerformed
-        var itemsForm = new ItemsForm();
-        itemsForm.setVisible(true);
-        itemsForm.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-
-        // Add items form to subForm list
-        LoginForm.subForms.add(itemsForm);
+        jTabbedPane1.setSelectedIndex(1);
     }//GEN-LAST:event_itemsButtonActionPerformed
-
+    
+    private void empButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_empButtonActionPerformed
+        jTabbedPane1.setSelectedIndex(0);
+    }//GEN-LAST:event_empButtonActionPerformed
+    
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
         // Dispose all allocated forms
         for (var form : LoginForm.subForms) {
@@ -145,7 +118,7 @@ public class AdminForm extends javax.swing.JFrame {
 
         // Remove all forms from list
         LoginForm.subForms.clear();
-
+        
         var loginForm = new LoginForm();
         loginForm.setVisible(true);
     }//GEN-LAST:event_logoutButtonActionPerformed
@@ -155,6 +128,8 @@ public class AdminForm extends javax.swing.JFrame {
     private javax.swing.JButton empButton;
     private javax.swing.JPanel headerPanel;
     private javax.swing.JButton itemsButton;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JPanel leftPanel;
     private javax.swing.JButton logoutButton;
     private javax.swing.JPanel rootPanel;
     // End of variables declaration//GEN-END:variables
