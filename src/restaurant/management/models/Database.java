@@ -538,4 +538,22 @@ public class Database {
         stmt.setInt(1, customerID);
         stmt.executeUpdate();
     }
+
+    public void removeRole(String roleName) throws SQLException {
+        var stmt = con.prepareStatement(
+                "DELETE FROM employee_role WHERE erole_name = ?"
+        );
+
+        stmt.setString(1, roleName);
+        stmt.executeUpdate();
+    }
+
+    public void removeCategory(String categoryName) throws SQLException {
+        var stmt = con.prepareStatement(
+                "DELETE FROM item_category WHERE category_name = ?"
+        );
+
+        stmt.setString(1, categoryName);
+        stmt.executeUpdate();
+    }
 }

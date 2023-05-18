@@ -1,14 +1,14 @@
 package restaurant.management.forms;
 
 import com.formdev.flatlaf.FlatDarkLaf;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import restaurant.management.models.Database;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import restaurant.management.models.Database;
 
 public class ItemsForm extends javax.swing.JPanel {
 
@@ -148,6 +148,11 @@ public class ItemsForm extends javax.swing.JPanel {
 
         categoryRemoveButton.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         categoryRemoveButton.setText("Remove");
+        categoryRemoveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                categoryRemoveButtonActionPerformed(evt);
+            }
+        });
 
         newCategoryButton.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         newCategoryButton.setText("New");
@@ -359,7 +364,7 @@ public class ItemsForm extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(priceLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(updateButton)
@@ -542,6 +547,26 @@ public class ItemsForm extends javax.swing.JPanel {
         var tableModel = (DefaultTableModel) itemsTable.getModel();
         tableModel.setRowCount(0);
     }//GEN-LAST:event_clearTableButton1ActionPerformed
+
+    private void categoryRemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryRemoveButtonActionPerformed
+        if (categoryCBox.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Select category to be removed");
+            return;
+        }
+
+        try {
+            var db = new Database();
+            db.removeCategory(categoryCBox.getSelectedItem().toString());
+
+            categoryCBox.removeItemAt(categoryCBox.getSelectedIndex());
+
+        } catch (SQLIntegrityConstraintViolationException e) {
+            JOptionPane.showMessageDialog(this, "One or more item exist under this category");
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_categoryRemoveButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;

@@ -2,14 +2,14 @@ package restaurant.management.forms;
 
 import com.formdev.flatlaf.FlatDarkLaf;
 import java.math.BigInteger;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import restaurant.management.models.Database;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import restaurant.management.models.Database;
 
 public class EmployeeForm extends javax.swing.JPanel {
 
@@ -245,6 +245,11 @@ public class EmployeeForm extends javax.swing.JPanel {
 
         roleRemoveButton.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         roleRemoveButton.setText("Remove");
+        roleRemoveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                roleRemoveButtonActionPerformed(evt);
+            }
+        });
 
         phoneLabel.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         phoneLabel.setText("Phone");
@@ -749,6 +754,26 @@ public class EmployeeForm extends javax.swing.JPanel {
             e.printStackTrace();
         }
     }//GEN-LAST:event_addButtonActionPerformed
+
+    private void roleRemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roleRemoveButtonActionPerformed
+        if (roleCBox.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Select role to be removed");
+            return;
+        }
+
+        try {
+            var db = new Database();
+            db.removeRole(roleCBox.getSelectedItem().toString());
+
+            roleCBox.removeItemAt(roleCBox.getSelectedIndex());
+
+        } catch (SQLIntegrityConstraintViolationException e) {
+            JOptionPane.showMessageDialog(this, "Role is assigned to one or more employee");
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_roleRemoveButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
