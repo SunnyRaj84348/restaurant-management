@@ -178,11 +178,11 @@ public class LoginForm extends javax.swing.JFrame {
                 subForms.add(adminForm);
 
             } else if (employeeRole.roleName.equals("Receptionist")) {
-                var customerForm = new CustomerForm();
-                customerForm.setVisible(true);
+                var receptionistForm = new ReceptionistForm();
+                receptionistForm.setVisible(true);
 
-                // Add customer form to subForm list
-                subForms.add(customerForm);
+                // Add receptionist form to subForm list
+                subForms.add(receptionistForm);
             }
 
             this.dispose();
