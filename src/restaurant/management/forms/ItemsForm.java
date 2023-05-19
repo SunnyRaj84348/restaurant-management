@@ -421,13 +421,10 @@ public class ItemsForm extends javax.swing.JPanel {
     private void itemsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemsTableMouseClicked
         var selectedRow = itemsTable.getSelectedRow();
 
-        var tableModel = (DefaultTableModel) itemsTable.getModel();
-        var arr = tableModel.getDataVector();
-
-        categoryCBox.setSelectedItem(arr.elementAt(selectedRow).elementAt(1));
-        idField.setText(arr.elementAt(selectedRow).elementAt(0).toString());
-        nameField.setText(arr.elementAt(selectedRow).elementAt(3).toString());
-        priceField.setText(arr.elementAt(selectedRow).elementAt(4).toString());
+        categoryCBox.setSelectedItem(itemsTable.getValueAt(selectedRow, 1));
+        idField.setText(itemsTable.getValueAt(selectedRow, 0).toString());
+        nameField.setText(itemsTable.getValueAt(selectedRow, 3).toString());
+        priceField.setText(itemsTable.getValueAt(selectedRow, 4).toString());
     }//GEN-LAST:event_itemsTableMouseClicked
 
     private void nameSearchFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameSearchFieldKeyReleased

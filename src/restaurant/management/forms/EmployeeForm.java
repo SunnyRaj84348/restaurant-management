@@ -643,19 +643,15 @@ public class EmployeeForm extends javax.swing.JPanel {
     }//GEN-LAST:event_newRoleButtonActionPerformed
 
     private void empTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_empTableMouseClicked
-        var row = empTable.getSelectedRow();
+        var selectedRow = empTable.getSelectedRow();
 
-        var tableModel = (DefaultTableModel) empTable.getModel();
-        var tableVector = tableModel.getDataVector();
+        idField.setText(empTable.getValueAt(selectedRow, 0).toString());
+        roleCBox.setSelectedItem(empTable.getValueAt(selectedRow, 1).toString());
+        nameField.setText(empTable.getValueAt(selectedRow, 2).toString());
+        phoneField.setText(empTable.getValueAt(selectedRow, 3).toString());
+        addressArea.setText(empTable.getValueAt(selectedRow, 4).toString());
+        salaryField.setText(empTable.getValueAt(selectedRow, 5).toString());
 
-        idField.setText(tableVector.elementAt(row).elementAt(0).toString());
-        roleCBox.setSelectedItem(tableVector.elementAt(row).elementAt(1));
-        nameField.setText(tableVector.elementAt(row).elementAt(2).toString());
-        phoneField.setText(tableVector.elementAt(row).elementAt(3).toString());
-        addressArea.setText(tableVector.elementAt(row).elementAt(4).toString());
-        salaryField.setText(tableVector.elementAt(row).elementAt(5).toString());
-
-        empSearchField.setText("");
         userField.setText("");
         passwordField.setText("");
 
@@ -664,7 +660,7 @@ public class EmployeeForm extends javax.swing.JPanel {
         // set username field only if role is either admin or receptionist
         if (role.equals("Admin") || role.equals("Receptionist")) {
             try {
-                var empID = Integer.parseInt(tableVector.elementAt(row).elementAt(0).toString());
+                var empID = Integer.parseInt(idField.getText());
 
                 var db = new Database();
                 var creds = db.getCredentials(empID);
