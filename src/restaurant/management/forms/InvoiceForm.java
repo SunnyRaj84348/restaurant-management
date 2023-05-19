@@ -112,6 +112,7 @@ public class InvoiceForm extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(980, 720));
 
         itemQtField.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        itemQtField.setText("1");
 
         dateField.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         dateField.setEnabled(false);
@@ -149,6 +150,11 @@ public class InvoiceForm extends javax.swing.JPanel {
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+        });
+        cartTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cartTableMouseClicked(evt);
             }
         });
         jScrollPane2.setViewportView(cartTable);
@@ -486,6 +492,12 @@ public class InvoiceForm extends javax.swing.JPanel {
 
         sorter.setRowFilter(RowFilter.regexFilter(pattern));
     }//GEN-LAST:event_itemSearchFieldKeyReleased
+
+    private void cartTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartTableMouseClicked
+        int selectedRow = cartTable.getSelectedRow();
+
+        cartItemQtField.setText(cartTable.getValueAt(selectedRow, 2).toString());
+    }//GEN-LAST:event_cartTableMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField cartItemQtField;
