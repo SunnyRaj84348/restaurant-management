@@ -376,9 +376,9 @@ public class CustomerForm extends javax.swing.JPanel {
 
             db.insertCustomer(nameField.getText(), phoneField.getText(), addressArea.getText());
 
-            JOptionPane.showMessageDialog(this, "Customer added");
-
             clearFields();
+
+            JOptionPane.showMessageDialog(this, "Customer added");
 
         } catch (SQLIntegrityConstraintViolationException e) {
             JOptionPane.showMessageDialog(this, "Phone no. already exists");
@@ -410,16 +410,12 @@ public class CustomerForm extends javax.swing.JPanel {
             db.updateCustomer(Integer.parseInt(idField.getText()), nameField.getText(),
                     phoneField.getText(), addressArea.getText());
 
-            var tableModel = (DefaultTableModel) customerTable.getModel();
-
-            tableModel.setValueAt(idField.getText(), selectedRow, 0);
-            tableModel.setValueAt(nameField.getText(), selectedRow, 1);
-            tableModel.setValueAt(phoneField.getText(), selectedRow, 2);
-            tableModel.setValueAt(addressArea.getText(), selectedRow, 3);
+            customerTable.setValueAt(idField.getText(), selectedRow, 0);
+            customerTable.setValueAt(nameField.getText(), selectedRow, 1);
+            customerTable.setValueAt(phoneField.getText(), selectedRow, 2);
+            customerTable.setValueAt(addressArea.getText(), selectedRow, 3);
 
             JOptionPane.showMessageDialog(this, "Data updated");
-
-            clearFields();
 
         } catch (SQLIntegrityConstraintViolationException e) {
             JOptionPane.showMessageDialog(this, "Phone no. already exists");

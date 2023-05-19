@@ -474,8 +474,13 @@ public class ItemsForm extends javax.swing.JPanel {
                 db.removeItem(itemID);
 
                 var tableModel = (DefaultTableModel) itemsTable.getModel();
+                var arr = tableModel.getDataVector();
 
-                tableModel.removeRow(selectedRows[i] - i);
+                for (int row = 0; row < arr.size(); row++) {
+                    if (arr.elementAt(row).elementAt(0).equals(itemID)) {
+                        tableModel.removeRow(row);
+                    }
+                }
             }
 
             clearFields();
@@ -511,12 +516,10 @@ public class ItemsForm extends javax.swing.JPanel {
                     categoryCBox.getSelectedItem().toString(), Double.parseDouble(priceField.getText())
             );
 
-            var tableModel = (DefaultTableModel) itemsTable.getModel();
-
-            tableModel.setValueAt(categoryCBox.getSelectedItem(), selectedRow, 1);
-            tableModel.setValueAt(db.getCategory(categoryCBox.getSelectedItem().toString()).itemCategoryType, selectedRow, 2);
-            tableModel.setValueAt(nameField.getText(), selectedRow, 3);
-            tableModel.setValueAt(priceField.getText(), selectedRow, 4);
+            itemsTable.setValueAt(categoryCBox.getSelectedItem(), selectedRow, 1);
+            itemsTable.setValueAt(db.getCategory(categoryCBox.getSelectedItem().toString()).itemCategoryType, selectedRow, 2);
+            itemsTable.setValueAt(nameField.getText(), selectedRow, 3);
+            itemsTable.setValueAt(priceField.getText(), selectedRow, 4);
 
             JOptionPane.showMessageDialog(this, "Item Updated");
 

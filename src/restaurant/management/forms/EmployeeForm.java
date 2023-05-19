@@ -545,14 +545,12 @@ public class EmployeeForm extends javax.swing.JPanel {
                 db.deleteCredentials(empID);
             }
 
-            var tableModel = (DefaultTableModel) empTable.getModel();
-
-            tableModel.setValueAt(idField.getText(), selectedRow, 0);
-            tableModel.setValueAt(roleCBox.getSelectedItem(), selectedRow, 1);
-            tableModel.setValueAt(nameField.getText(), selectedRow, 2);
-            tableModel.setValueAt(phoneField.getText(), selectedRow, 3);
-            tableModel.setValueAt(addressArea.getText(), selectedRow, 4);
-            tableModel.setValueAt(salaryField.getText(), selectedRow, 5);
+            empTable.setValueAt(idField.getText(), selectedRow, 0);
+            empTable.setValueAt(roleCBox.getSelectedItem(), selectedRow, 1);
+            empTable.setValueAt(nameField.getText(), selectedRow, 2);
+            empTable.setValueAt(phoneField.getText(), selectedRow, 3);
+            empTable.setValueAt(addressArea.getText(), selectedRow, 4);
+            empTable.setValueAt(salaryField.getText(), selectedRow, 5);
 
             JOptionPane.showMessageDialog(this, "Data updated successfully");
 
@@ -593,8 +591,13 @@ public class EmployeeForm extends javax.swing.JPanel {
                 db.removeEmployee(empID);
 
                 var tableModel = (DefaultTableModel) empTable.getModel();
+                var arr = tableModel.getDataVector();
 
-                tableModel.removeRow(selectedRows[i] - i);
+                for (int row = 0; row < arr.size(); row++) {
+                    if (arr.elementAt(row).elementAt(0).equals(empID)) {
+                        tableModel.removeRow(row);
+                    }
+                }
             }
 
             clearFields();
