@@ -13,8 +13,6 @@ import restaurant.management.models.Database;
 
 public class EmployeeForm extends javax.swing.JPanel {
 
-    static String newRoleName;
-
     public EmployeeForm() {
         // Set FlatLaf Dark theme
         FlatDarkLaf.setup();
@@ -611,10 +609,7 @@ public class EmployeeForm extends javax.swing.JPanel {
     }//GEN-LAST:event_removeButtonActionPerformed
 
     private void roleCBoxPopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_roleCBoxPopupMenuWillBecomeVisible
-        if (newRoleName != null) {
-            roleCBox.addItem(newRoleName);
-            newRoleName = null;
-        }
+        addRoles();
     }//GEN-LAST:event_roleCBoxPopupMenuWillBecomeVisible
 
     private void roleCBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roleCBoxActionPerformed

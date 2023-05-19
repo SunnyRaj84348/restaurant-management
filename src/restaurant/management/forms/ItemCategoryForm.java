@@ -129,7 +129,6 @@ public class ItemCategoryForm extends javax.swing.JFrame {
             var db = new Database();
             db.insertItemCategory(categoryField.getText(), categoryTypeCBox.getSelectedItem().toString());
 
-            ItemsForm.newItemcategory = categoryField.getText();
             JOptionPane.showMessageDialog(this, "Category added");
 
         } catch (SQLIntegrityConstraintViolationException e) {

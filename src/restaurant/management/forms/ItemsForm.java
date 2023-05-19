@@ -12,8 +12,6 @@ import restaurant.management.models.Database;
 
 public class ItemsForm extends javax.swing.JPanel {
 
-    static String newItemcategory;
-
     public ItemsForm() {
         // Set FlatLaf Dark theme
         FlatDarkLaf.setup();
@@ -536,10 +534,7 @@ public class ItemsForm extends javax.swing.JPanel {
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void categoryCBoxPopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_categoryCBoxPopupMenuWillBecomeVisible
-        if (newItemcategory != null) {
-            categoryCBox.addItem(newItemcategory);
-            newItemcategory = null;
-        }
+        addItemCategory();
     }//GEN-LAST:event_categoryCBoxPopupMenuWillBecomeVisible
 
     private void clearTableButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearTableButton1ActionPerformed
