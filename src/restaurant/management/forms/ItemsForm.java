@@ -406,9 +406,9 @@ public class ItemsForm extends javax.swing.JPanel {
                     Double.parseDouble(priceField.getText())
             );
 
-            JOptionPane.showMessageDialog(this, "Item added");
-
             clearFields();
+
+            JOptionPane.showMessageDialog(this, "Item added");
 
         } catch (SQLIntegrityConstraintViolationException e) {
             JOptionPane.showMessageDialog(this, "Item already exists");
@@ -481,9 +481,9 @@ public class ItemsForm extends javax.swing.JPanel {
                 tableModel.removeRow(selectedRows[i] - i);
             }
 
-            JOptionPane.showMessageDialog(this, "Item Removed");
-
             clearFields();
+
+            JOptionPane.showMessageDialog(this, "Item Removed");
 
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -522,8 +522,6 @@ public class ItemsForm extends javax.swing.JPanel {
             tableModel.setValueAt(priceField.getText(), selectedRow, 4);
 
             JOptionPane.showMessageDialog(this, "Item Updated");
-
-            clearFields();
 
         } catch (SQLIntegrityConstraintViolationException e) {
             JOptionPane.showMessageDialog(this, "Item already exists");
