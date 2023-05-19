@@ -11,31 +11,31 @@ import javax.swing.table.TableRowSorter;
 import restaurant.management.models.Database;
 
 public class ItemsForm extends javax.swing.JPanel {
-
+    
     public ItemsForm() {
         // Set FlatLaf Dark theme
         FlatDarkLaf.setup();
-
+        
         initComponents();
         addItemCategory();
     }
-
+    
     private void addItemCategory() {
         try {
             var db = new Database();
             var itemCategoryList = db.getItemCategories();
-
+            
             categoryCBox.removeAllItems();
-
+            
             itemCategoryList.forEach(category -> {
                 categoryCBox.addItem(category.itemCategoryName);
             });
-
+            
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
-
+    
     public boolean validateData() {
         // Check if item category list is empty
         if (categoryCBox.getSelectedItem() == null) {
@@ -52,7 +52,7 @@ public class ItemsForm extends javax.swing.JPanel {
         // Check if price format is invalid
         try {
             Double.parseDouble(priceField.getText());
-
+            
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Invalid value for price");
             return false;
@@ -63,45 +63,47 @@ public class ItemsForm extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Price range too large");
             return false;
         }
-
+        
         return true;
     }
-
+    
     void clearFields() {
         nameSearchField.setText("");
         idField.setText("");
         nameField.setText("");
         priceField.setText("");
     }
-
+    
     void showAllItems() {
         var tableModel = (DefaultTableModel) itemsTable.getModel();
 
         // Clear table rows
         tableModel.setRowCount(0);
-
+        
+        itemsTable.setRowSorter(null);
+        
         try {
             var db = new Database();
-
+            
             var itemList = db.getItems();
-
+            
             if (itemList.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "No item entry founded");
                 return;
             }
-
+            
             for (var item : itemList) {
                 tableModel.addRow(new Object[]{
                     item.itemID, db.getCategory(item.itemCategoryID).itemCategoryName,
                     db.getCategory(item.itemCategoryID).itemCategoryType, item.itemName, item.itemPrice
                 });
             }
-
+            
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -383,7 +385,7 @@ public class ItemsForm extends javax.swing.JPanel {
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
         clearFields();
     }//GEN-LAST:event_clearButtonActionPerformed
-
+    
     private void newCategoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newCategoryButtonActionPerformed
         var categoryForm = new ItemCategoryForm();
         categoryForm.setVisible(true);
@@ -392,53 +394,53 @@ public class ItemsForm extends javax.swing.JPanel {
         // Add category form to subForm list
         LoginForm.subForms.add(categoryForm);
     }//GEN-LAST:event_newCategoryButtonActionPerformed
-
+    
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         if (!validateData()) {
             return;
         }
-
+        
         try {
             var db = new Database();
-
+            
             db.insertItem(
                     nameField.getText(), categoryCBox.getSelectedItem().toString(),
                     Double.parseDouble(priceField.getText())
             );
-
+            
             clearFields();
-
+            
             JOptionPane.showMessageDialog(this, "Item added");
-
+            
         } catch (SQLIntegrityConstraintViolationException e) {
             JOptionPane.showMessageDialog(this, "Item already exists");
-
+            
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_addButtonActionPerformed
-
+    
     private void itemsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemsTableMouseClicked
         var selectedRow = itemsTable.getSelectedRow();
-
+        
         categoryCBox.setSelectedItem(itemsTable.getValueAt(selectedRow, 1));
         idField.setText(itemsTable.getValueAt(selectedRow, 0).toString());
         nameField.setText(itemsTable.getValueAt(selectedRow, 3).toString());
         priceField.setText(itemsTable.getValueAt(selectedRow, 4).toString());
     }//GEN-LAST:event_itemsTableMouseClicked
-
+    
     private void nameSearchFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameSearchFieldKeyReleased
         showAllItems();
-
+        
         var tableModel = (DefaultTableModel) itemsTable.getModel();
         var sorter = new TableRowSorter<>(tableModel);
-
+        
         itemsTable.setRowSorter(sorter);
-
+        
         var text = nameSearchField.getText();
-
+        
         var pattern = "^";
-
+        
         for (int i = 0; i < text.length(); i++) {
             // Append space and skip iteration
             if (text.charAt(i) == ' ') {
@@ -454,107 +456,107 @@ public class ItemsForm extends javax.swing.JPanel {
 
         // Append asterisk quantifier wildcard at end to match char if exists
         pattern += ".*";
-
+        
         sorter.setRowFilter(RowFilter.regexFilter(pattern));
     }//GEN-LAST:event_nameSearchFieldKeyReleased
-
+    
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
         var selectedRows = itemsTable.getSelectedRows();
-
+        
         if (selectedRows.length == 0) {
             JOptionPane.showMessageDialog(this, "Select item row before deleting");
             return;
         }
-
+        
         try {
             var db = new Database();
-
+            
             for (var i = 0; i < selectedRows.length; i++) {
                 var itemID = Integer.parseInt(itemsTable.getValueAt(selectedRows[i] - i, 0).toString());
                 db.removeItem(itemID);
-
+                
                 var tableModel = (DefaultTableModel) itemsTable.getModel();
                 var arr = tableModel.getDataVector();
-
+                
                 for (int row = 0; row < arr.size(); row++) {
                     if (arr.elementAt(row).elementAt(0).equals(itemID)) {
                         tableModel.removeRow(row);
                     }
                 }
             }
-
+            
             clearFields();
-
+            
             JOptionPane.showMessageDialog(this, "Item Removed");
-
+            
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_removeButtonActionPerformed
-
+    
     private void showItemsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showItemsButtonActionPerformed
         showAllItems();
     }//GEN-LAST:event_showItemsButtonActionPerformed
-
+    
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         var selectedRow = itemsTable.getSelectedRow();
-
+        
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Select item row before updating");
             return;
         }
-
+        
         if (!validateData()) {
             return;
         }
-
+        
         try {
             var db = new Database();
-
+            
             db.updateItem(
                     Integer.parseInt(idField.getText()), nameField.getText(),
                     categoryCBox.getSelectedItem().toString(), Double.parseDouble(priceField.getText())
             );
-
+            
             itemsTable.setValueAt(categoryCBox.getSelectedItem(), selectedRow, 1);
             itemsTable.setValueAt(db.getCategory(categoryCBox.getSelectedItem().toString()).itemCategoryType, selectedRow, 2);
             itemsTable.setValueAt(nameField.getText(), selectedRow, 3);
             itemsTable.setValueAt(priceField.getText(), selectedRow, 4);
-
+            
             JOptionPane.showMessageDialog(this, "Item Updated");
-
+            
         } catch (SQLIntegrityConstraintViolationException e) {
             JOptionPane.showMessageDialog(this, "Item already exists");
-
+            
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_updateButtonActionPerformed
-
+    
     private void categoryCBoxPopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_categoryCBoxPopupMenuWillBecomeVisible
         addItemCategory();
     }//GEN-LAST:event_categoryCBoxPopupMenuWillBecomeVisible
-
+    
     private void clearTableButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearTableButton1ActionPerformed
         var tableModel = (DefaultTableModel) itemsTable.getModel();
         tableModel.setRowCount(0);
     }//GEN-LAST:event_clearTableButton1ActionPerformed
-
+    
     private void categoryRemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryRemoveButtonActionPerformed
         if (categoryCBox.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(this, "Select category to be removed");
             return;
         }
-
+        
         try {
             var db = new Database();
             db.removeCategory(categoryCBox.getSelectedItem().toString());
-
+            
             categoryCBox.removeItemAt(categoryCBox.getSelectedIndex());
-
+            
         } catch (SQLIntegrityConstraintViolationException e) {
             JOptionPane.showMessageDialog(this, "One or more item exist under this category");
-
+            
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
