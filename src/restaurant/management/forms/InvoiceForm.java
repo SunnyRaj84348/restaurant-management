@@ -1,5 +1,6 @@
 package restaurant.management.forms;
 
+import java.awt.print.PrinterException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -109,7 +110,7 @@ public class InvoiceForm extends javax.swing.JPanel {
         itemSearchField = new javax.swing.JTextField();
         cartLabel = new javax.swing.JLabel();
         headingLabel = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        printButton = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(980, 720));
 
@@ -258,6 +259,7 @@ public class InvoiceForm extends javax.swing.JPanel {
         invoiceArea.setColumns(20);
         invoiceArea.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         invoiceArea.setRows(5);
+        invoiceArea.setEnabled(false);
         jScrollPane3.setViewportView(invoiceArea);
 
         itemSearchField.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
@@ -279,10 +281,15 @@ public class InvoiceForm extends javax.swing.JPanel {
         headingLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         headingLabel.setText("Invoice Dashboard");
 
-        jButton1.setBackground(new java.awt.Color(0, 102, 102));
-        jButton1.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Print");
+        printButton.setBackground(new java.awt.Color(0, 102, 102));
+        printButton.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        printButton.setForeground(new java.awt.Color(255, 255, 255));
+        printButton.setText("Print");
+        printButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                printButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -337,7 +344,7 @@ public class InvoiceForm extends javax.swing.JPanel {
                         .addGap(386, 386, 386)
                         .addComponent(genInvoiceButton)
                         .addGap(49, 49, 49)
-                        .addComponent(jButton1))
+                        .addComponent(printButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(291, 291, 291)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -376,7 +383,7 @@ public class InvoiceForm extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(genInvoiceButton)
-                    .addComponent(jButton1))
+                    .addComponent(printButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(28, Short.MAX_VALUE))
@@ -579,6 +586,20 @@ public class InvoiceForm extends javax.swing.JPanel {
         itemQtField.setText("1");
     }//GEN-LAST:event_itemsTableMouseClicked
 
+    private void printButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printButtonActionPerformed
+        if (invoiceArea.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Invoice not generated");
+            return;
+        }
+
+        try {
+            invoiceArea.print();
+
+        } catch (PrinterException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_printButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField cartItemQtField;
     private javax.swing.JLabel cartItemQtLabel;
@@ -600,9 +621,9 @@ public class InvoiceForm extends javax.swing.JPanel {
     private javax.swing.JTextField itemSearchField;
     private javax.swing.JLabel itemSearchLabel;
     private javax.swing.JTable itemsTable;
-    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JButton printButton;
     // End of variables declaration//GEN-END:variables
 }
