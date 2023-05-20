@@ -1,6 +1,7 @@
 package restaurant.management.forms;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
@@ -409,6 +410,49 @@ public class InvoiceForm extends javax.swing.JPanel {
                 
                 db.insertOrderItem(orderID, itemName, quantity);
             }
+            
+            var customerDeatils = db.getCustomer(customerID);
+            var orderDetails = db.getOrderDetails(orderID);
+            
+            invoiceArea.setText("""
+                            ************************* Yummy In The Tummy *************************
+                                                                  Food Business Centre
+                                                                 Bhatta Bazaar Purnea
+                                                                     Tel - 06454-202122
+
+                              Date:""" + " " + new SimpleDateFormat("dd/MM/yyyy hh:mm:ss aa").format(orderDetails.orderDate) + "\n\n  "
+                    + """
+                  Order ID:""" + " " + orderID + "\n\n  "
+                    + """
+                  Customer Name:""" + "  " + customerDeatils.customerName + "\n  "
+                    + """
+                  Customer Phone:""" + " " + customerDeatils.customerPhone + "\n\n"
+                    + """
+                  -------------------------------------------------------------------------------------------""" + "\n  "
+                    + """
+                  S.No""" + "\n"
+                    + """
+                  -------------------------------------------------------------------------------------------""" + "\n"
+            );
+            
+            String str = "";
+            double totalPrice = 0;
+            
+            for (int i = 0; i < arr.size(); i++) {
+                totalPrice += Double.parseDouble(arr.elementAt(i).elementAt(3).toString());
+                
+                str += "   " + (i + 1) + "          " + arr.elementAt(i).elementAt(0) + "\n" + "                x" + arr.elementAt(i).elementAt(2) + " - Rs. " + arr.elementAt(i).elementAt(3) + "\n\n";
+            }
+            
+            str += """
+                   -------------------------------------------------------------------------------------------
+                   """;
+            
+            str += "   -           " + "Total Price:    " + totalPrice;
+            
+            invoiceArea.setText(invoiceArea.getText() + str);
+            
+            tableModel.setRowCount(0);
             
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();

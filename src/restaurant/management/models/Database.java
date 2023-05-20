@@ -281,6 +281,25 @@ public class Database {
         return orderHistory;
     }
 
+    public OrderModel getOrderDetails(int orderID) throws SQLException {
+        var stmt = con.prepareStatement(
+                "SELECT * FROM order_history WHERE order_id = ?"
+        );
+
+        stmt.setInt(1, orderID);
+        var rs = stmt.executeQuery();
+
+        if (!rs.next()) {
+            return null;
+        }
+
+        var orderDetails = new OrderModel(
+                rs.getInt(1), rs.getTimestamp(2), rs.getInt(3)
+        );
+
+        return orderDetails;
+    }
+
     public ArrayList<OrderedItemModel> getOrderedItems(int orderID) throws SQLException {
         var stmt = con.prepareStatement(
                 "SELECT * FROM ordered_item WHERE order_id = ?"
