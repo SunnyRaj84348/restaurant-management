@@ -2,6 +2,7 @@ package restaurant.management.forms;
 
 import java.awt.print.PrinterException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
@@ -25,59 +26,6 @@ public class InvoiceForm extends javax.swing.JPanel {
 
         initFields();
         showAllItems();
-
-        invoiceArea.setText("""
-                            ************************* Yummy In The Tummy *************************
-                                                                  Food Business Centre
-                                                                 Bhatta Bazaar Purnea
-                                                                     Tel - 06454-202122
-                            
-                              Date:""" + " " + LocalDate.now() + "\n\n  "
-                + """
-                  Order ID:""" + " " + 456 + "\n\n  "
-                + """
-                  Customer Name:""" + "  " + "Sunny Raj" + "\n  "
-                + """
-                  Customer Phone:""" + " " + "9865400000" + "\n\n"
-                + """
-                  -------------------------------------------------------------------------------------------""" + "\n  "
-                + """
-                  S.No    Item                                                         Qtn      Total Price  """ + "\n"
-        );
-        //System.out.println("Item                                                         ".length());
-        try {
-            var db = new Database();
-            var orderedItems = db.getOrderedItems(3012);
-
-            String str = "";
-
-            for (int i = 0; i < orderedItems.size(); i++) {
-                var item = db.getItem(orderedItems.get(i).itemID);
-                var itemSize = item.itemName.length();
-
-                str += "  " + (i + 1) + "          " + item.itemName + "\t\t\t\t" + orderedItems.get(i).itemQuantity + "    " + (item.itemPrice * orderedItems.get(i).itemQuantity) + "\n";
-            }
-
-            invoiceArea.setText(invoiceArea.getText() + str);
-
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-//        try {
-//            invoiceArea.print();
-//        } catch (PrinterException ex) {
-//            Logger.getLogger(InvoiceForm.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-    }
-
-    public static void main(String[] args) {
-        var v = new InvoiceForm(2006);
-        var frame = new JFrame();
-        frame.setSize(980, 780);
-        frame.setContentPane(v);
-        frame.setVisible(true);
-
     }
 
     private void initFields() {
@@ -467,7 +415,46 @@ public class InvoiceForm extends javax.swing.JPanel {
                 db.insertOrderItem(orderID, itemName, quantity);
             }
 
+            var customerDeatils = db.getCustomer(customerID);
             var orderDetails = db.getOrderDetails(orderID);
+
+            invoiceArea.setText("""
+                            ************************* Yummy In The Tummy *************************
+                                                                  Food Business Centre
+                                                                 Bhatta Bazaar Purnea
+                                                                     Tel - 06454-202122
+                            
+                              Date:""" + " " + new SimpleDateFormat("dd/MM/yyyy hh:mm:ss aa").format(orderDetails.orderDate) + "\n\n  "
+                    + """
+                  Order ID:""" + " " + orderID + "\n\n  "
+                    + """
+                  Customer Name:""" + "  " + customerDeatils.customerName + "\n  "
+                    + """
+                  Customer Phone:""" + " " + customerDeatils.customerPhone + "\n\n"
+                    + """
+                  -------------------------------------------------------------------------------------------""" + "\n  "
+                    + """
+                  S.No""" + "\n"
+                    + """
+                  -------------------------------------------------------------------------------------------""" + "\n"
+            );
+
+            String str = "";
+            double totalPrice = 0;
+
+            for (int i = 0; i < arr.size(); i++) {
+                totalPrice += Double.parseDouble(arr.elementAt(i).elementAt(3).toString());
+
+                str += "   " + (i + 1) + "          " + arr.elementAt(i).elementAt(0) + "\n" + "                x" + arr.elementAt(i).elementAt(2) + " - Rs. " + arr.elementAt(i).elementAt(3) + "\n\n";
+            }
+
+            str += """
+                   -------------------------------------------------------------------------------------------
+                   """;
+
+            str += "   -           " + "Total Price:    " + totalPrice;
+
+            invoiceArea.setText(invoiceArea.getText() + str);
 
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
