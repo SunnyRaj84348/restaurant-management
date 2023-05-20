@@ -10,19 +10,19 @@ import javax.swing.table.TableRowSorter;
 import restaurant.management.models.Database;
 
 public class CustomerForm extends javax.swing.JPanel {
-    
+
     private ReceptionistForm receptionistForm;
-    
+
     public CustomerForm(ReceptionistForm receptionistForm) {
         initComponents();
-        
+
         this.receptionistForm = receptionistForm;
     }
-    
+
     boolean validateData() {
         if (nameField.getText().trim().isEmpty() || phoneField.getText().trim().isEmpty()
                 || addressArea.getText().trim().isEmpty()) {
-            
+
             JOptionPane.showMessageDialog(this, "One or more fields are empty");
             return false;
         }
@@ -36,15 +36,15 @@ public class CustomerForm extends javax.swing.JPanel {
         // Check if phone number is valid
         try {
             new BigInteger(phoneField.getText());
-            
+
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Invalid phone number");
             return false;
         }
-        
+
         return true;
     }
-    
+
     void clearFields() {
         customerSearchField.setText("");
         idField.setText("");
@@ -52,35 +52,35 @@ public class CustomerForm extends javax.swing.JPanel {
         phoneField.setText("");
         addressArea.setText("");
     }
-    
+
     void showAllCustomers() {
         try {
             var db = new Database();
-            
+
             var customerList = db.getAllCustomers();
-            
+
             if (customerList.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "No customer entry founded");
                 return;
             }
-            
+
             customerTable.setRowSorter(null);
-            
+
             var tableModel = (DefaultTableModel) customerTable.getModel();
             tableModel.setRowCount(0);
-            
+
             for (var customer : customerList) {
                 tableModel.addRow(new Object[]{
                     customer.customerID, customer.customerName,
                     customer.customerPhone, customer.customerAddress
                 });
             }
-            
+
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -130,9 +130,16 @@ public class CustomerForm extends javax.swing.JPanel {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         customerTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -323,16 +330,16 @@ public class CustomerForm extends javax.swing.JPanel {
 
     private void customerSearchFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_customerSearchFieldKeyReleased
         showAllCustomers();
-        
+
         var tableModel = (DefaultTableModel) customerTable.getModel();
         var sorter = new TableRowSorter<>(tableModel);
-        
+
         customerTable.setRowSorter(sorter);
-        
+
         var text = customerSearchField.getText();
-        
+
         var pattern = "^";
-        
+
         for (int i = 0; i < text.length(); i++) {
             // Append space and skip iteration
             if (text.charAt(i) == ' ') {
@@ -348,85 +355,85 @@ public class CustomerForm extends javax.swing.JPanel {
 
         // Append asterisk quantifier wildcard at end to match char if exists
         pattern += ".*";
-        
+
         sorter.setRowFilter(RowFilter.regexFilter(pattern));
     }//GEN-LAST:event_customerSearchFieldKeyReleased
-    
+
     private void customerTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customerTableMouseClicked
         var selectedRow = customerTable.getSelectedRow();
-        
+
         idField.setText(customerTable.getValueAt(selectedRow, 0).toString());
         nameField.setText(customerTable.getValueAt(selectedRow, 1).toString());
         phoneField.setText(customerTable.getValueAt(selectedRow, 2).toString());
         addressArea.setText(customerTable.getValueAt(selectedRow, 3).toString());
-        
+
         receptionistForm.enableButtons();
         receptionistForm.initInvoiceForm(Integer.parseInt(idField.getText()));
     }//GEN-LAST:event_customerTableMouseClicked
-    
+
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
         clearFields();
     }//GEN-LAST:event_clearButtonActionPerformed
-    
+
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         if (!validateData()) {
             return;
         }
-        
+
         try {
             var db = new Database();
-            
+
             db.insertCustomer(nameField.getText(), phoneField.getText(), addressArea.getText());
-            
+
             clearFields();
-            
+
             JOptionPane.showMessageDialog(this, "Customer added");
-            
+
         } catch (SQLIntegrityConstraintViolationException e) {
             JOptionPane.showMessageDialog(this, "Phone no. already exists");
-            
+
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_addButtonActionPerformed
-    
+
     private void showAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showAllButtonActionPerformed
         showAllCustomers();
     }//GEN-LAST:event_showAllButtonActionPerformed
-    
+
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         var selectedRow = customerTable.getSelectedRow();
-        
+
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Select Customer row before updating");
             return;
         }
-        
+
         if (!validateData()) {
             return;
         }
-        
+
         try {
             var db = new Database();
-            
+
             db.updateCustomer(Integer.parseInt(idField.getText()), nameField.getText(),
                     phoneField.getText(), addressArea.getText());
-            
+
             customerTable.setValueAt(idField.getText(), selectedRow, 0);
             customerTable.setValueAt(nameField.getText(), selectedRow, 1);
             customerTable.setValueAt(phoneField.getText(), selectedRow, 2);
             customerTable.setValueAt(addressArea.getText(), selectedRow, 3);
-            
+
             JOptionPane.showMessageDialog(this, "Data updated");
-            
+
         } catch (SQLIntegrityConstraintViolationException e) {
             JOptionPane.showMessageDialog(this, "Phone no. already exists");
-            
+
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_updateButtonActionPerformed
-    
+
     private void clearTableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearTableButtonActionPerformed
         var tableModel = (DefaultTableModel) customerTable.getModel();
         tableModel.setRowCount(0);

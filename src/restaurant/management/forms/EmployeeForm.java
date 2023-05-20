@@ -12,59 +12,59 @@ import javax.swing.table.TableRowSorter;
 import restaurant.management.models.Database;
 
 public class EmployeeForm extends javax.swing.JPanel {
-    
+
     public EmployeeForm() {
         // Set FlatLaf Dark theme
         FlatDarkLaf.setup();
-        
+
         initComponents();
         addRoles();
     }
-    
+
     private void addRoles() {
         try {
             var db = new Database();
             var empRoleList = db.getEmployeeRoles();
-            
+
             roleCBox.removeAllItems();
-            
+
             empRoleList.forEach(role -> {
                 roleCBox.addItem(role.roleName);
             });
-            
+
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
-    
+
     private boolean validateInsertData() {
         // Check username and password field based on employee's role
         if (roleCBox.getSelectedItem().equals("Admin")
                 || roleCBox.getSelectedItem().equals("Receptionist")) {
-            
+
             if (userField.getText().trim().isEmpty() || passwordField.getPassword().length == 0) {
                 JOptionPane.showMessageDialog(this, "One or more fields are empty");
                 return false;
             }
         }
-        
+
         return true;
     }
-    
+
     private boolean validateUpdateData() {
         // Check username field based on employee's role
         if (roleCBox.getSelectedItem().equals("Admin")
                 || roleCBox.getSelectedItem().equals("Receptionist")) {
-            
+
             if (userField.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "One or more fields are empty");
                 return false;
             }
         }
-        
+
         return true;
     }
-    
+
     private boolean validateData() {
         if (roleCBox.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(this, "Select employee's role");
@@ -74,7 +74,7 @@ public class EmployeeForm extends javax.swing.JPanel {
         // Check if specified fields are empty or contains whitespaces
         if (nameField.getText().trim().isEmpty() || phoneField.getText().trim().isEmpty()
                 || addressArea.getText().trim().isEmpty() || salaryField.getText().trim().isEmpty()) {
-            
+
             JOptionPane.showMessageDialog(this, "One or more fields are empty");
             return false;
         }
@@ -94,7 +94,7 @@ public class EmployeeForm extends javax.swing.JPanel {
         // Check if phone number is valid
         try {
             new BigInteger(phoneField.getText());
-            
+
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Invalid phone number");
             return false;
@@ -103,15 +103,15 @@ public class EmployeeForm extends javax.swing.JPanel {
         // Check if salary value is valid
         try {
             Double.parseDouble(salaryField.getText());
-            
+
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Invalid value for salary");
             return false;
         }
-        
+
         return true;
     }
-    
+
     void clearFields() {
         empSearchField.setText("");
         userField.setText("");
@@ -122,36 +122,36 @@ public class EmployeeForm extends javax.swing.JPanel {
         addressArea.setText("");
         salaryField.setText("");
     }
-    
+
     void showAllEmployee() {
         var tableModel = (DefaultTableModel) empTable.getModel();
 
         // Clear table rows
         tableModel.setRowCount(0);
-        
+
         empTable.setRowSorter(null);
-        
+
         try {
             var db = new Database();
             var empList = db.getAllEmployee();
-            
+
             if (empList.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "No employee entry founded");
                 return;
             }
-            
+
             for (var emp : empList) {
                 tableModel.addRow(new Object[]{
                     emp.employeeID, emp.employeeRole, emp.employeeName,
                     emp.employeePhone, emp.employeeAddress, emp.employeeSalary
                 });
             }
-            
+
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -325,9 +325,16 @@ public class EmployeeForm extends javax.swing.JPanel {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         empTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -486,23 +493,23 @@ public class EmployeeForm extends javax.swing.JPanel {
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         var selectedRow = empTable.getSelectedRow();
-        
+
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Select employee row before updating");
             return;
         }
-        
+
         if (!validateData() || !validateUpdateData()) {
             return;
         }
-        
+
         try {
             var db = new Database();
-            
+
             var empID = Integer.parseInt(idField.getText());
             var role = roleCBox.getSelectedItem().toString();
             var currentRole = db.getEmployeeRole(empID);
-            
+
             var credExists = false;
 
             // Check existing role
@@ -513,7 +520,7 @@ public class EmployeeForm extends javax.swing.JPanel {
 
             // Check new role
             if (role.equals("Admin") || role.equals("Receptionist")) {
-                
+
                 var otherUserCreds = db.getCredentials(userField.getText());
 
                 // Check if specified username already exists
@@ -521,7 +528,7 @@ public class EmployeeForm extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(this, "Username already exists");
                     return;
                 }
-                
+
                 if (!credExists) {
                     // Validate password field for new credential
                     if (String.valueOf(passwordField.getPassword()).trim().isEmpty()) {
@@ -534,93 +541,93 @@ public class EmployeeForm extends javax.swing.JPanel {
             // Update specified employee details
             db.updateEmployee(empID, nameField.getText(), phoneField.getText(),
                     addressArea.getText(), role, Double.parseDouble(salaryField.getText()));
-            
+
             if (role.equals("Admin") || role.equals("Receptionist")) {
-                
+
                 if (credExists) {
                     db.updateCredentials(empID, userField.getText(), String.valueOf(passwordField.getPassword()));
                 } else {
                     db.insertCredentials(empID, userField.getText(), String.valueOf(passwordField.getPassword()));
                 }
-                
+
             } else if (credExists) {
                 db.deleteCredentials(empID);
             }
-            
+
             empTable.setValueAt(idField.getText(), selectedRow, 0);
             empTable.setValueAt(roleCBox.getSelectedItem(), selectedRow, 1);
             empTable.setValueAt(nameField.getText(), selectedRow, 2);
             empTable.setValueAt(phoneField.getText(), selectedRow, 3);
             empTable.setValueAt(addressArea.getText(), selectedRow, 4);
             empTable.setValueAt(salaryField.getText(), selectedRow, 5);
-            
+
             JOptionPane.showMessageDialog(this, "Data updated successfully");
-            
+
         } catch (SQLIntegrityConstraintViolationException e) {
             JOptionPane.showMessageDialog(this, "Phone number already exists");
-            
+
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_updateButtonActionPerformed
-    
+
     private void showEmpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showEmpButtonActionPerformed
         showAllEmployee();
     }//GEN-LAST:event_showEmpButtonActionPerformed
-    
+
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
         clearFields();
     }//GEN-LAST:event_clearButtonActionPerformed
-    
+
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
         var selectedRows = empTable.getSelectedRows();
-        
+
         if (selectedRows.length == 0) {
             JOptionPane.showMessageDialog(this, "Select employee row before deleting");
             return;
         }
-        
+
         try {
             var db = new Database();
-            
+
             for (var i = 0; i < selectedRows.length; i++) {
                 var empID = Integer.parseInt(empTable.getValueAt(selectedRows[i] - i, 0).toString());
-                
+
                 if (roleCBox.getSelectedItem().equals("Admin") || roleCBox.getSelectedItem().equals("Admin")) {
                     db.deleteCredentials(empID);
                 }
-                
+
                 db.removeEmployee(empID);
-                
+
                 var tableModel = (DefaultTableModel) empTable.getModel();
                 var arr = tableModel.getDataVector();
-                
+
                 for (int row = 0; row < arr.size(); row++) {
                     if (arr.elementAt(row).elementAt(0).equals(empID)) {
                         tableModel.removeRow(row);
                     }
                 }
             }
-            
+
             clearFields();
-            
+
             JOptionPane.showMessageDialog(this, "Deleted successfully");
-            
+
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_removeButtonActionPerformed
-    
+
     private void roleCBoxPopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_roleCBoxPopupMenuWillBecomeVisible
         addRoles();
     }//GEN-LAST:event_roleCBoxPopupMenuWillBecomeVisible
-    
+
     private void roleCBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roleCBoxActionPerformed
         // Return if event triggered without mouse click
         if (roleCBox.getSelectedItem() == null) {
             return;
         }
-        
+
         var role = roleCBox.getSelectedItem().toString();
 
         // Enable/Disable fields based on employee's role
@@ -632,12 +639,12 @@ public class EmployeeForm extends javax.swing.JPanel {
             passwordField.setEnabled(false);
         }
     }//GEN-LAST:event_roleCBoxActionPerformed
-    
+
     private void clearTableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearTableButtonActionPerformed
         var tableModel = (DefaultTableModel) empTable.getModel();
         tableModel.setRowCount(0);
     }//GEN-LAST:event_clearTableButtonActionPerformed
-    
+
     private void newRoleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newRoleButtonActionPerformed
         var roleForm = new RoleForm();
         roleForm.setVisible(true);
@@ -646,50 +653,50 @@ public class EmployeeForm extends javax.swing.JPanel {
         // Add role form to subForm list
         LoginForm.subForms.add(roleForm);
     }//GEN-LAST:event_newRoleButtonActionPerformed
-    
+
     private void empTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_empTableMouseClicked
         var selectedRow = empTable.getSelectedRow();
-        
+
         idField.setText(empTable.getValueAt(selectedRow, 0).toString());
         roleCBox.setSelectedItem(empTable.getValueAt(selectedRow, 1).toString());
         nameField.setText(empTable.getValueAt(selectedRow, 2).toString());
         phoneField.setText(empTable.getValueAt(selectedRow, 3).toString());
         addressArea.setText(empTable.getValueAt(selectedRow, 4).toString());
         salaryField.setText(empTable.getValueAt(selectedRow, 5).toString());
-        
+
         userField.setText("");
         passwordField.setText("");
-        
+
         var role = roleCBox.getSelectedItem().toString();
 
         // set username field only if role is either admin or receptionist
         if (role.equals("Admin") || role.equals("Receptionist")) {
             try {
                 var empID = Integer.parseInt(idField.getText());
-                
+
                 var db = new Database();
                 var creds = db.getCredentials(empID);
-                
+
                 userField.setText(creds.username);
-                
+
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
     }//GEN-LAST:event_empTableMouseClicked
-    
+
     private void empSearchFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_empSearchFieldKeyReleased
         showAllEmployee();
-        
+
         var tableModel = (DefaultTableModel) empTable.getModel();
         var sorter = new TableRowSorter<>(tableModel);
-        
+
         empTable.setRowSorter(sorter);
-        
+
         var text = empSearchField.getText();
-        
+
         var pattern = "^";
-        
+
         for (int i = 0; i < text.length(); i++) {
             // Append space and skip iteration
             if (text.charAt(i) == ' ') {
@@ -705,63 +712,63 @@ public class EmployeeForm extends javax.swing.JPanel {
 
         // Append asterisk quantifier wildcard at end to match char if exists
         pattern += ".*";
-        
+
         sorter.setRowFilter(RowFilter.regexFilter(pattern));
     }//GEN-LAST:event_empSearchFieldKeyReleased
-    
+
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         if (!validateData() || !validateInsertData()) {
             return;
         }
-        
+
         try {
             var role = roleCBox.getSelectedItem().toString();
-            
+
             var db = new Database();
-            
+
             if (role.equals("Admin") || role.equals("Receptionist")) {
                 var creds = db.getCredentials(userField.getText());
-                
+
                 if (creds != null) {
                     JOptionPane.showMessageDialog(this, "Username already exists");
                     return;
                 }
             }
-            
+
             var newEmpID = db.insertEmployee(nameField.getText(), phoneField.getText(),
                     addressArea.getText(), role, salaryField.getText());
-            
+
             if (role.equals("Admin") || role.equals("Receptionist")) {
                 db.insertCredentials(newEmpID, userField.getText(), String.valueOf(passwordField.getPassword()));
             }
-            
+
             clearFields();
-            
+
             JOptionPane.showMessageDialog(this, "New employee's id = " + newEmpID);
-            
+
         } catch (SQLIntegrityConstraintViolationException e) {
             JOptionPane.showMessageDialog(this, "Phone no. already exists");
-            
+
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_addButtonActionPerformed
-    
+
     private void roleRemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roleRemoveButtonActionPerformed
         if (roleCBox.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(this, "Select role to be removed");
             return;
         }
-        
+
         try {
             var db = new Database();
             db.removeRole(roleCBox.getSelectedItem().toString());
-            
+
             roleCBox.removeItemAt(roleCBox.getSelectedIndex());
-            
+
         } catch (SQLIntegrityConstraintViolationException e) {
             JOptionPane.showMessageDialog(this, "Role is assigned to one or more employee");
-            
+
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
