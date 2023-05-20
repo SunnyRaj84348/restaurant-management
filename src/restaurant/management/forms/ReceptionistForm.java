@@ -11,6 +11,7 @@ public class ReceptionistForm extends javax.swing.JFrame {
         initComponents();
 
         jTabbedPane1.addTab("", new CustomerForm(this));
+        customerButton.grabFocus();
     }
 
     void enableButtons() {
