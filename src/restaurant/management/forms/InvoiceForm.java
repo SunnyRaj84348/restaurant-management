@@ -109,6 +109,7 @@ public class InvoiceForm extends javax.swing.JPanel {
         itemSearchField = new javax.swing.JTextField();
         cartLabel = new javax.swing.JLabel();
         headingLabel = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(980, 720));
 
@@ -278,6 +279,11 @@ public class InvoiceForm extends javax.swing.JPanel {
         headingLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         headingLabel.setText("Invoice Dashboard");
 
+        jButton1.setBackground(new java.awt.Color(0, 102, 102));
+        jButton1.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Print");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -329,8 +335,10 @@ public class InvoiceForm extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(customerNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(401, 401, 401)
-                        .addComponent(genInvoiceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(386, 386, 386)
+                        .addComponent(genInvoiceButton)
+                        .addGap(49, 49, 49)
+                        .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(291, 291, 291)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -367,10 +375,12 @@ public class InvoiceForm extends javax.swing.JPanel {
                     .addComponent(cartItemRemoveButton)
                     .addComponent(clearButton))
                 .addGap(18, 18, 18)
-                .addComponent(genInvoiceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(genInvoiceButton)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -591,6 +601,7 @@ public class InvoiceForm extends javax.swing.JPanel {
     private javax.swing.JTextField itemSearchField;
     private javax.swing.JLabel itemSearchLabel;
     private javax.swing.JTable itemsTable;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
