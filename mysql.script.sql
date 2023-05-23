@@ -1,3 +1,7 @@
+CREATE DATABASE IF NOT EXISTS restaurant_management;
+
+USE restaurant_management;
+
 CREATE TABLE category_type (
 	ctype_id INT PRIMARY KEY AUTO_INCREMENT,
 	ctype_name VARCHAR(50) UNIQUE
