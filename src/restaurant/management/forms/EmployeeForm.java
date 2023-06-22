@@ -593,7 +593,7 @@ public class EmployeeForm extends javax.swing.JPanel {
             for (var i = 0; i < selectedRows.length; i++) {
                 var empID = Integer.parseInt(empTable.getValueAt(selectedRows[i] - i, 0).toString());
 
-                if (roleCBox.getSelectedItem().equals("Admin") || roleCBox.getSelectedItem().equals("Admin")) {
+                if (roleCBox.getSelectedItem().equals("Admin") || roleCBox.getSelectedItem().equals("Receptionist")) {
                     db.deleteCredentials(empID);
                 }
 
